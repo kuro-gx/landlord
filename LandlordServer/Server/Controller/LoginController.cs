@@ -4,7 +4,7 @@ namespace Server.Controller {
     /// <summary>
     /// 登录控制器
     /// </summary>
-    public class LoginController : IContainer{
+    public class LoginController : IContainer {
         public void OnInit() {
         }
 
@@ -18,7 +18,7 @@ namespace Server.Controller {
 
         public void OnClientCommand(ServerBase server, BasePackage package) {
         }
-        
+
         /// <summary>
         /// 处理注册事件
         /// </summary>

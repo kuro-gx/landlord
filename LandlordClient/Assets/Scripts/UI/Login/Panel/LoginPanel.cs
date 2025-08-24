@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,12 @@ public class LoginPanel : UIBase {
         });
         
         _loginBtn.onClick.AddListener(() => {
-            
+            ShowSystemTips("账号密码错误", Color.red);
         });
+    }
+
+    private void OnDestroy() {
+        _registerBtn.onClick.RemoveAllListeners();
+        _loginBtn.onClick.RemoveAllListeners();
     }
 }

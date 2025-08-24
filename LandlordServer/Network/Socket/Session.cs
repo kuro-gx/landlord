@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 
 public class Session : ServerBase {
+    private readonly Dictionary<int, IContainer> _cmdDict;
+
     public Session(Dictionary<int, IContainer> cmdDict) {
         _cmdDict = cmdDict;
     }
@@ -16,7 +18,7 @@ public class Session : ServerBase {
         BeginReceive();
     }
 
-    protected override void CommandHandle(BasePackage package) {
+    protected override void HandleCommand(BasePackage package) {
         IContainer container = _cmdDict[package.Code];
         if (container == null) {
             Console.WriteLine("command not register...");
@@ -24,5 +26,12 @@ public class Session : ServerBase {
         }
 
         container.OnServerCommand(this, package);
+    }
+
+    public override void DisconnectHandle() {
+        base.DisconnectHandle();
+        if (_socket != null) {
+            Console.WriteLine("Disconnect: " + _socket.RemoteEndPoint + "断开了连接...");
+        }
     }
 }

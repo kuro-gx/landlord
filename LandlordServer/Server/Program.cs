@@ -10,6 +10,10 @@ namespace Server {
 
             LoginController loginController = new LoginController();
             server.RegisterCommand(NetDefine.CMD_RegisterCode, loginController);
+
+            while (true) {
+                Thread.Sleep(1);
+            }
         }
     }
 }

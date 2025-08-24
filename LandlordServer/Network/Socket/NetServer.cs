@@ -6,7 +6,7 @@ using System.Threading;
 
 public class NetServer {
     private Socket _socket;
-    private Dictionary<int, IContainer> _cmdDict = new Dictionary<int, IContainer>();
+    private readonly Dictionary<int, IContainer> _cmdDict = new Dictionary<int, IContainer>();
 
     public void StartServer(string ip, int port) {
         // 创建Socket
@@ -17,6 +17,8 @@ public class NetServer {
         _socket.Bind(endPoint);
         // 设置最大连接数
         _socket.Listen(50);
+
+        Console.WriteLine("服务器启动成功：" + endPoint);
 
         // 监听客户端连接
         Thread listenThread = new Thread(ListenConnectSocket) {
@@ -40,6 +42,7 @@ public class NetServer {
         try {
             // 结束监听
             Socket clientSocket = _socket.EndAccept(ar);
+            Console.WriteLine($"客户端：{clientSocket.RemoteEndPoint} 连接成功...");
             // 开始接收客户端数据
             Session session = new Session(_cmdDict);
             session.ReceiveData(clientSocket);

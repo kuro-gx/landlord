@@ -6,7 +6,7 @@ public class NetClient : ServerBase {
     private string _ip;
     private int _port;
     private Timer _reconnectTimer; // 重连间隔
-    private bool _isNeedReconn = true; // 是否需要重连
+    public bool _isNeedReconn = true; // 是否需要重连
 
     public NetClient(string ip, int port) {
         _ip = ip;
@@ -19,7 +19,7 @@ public class NetClient : ServerBase {
     /// </summary>
     public void StartConnect() {
         try {
-            if (_connState == ConnState.Disconnected) {
+            if (_connState != ConnState.Disconnected) {
                 return;
             }
 
@@ -53,20 +53,13 @@ public class NetClient : ServerBase {
     /// <summary>
     /// 断开连接的处理
     /// </summary>
-    protected override void DisconnectHandle() {
+    public override void DisconnectHandle() {
         SetReconnectTimer();
         base.DisconnectHandle();
     }
 
-    protected override void CommandHandle(BasePackage package) {
+    protected override void HandleCommand(BasePackage package) {
         OnReceiveMsg?.Invoke(package.Code, package.Data);
-    }
-
-    /// <summary>
-    /// 注册指令
-    /// </summary>
-    public void RegisterCommand(int cmd, IContainer container) {
-        _cmdDict.Add(cmd, container);
     }
 
     /// <summary>

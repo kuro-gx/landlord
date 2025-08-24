@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Sockets;
 using Google.Protobuf;
 
@@ -7,9 +6,7 @@ public class ServerBase {
     protected Socket _socket;
     private byte[] _buffer = new byte[1024 * 4]; // 接收数据的缓冲区
     protected ConnState _connState; // 连接状态
-
-    protected Dictionary<int, IContainer> _cmdDict = new Dictionary<int, IContainer>();
-    public Action<int, ByteString> OnReceiveMsg;
+    public Action<int, ByteString> OnReceiveMsg; // 将消息以回调的形式传给Unity
 
     /// <summary>
     /// 接收服务器 or 客户端发送的数据
@@ -34,8 +31,8 @@ public class ServerBase {
                         // 数据不为空，则反序列化数据
                         if (data != null) {
                             BasePackage package = BasePackage.Parser.ParseFrom(data);
-                            Console.WriteLine(package.ToString());
-                            CommandHandle(package);
+                            Console.WriteLine("basePackage: " + package.ToString());
+                            HandleCommand(package);
                         }
 
                         len -= (msgLen + 2);
@@ -50,6 +47,8 @@ public class ServerBase {
 
                 // 继续接收数据
                 BeginReceive();
+            } else {
+                DisconnectHandle();
             }
         } catch (Exception e) {
             DisconnectHandle();
@@ -58,7 +57,7 @@ public class ServerBase {
     }
 
     // 断线处理
-    protected virtual void DisconnectHandle() {
+    public virtual void DisconnectHandle() {
         _connState = ConnState.Disconnected;
         if (_socket != null) {
             _socket.Close();
@@ -66,7 +65,7 @@ public class ServerBase {
         }
     }
     
-    protected virtual void CommandHandle(BasePackage package) {
+    protected virtual void HandleCommand(BasePackage package) {
     }
 
     /// <summary>

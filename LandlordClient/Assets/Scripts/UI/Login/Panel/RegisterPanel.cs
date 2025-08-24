@@ -1,3 +1,4 @@
+using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,30 +16,47 @@ public class RegisterPanel : UIBase {
         _sendCodeBtn.onClick.AddListener(() => { });
 
         _registerBtn.onClick.AddListener(() => {
-            if (string.IsNullOrEmpty(_mobileInput.text)) {
+            if (string.IsNullOrEmpty(_mobileInput.text.Trim())) {
+                ShowSystemTips("账号不能为空!", Color.red);
                 return;
             }
 
-            if (string.IsNullOrEmpty(_smsInput.text)) {
+            if (string.IsNullOrEmpty(_smsInput.text.Trim())) {
+                ShowSystemTips("短信验证码不能为空!", Color.red);
                 return;
             }
 
-            if (string.IsNullOrEmpty(_pwdInput.text)) {
+            if (string.IsNullOrEmpty(_pwdInput.text.Trim())) {
+                ShowSystemTips("密码不能为空!", Color.red);
                 return;
             }
 
-            if (string.IsNullOrEmpty(_repwdInput.text)) {
+            if (string.IsNullOrEmpty(_repwdInput.text.Trim())) {
+                ShowSystemTips("确认密码不能为空!", Color.red);
                 return;
             }
 
             if (!_pwdInput.text.Equals(_repwdInput.text)) {
+                ShowSystemTips("两次密码不一致!", Color.red);
                 return;
             }
+
+            RegisterReq param = new RegisterReq() {
+                Mobile = _mobileInput.text.Trim(),
+                SmsCode = _smsInput.text.Trim(),
+                Password = _pwdInput.text.Trim()
+            };
+            NetSocketMgr.Client.SendData(NetDefine.CMD_RegisterCode, param.ToByteString());
         });
 
         _backBtn.onClick.AddListener(() => {
             Show(false);
             LoginView.Instance.ShowPanel(PanelType.LoginPanel);
         });
+    }
+
+    private void OnDestroy() {
+        _registerBtn.onClick.RemoveAllListeners();
+        _sendCodeBtn.onClick.RemoveAllListeners();
     }
 }
