@@ -32,6 +32,7 @@ public class NetClient : ServerBase {
         } catch (Exception e) {
             DisconnectHandle();
             Console.WriteLine(e.Message);
+            throw;
         }
     }
 
@@ -47,6 +48,7 @@ public class NetClient : ServerBase {
         } catch (Exception e) {
             DisconnectHandle();
             Console.WriteLine(e.Message);
+            throw;
         }
     }
 

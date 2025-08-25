@@ -1,6 +1,5 @@
-﻿using System;
-using System.Threading;
-using Server.Controller;
+﻿using System.Threading;
+using SqlSugar;
 
 namespace Server {
     public class Program {
@@ -8,8 +7,12 @@ namespace Server {
             NetServer server = new NetServer();
             server.StartServer(NetDefine.IP, NetDefine.ServerPort);
 
-            LoginController loginController = new LoginController();
+            SqlSugarClient db = DBMgr.Instance.InitDB();
+
+            LoginController loginController = new LoginController(new LoginService(db));
+            // 注册指令集
             server.RegisterCommand(NetDefine.CMD_RegisterCode, loginController);
+            server.RegisterCommand(NetDefine.CMD_LoginCode, loginController);
 
             while (true) {
                 Thread.Sleep(1);

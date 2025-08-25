@@ -1,5 +1,7 @@
+using System;
 using System.Threading;
 using Google.Protobuf;
+using UnityEngine;
 
 /// <summary>
 /// 网络模块管理
@@ -24,7 +26,7 @@ public class NetSocketMgr : Singleton<NetSocketMgr> {
     /// <param name="host">ip地址</param>
     /// <param name="port">端口</param>
     public void ConnectServer(string host, int port) {
-        // Disconnect();
+        Disconnect();
 
         _client = new NetClient(host, port);
         _client.OnReceiveMsg += OnReceiveMsgHandle;

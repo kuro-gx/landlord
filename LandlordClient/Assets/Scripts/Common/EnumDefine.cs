@@ -3,5 +3,6 @@
 /// </summary>
 public enum PanelType {
     LoginPanel,
-    RegisterPanel
+    RegisterPanel,
+    LoadingPanel
 }

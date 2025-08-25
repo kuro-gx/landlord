@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 
 public class Session : ServerBase {
+    public int SessionId { get; set; }
     private readonly Dictionary<int, IContainer> _cmdDict;
 
     public Session(Dictionary<int, IContainer> cmdDict) {
         _cmdDict = cmdDict;
+        SessionMgr.Instance.AddSession(this);
     }
-    
+
     /// <summary>
     /// 接收客户端数据
     /// </summary>
@@ -25,13 +27,12 @@ public class Session : ServerBase {
             return;
         }
 
-        container.OnServerCommand(this, package);
+        package.SessionId = SessionId;
+        container.OnServerCommand(package);
     }
 
     public override void DisconnectHandle() {
+        Console.WriteLine("Disconnect: " + _socket.RemoteEndPoint + "断开了连接...");
         base.DisconnectHandle();
-        if (_socket != null) {
-            Console.WriteLine("Disconnect: " + _socket.RemoteEndPoint + "断开了连接...");
-        }
     }
 }

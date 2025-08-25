@@ -1,8 +1,11 @@
 ﻿public class NetDefine {
     public const string IP = "127.0.0.1";
     public const int ServerPort = 10086;
+    
+    // ====================== 协议码 ============================
     public const ushort CMD_ErrCode = 1001; // 错误码
     public const ushort CMD_RegisterCode = 801; // 注册请求码
+    public const ushort CMD_LoginCode = 802; // 登录请求码
 }
 
 /// <summary>

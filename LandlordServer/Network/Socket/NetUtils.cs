@@ -79,8 +79,8 @@ public class NetUtils : Singleton<NetUtils> {
     /// <param name="data">需要解压的数据</param>
     /// <returns>解压后的数据</returns>
     public byte[] Decompress(byte[] data) {
-        using (var comStream = new MemoryStream()) {
-            using (var zipStream = new GZipStream(comStream, CompressionMode.Compress)) {
+        using (var comStream = new MemoryStream(data)) {
+            using (var zipStream = new GZipStream(comStream, CompressionMode.Decompress)) {
                 using (var resultStream = new MemoryStream()) {
                     zipStream.CopyTo(resultStream);
                     zipStream.Close();

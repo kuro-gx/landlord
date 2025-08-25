@@ -1,9 +1,10 @@
+using System.Text.RegularExpressions;
 using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RegisterPanel : UIBase {
-    [SerializeField, Header("账号输入框")] private InputField _mobileInput;
+    [SerializeField, Header("手机号输入框")] private InputField _mobileInput;
     [SerializeField, Header("短信验证码")] private InputField _smsInput;
     [SerializeField, Header("密码输入框")] private InputField _pwdInput;
     [SerializeField, Header("重复密码输入框")] private InputField _repwdInput;
@@ -13,11 +14,11 @@ public class RegisterPanel : UIBase {
     [SerializeField, Header("返回登录按钮")] private Button _backBtn;
 
     public override void Init() {
-        _sendCodeBtn.onClick.AddListener(() => { });
+        _sendCodeBtn.onClick.AddListener(() => { ShowSystemTips("验证码已发送", Color.green); });
 
         _registerBtn.onClick.AddListener(() => {
             if (string.IsNullOrEmpty(_mobileInput.text.Trim())) {
-                ShowSystemTips("账号不能为空!", Color.red);
+                ShowSystemTips("手机号不能为空!", Color.red);
                 return;
             }
 
@@ -36,17 +37,31 @@ public class RegisterPanel : UIBase {
                 return;
             }
 
+            if (_pwdInput.text.Length > 16 || _pwdInput.text.Length < 6) {
+                ShowSystemTips("密码长度须为6-16位!", Color.red);
+                return;
+            }
+
             if (!_pwdInput.text.Equals(_repwdInput.text)) {
                 ShowSystemTips("两次密码不一致!", Color.red);
                 return;
             }
 
-            RegisterReq param = new RegisterReq() {
+            string pattern = @"^1[3-9]\d{9}$";
+            if (!Regex.IsMatch(_mobileInput.text.Trim(), pattern)) {
+                ShowSystemTips("手机号不合法!", Color.red);
+                return;
+            }
+
+            RegisterReq form = new RegisterReq() {
                 Mobile = _mobileInput.text.Trim(),
                 SmsCode = _smsInput.text.Trim(),
                 Password = _pwdInput.text.Trim()
             };
-            NetSocketMgr.Client.SendData(NetDefine.CMD_RegisterCode, param.ToByteString());
+            // 发送注册请求
+            NetSocketMgr.Client.SendData(NetDefine.CMD_RegisterCode, form.ToByteString());
+            // 显示Loading
+            LoginView.Instance.ShowPanel(PanelType.LoadingPanel);
         });
 
         _backBtn.onClick.AddListener(() => {
