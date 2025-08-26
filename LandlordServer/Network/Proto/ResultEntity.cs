@@ -23,17 +23,19 @@ public static partial class ResultEntityReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Chhwcm90by9SZXN1bHRFbnRpdHkucHJvdG8iGwoBUhIWCgRjb2RlGAEgASgO",
-          "MgguQ21kQ29kZSIzCghMb2dpblJlcxIWCgRjb2RlGAEgASgOMgguQ21kQ29k",
-          "ZRIPCgd1c2VyX2lkGAIgASgFKqcBCgdDbWRDb2RlEgsKB1N1Y2Nlc3MQABII",
-          "CgRGYWlsEAESDwoLU2VydmVyRXJyb3IQAhIQCgxBY2NvdW50RXhpc3QQAxIT",
-          "Cg9BY2NvdW50Tm90RXhpc3QQBBIRCg1QYXNzd29yZEVycm9yEAUSEAoMU21z",
-          "Q29kZUVycm9yEAYSEgoOTW9iaWxlTm90QmxhbmsQBxIUChBQYXNzd29yZE5v",
-          "dEJsYW5rEAhiBnByb3RvMw=="));
+          "MgguQ21kQ29kZSKLAQoITG9naW5SZXMSFgoEY29kZRgBIAEoDjIILkNtZENv",
+          "ZGUSDwoHdXNlcl9pZBgCIAEoBRIQCgh1c2VybmFtZRgDIAEoCRIOCgZnZW5k",
+          "ZXIYBCABKAUSDQoFbW9uZXkYBSABKAUSEQoJd2luX2NvdW50GAYgASgFEhIK",
+          "Cmxvc2VfY291bnQYByABKAUqvQEKB0NtZENvZGUSCwoHU3VjY2VzcxAAEggK",
+          "BEZhaWwQARIPCgtTZXJ2ZXJFcnJvchACEhAKDEFjY291bnRFeGlzdBADEhMK",
+          "D0FjY291bnROb3RFeGlzdBAEEhEKDVBhc3N3b3JkRXJyb3IQBRIQCgxTbXND",
+          "b2RlRXJyb3IQBhISCg5Nb2JpbGVOb3RCbGFuaxAHEhQKEFBhc3N3b3JkTm90",
+          "QmxhbmsQCBIUChBBY2NvdW50VGVybWluYXRlEAliBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CmdCode), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::R), global::R.Parser, new[]{ "Code" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::LoginRes), global::LoginRes.Parser, new[]{ "Code", "UserId" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::LoginRes), global::LoginRes.Parser, new[]{ "Code", "UserId", "Username", "Gender", "Money", "WinCount", "LoseCount" }, null, null, null, null)
         }));
   }
   #endregion
@@ -77,6 +79,10 @@ public enum CmdCode {
   /// 密码不能为空
   /// </summary>
   [pbr::OriginalName("PasswordNotBlank")] PasswordNotBlank = 8,
+  /// <summary>
+  /// 账号被封禁
+  /// </summary>
+  [pbr::OriginalName("AccountTerminate")] AccountTerminate = 9,
 }
 
 #endregion
@@ -323,6 +329,11 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
   public LoginRes(LoginRes other) : this() {
     code_ = other.code_;
     userId_ = other.userId_;
+    username_ = other.username_;
+    gender_ = other.gender_;
+    money_ = other.money_;
+    winCount_ = other.winCount_;
+    loseCount_ = other.loseCount_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -356,6 +367,66 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
     }
   }
 
+  /// <summary>Field number for the "username" field.</summary>
+  public const int UsernameFieldNumber = 3;
+  private string username_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public string Username {
+    get { return username_; }
+    set {
+      username_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "gender" field.</summary>
+  public const int GenderFieldNumber = 4;
+  private int gender_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Gender {
+    get { return gender_; }
+    set {
+      gender_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "money" field.</summary>
+  public const int MoneyFieldNumber = 5;
+  private int money_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Money {
+    get { return money_; }
+    set {
+      money_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "win_count" field.</summary>
+  public const int WinCountFieldNumber = 6;
+  private int winCount_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int WinCount {
+    get { return winCount_; }
+    set {
+      winCount_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "lose_count" field.</summary>
+  public const int LoseCountFieldNumber = 7;
+  private int loseCount_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int LoseCount {
+    get { return loseCount_; }
+    set {
+      loseCount_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -373,6 +444,11 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
     }
     if (Code != other.Code) return false;
     if (UserId != other.UserId) return false;
+    if (Username != other.Username) return false;
+    if (Gender != other.Gender) return false;
+    if (Money != other.Money) return false;
+    if (WinCount != other.WinCount) return false;
+    if (LoseCount != other.LoseCount) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -382,6 +458,11 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
     int hash = 1;
     if (Code != global::CmdCode.Success) hash ^= Code.GetHashCode();
     if (UserId != 0) hash ^= UserId.GetHashCode();
+    if (Username.Length != 0) hash ^= Username.GetHashCode();
+    if (Gender != 0) hash ^= Gender.GetHashCode();
+    if (Money != 0) hash ^= Money.GetHashCode();
+    if (WinCount != 0) hash ^= WinCount.GetHashCode();
+    if (LoseCount != 0) hash ^= LoseCount.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -408,6 +489,26 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
       output.WriteRawTag(16);
       output.WriteInt32(UserId);
     }
+    if (Username.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Username);
+    }
+    if (Gender != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(Gender);
+    }
+    if (Money != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(Money);
+    }
+    if (WinCount != 0) {
+      output.WriteRawTag(48);
+      output.WriteInt32(WinCount);
+    }
+    if (LoseCount != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(LoseCount);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -426,6 +527,26 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
       output.WriteRawTag(16);
       output.WriteInt32(UserId);
     }
+    if (Username.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(Username);
+    }
+    if (Gender != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(Gender);
+    }
+    if (Money != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(Money);
+    }
+    if (WinCount != 0) {
+      output.WriteRawTag(48);
+      output.WriteInt32(WinCount);
+    }
+    if (LoseCount != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(LoseCount);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -441,6 +562,21 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
     }
     if (UserId != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
+    }
+    if (Username.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
+    }
+    if (Gender != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Gender);
+    }
+    if (Money != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Money);
+    }
+    if (WinCount != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(WinCount);
+    }
+    if (LoseCount != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoseCount);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -459,6 +595,21 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
     }
     if (other.UserId != 0) {
       UserId = other.UserId;
+    }
+    if (other.Username.Length != 0) {
+      Username = other.Username;
+    }
+    if (other.Gender != 0) {
+      Gender = other.Gender;
+    }
+    if (other.Money != 0) {
+      Money = other.Money;
+    }
+    if (other.WinCount != 0) {
+      WinCount = other.WinCount;
+    }
+    if (other.LoseCount != 0) {
+      LoseCount = other.LoseCount;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -487,6 +638,26 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
           UserId = input.ReadInt32();
           break;
         }
+        case 26: {
+          Username = input.ReadString();
+          break;
+        }
+        case 32: {
+          Gender = input.ReadInt32();
+          break;
+        }
+        case 40: {
+          Money = input.ReadInt32();
+          break;
+        }
+        case 48: {
+          WinCount = input.ReadInt32();
+          break;
+        }
+        case 56: {
+          LoseCount = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -512,6 +683,26 @@ public sealed partial class LoginRes : pb::IMessage<LoginRes>
         }
         case 16: {
           UserId = input.ReadInt32();
+          break;
+        }
+        case 26: {
+          Username = input.ReadString();
+          break;
+        }
+        case 32: {
+          Gender = input.ReadInt32();
+          break;
+        }
+        case 40: {
+          Money = input.ReadInt32();
+          break;
+        }
+        case 48: {
+          WinCount = input.ReadInt32();
+          break;
+        }
+        case 56: {
+          LoseCount = input.ReadInt32();
           break;
         }
       }

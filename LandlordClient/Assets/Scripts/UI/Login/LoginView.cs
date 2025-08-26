@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Google.Protobuf;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoginView : UIBase {
     public static LoginView Instance;
@@ -11,7 +12,7 @@ public class LoginView : UIBase {
 
     private Dictionary<PanelType, UIBase> _panelDict;
 
-    protected override void Awake() {
+    protected void Awake() {
         Instance = this;
     }
 
@@ -43,8 +44,9 @@ public class LoginView : UIBase {
 
         switch (res.Code) {
             case CmdCode.Success:
-                ShowSystemTips("登录成功!", Color.green);
-                Debug.Log("用户ID：" + res.UserId);
+                // ShowSystemTips("登录成功!", Color.green);
+                Global.LoginUser = res;
+                SceneManager.LoadScene("MainScene");
                 break;
             case CmdCode.PasswordNotBlank:
                 ShowSystemTips("密码不能为空!", Color.red);
@@ -57,6 +59,9 @@ public class LoginView : UIBase {
                 break;
             case CmdCode.PasswordError:
                 ShowSystemTips("账号或密码错误!", Color.red);
+                break;
+            case CmdCode.AccountTerminate:
+                ShowSystemTips("账号已被封禁!", Color.red);
                 break;
             default:
                 ShowSystemTips("未知错误!", Color.red);

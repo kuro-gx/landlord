@@ -52,7 +52,8 @@ public class LoginService {
             return res;
         }
 
-        User user = _db.Queryable<User>().Where(v => v.Mobile == form.Mobile).First();
+        User user = _db.Queryable<User>()
+            .Where(v => v.Mobile == form.Mobile).Where(v => v.State != 3).First();
         if (user == null) {
             res.Code = CmdCode.AccountNotExist;
             return res;
@@ -63,8 +64,19 @@ public class LoginService {
             return res;
         }
 
+        // 账号被冻结
+        if (user.State == 2) {
+            res.Code = CmdCode.AccountTerminate;
+            return res;
+        }
+
         res.Code = CmdCode.Success;
         res.UserId = user.Id;
+        res.Username = user.Username;
+        res.Gender = user.Gender;
+        res.Money = user.Money;
+        res.WinCount = user.WinCount;
+        res.LoseCount = user.LoseCount;
         return res;
     }
 

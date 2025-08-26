@@ -1,8 +1,6 @@
 using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour {
-    protected virtual void Awake() {
-    }
 
     public abstract void Init();
 
@@ -12,9 +10,6 @@ public abstract class UIBase : MonoBehaviour {
 
     protected virtual void Start() {
         Init();
-    }
-
-    protected virtual void Update() {
     }
     
     public void ShowSystemTips(string msg, Color color) {

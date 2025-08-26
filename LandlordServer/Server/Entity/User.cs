@@ -18,6 +18,13 @@ public class User {
     // 状态
     public byte State { get; set; }
 
+    public int Money { get; set; }
+    
+    [SugarColumn(ColumnName = "win_count")]
+    public int WinCount { get; set; }
+    [SugarColumn(ColumnName = "lose_count")]
+    public int LoseCount { get; set; }
+
     // 备注
     public string Remark { get; set; }
 

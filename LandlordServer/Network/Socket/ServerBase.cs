@@ -31,12 +31,12 @@ public class ServerBase {
                         // 数据不为空，则反序列化数据
                         if (data != null) {
                             BasePackage package = BasePackage.Parser.ParseFrom(data);
-                            Console.WriteLine("basePackage: " + package.ToString());
+                            Console.WriteLine("basePackage: " + package);
                             HandleCommand(package);
                         }
 
                         len -= (msgLen + 2);
-                        // 如何 len大于0，则发生了粘包
+                        // 如len大于0，则发生了粘包
                         if (len > 0) {
                             Buffer.BlockCopy(_buffer, msgLen + 2, _buffer, 0, len);
                         }
