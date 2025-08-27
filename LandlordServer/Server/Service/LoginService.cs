@@ -13,18 +13,20 @@ public class LoginService {
     /// <summary>
     /// 注册账号
     /// </summary>
-    /// <param name="req">请求参数</param>
-    public CmdCode Register(RegisterReq req) {
-        int count = _db.Queryable<User>().Where(v => v.Mobile == req.Mobile).Count();
+    /// <param name="form">请求参数</param>
+    public CmdCode Register(RegisterBo form) {
+        int count = _db.Queryable<User>().Where(v => v.Mobile == form.Mobile).Count();
         // 账号已存在
         if (count > 0) {
             return CmdCode.AccountExist;
         }
 
-        User user = new User() {
+        User user = new User {
             Username = "用户" + new Random().Next(1000, 10000),
-            Mobile = req.Mobile,
-            Password = MD5Encrypt64(req.Password),
+            Mobile = form.Mobile,
+            Password = MD5Encrypt64(form.Password),
+            Gender = 0,
+            State = 1,
             CreateTime = DateTime.Now,
             UpdateTime = DateTime.Now
         };
@@ -40,17 +42,8 @@ public class LoginService {
     /// 登录
     /// </summary>
     /// <param name="form">登录参数</param>
-    public LoginRes Login(LoginReq form) {
+    public LoginRes Login(LoginBo form) {
         LoginRes res = new LoginRes();
-        if (string.IsNullOrEmpty(form.Password)) {
-            res.Code = CmdCode.PasswordNotBlank;
-            return res;
-        }
-
-        if (string.IsNullOrEmpty(form.Mobile)) {
-            res.Code = CmdCode.MobileNotBlank;
-            return res;
-        }
 
         User user = _db.Queryable<User>()
             .Where(v => v.Mobile == form.Mobile).Where(v => v.State != 3).First();
@@ -78,6 +71,28 @@ public class LoginService {
         res.WinCount = user.WinCount;
         res.LoseCount = user.LoseCount;
         return res;
+    }
+
+    /// <summary>
+    /// 修改用户信息
+    /// </summary>
+    public CmdCode UpdateUserInfo(UpdateUserBo form) {
+        User user = _db.Queryable<User>().Where(v => v.Id == form.UserId).First();
+        if (user == null) {
+            return CmdCode.AccountNotExist;
+        }
+
+        user.Username = form.Username;
+        if (form.Gender == 1 || form.Gender == 2) {
+            user.Gender = (byte)form.Gender;
+        }
+
+        int result = _db.Updateable(user).ExecuteCommand();
+        if (result <= 0) {
+            return CmdCode.ServerError;
+        }
+
+        return CmdCode.Success;
     }
 
     private string MD5Encrypt64(string password) {

@@ -1,3 +1,4 @@
+using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,9 @@ public class MainView : UIBase {
     [SerializeField, Header("加入房间面板")] private JoinPanel _joinPanel;
     [SerializeField, Header("战绩面板")] private FeatsPanel _featsPanel;
 
+    // 临时保存修改用户信息参数
+    private UpdateUserBo _userParam;
+
     public override void Init() {
         // 设置按钮点击事件
         _settingButton.onClick.AddListener(() => { _settingPanel.Show(); });
@@ -27,6 +31,34 @@ public class MainView : UIBase {
 
         // 加入房间按钮点击事件
         _joinRoomBtn.onClick.AddListener(() => { _joinPanel.Show(); });
+
+        _infoPanel.UpdateUserInfoAction = UpdateUserInfoHandle;
+        
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_UpdateUserInfoCode, OnUpdateInfoHandle);
+    }
+
+    /// <summary>
+    /// 修改用户信息结果回调
+    /// </summary>
+    private void OnUpdateInfoHandle(ByteString data) {
+        R res = R.Parser.ParseFrom(data);
+        if (res.Code == CmdCode.Success) {
+            ShowSystemTips("修改成功!", Color.green);
+            _username.text = _userParam.Username;
+            Debug.Log(_username.text);
+            Global.LoginUser.Username = _userParam.Username;
+            Global.LoginUser.Gender = _userParam.Gender;
+        } else {
+            ShowSystemTips("服务器异常!", Color.red);
+        }
+    }
+
+    /// <summary>
+    /// 修改用户信息请求
+    /// </summary>
+    private void UpdateUserInfoHandle(UpdateUserBo form) {
+        _userParam = form;
+        NetSocketMgr.Client.SendData(NetDefine.CMD_UpdateUserInfoCode, form.ToByteString());
     }
 
     private void Awake() {

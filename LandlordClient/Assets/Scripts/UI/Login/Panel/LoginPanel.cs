@@ -34,7 +34,7 @@ public class LoginPanel : UIBase {
                 return;
             }
 
-            LoginReq form = new LoginReq {
+            LoginBo form = new LoginBo {
                 Mobile = _mobileInput.text.Trim(),
                 Password = _pwdInput.text.Trim()
             };

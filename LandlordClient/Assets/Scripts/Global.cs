@@ -8,6 +8,8 @@ public class Global : MonoBehaviour {
         Instance = this;
 
         NetSocketMgr.Instance.Init();
+        // 场景切换时保留本组件
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnApplicationQuit() {

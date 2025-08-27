@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,33 @@ public class InfoPanel : UIBase {
     [SerializeField, Header("性别男")] private Toggle _genderMan;
     [SerializeField, Header("性别女")] private Toggle _genderWoman;
 
+    // 将参数传递给父组件让其发送网络请求
+    public Action<UpdateUserBo> UpdateUserInfoAction;
+
     public override void Init() {
         _closeBtn.onClick.AddListener(() => { Show(false); });
 
-        _okBtn.onClick.AddListener(() => { });
+        _okBtn.onClick.AddListener(() => {
+            if (string.IsNullOrEmpty(_usernameInput.text.Trim())) {
+                ShowSystemTips("昵称不能为空！", Color.red);
+                return;
+            }
+
+            UpdateUserBo form = new UpdateUserBo {
+                UserId = Global.LoginUser.UserId,
+                Username = _usernameInput.text.Trim()
+            };
+            if (_genderMan.isOn) {
+                form.Gender = 1;
+            }
+
+            if (_genderWoman.isOn) {
+                form.Gender = 2;
+            }
+
+            // 将参数传给父组件，让其发起网络请求
+            UpdateUserInfoAction?.Invoke(form);
+        });
     }
 
     private void Awake() {

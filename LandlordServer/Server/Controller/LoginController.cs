@@ -21,6 +21,9 @@ public class LoginController : IContainer {
             case NetDefine.CMD_LoginCode:
                 OnLoginHandle(package);
                 break;
+            case NetDefine.CMD_UpdateUserInfoCode:
+                OnUpdateHandle(package);
+                break;
         }
     }
 
@@ -29,9 +32,23 @@ public class LoginController : IContainer {
     /// </summary>
     /// <param name="package">请求参数</param>
     private void OnLoginHandle(BasePackage package) {
-        LoginReq form = LoginReq.Parser.ParseFrom(package.Data);
+        LoginBo form = LoginBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
-        LoginRes res = _loginService.Login(form);
+
+        LoginRes res = new LoginRes();
+        if (string.IsNullOrEmpty(form.Password)) {
+            res.Code = CmdCode.PasswordNotBlank;
+            session.SendData(package, package.Code, res.ToByteString());
+            return;
+        }
+
+        if (string.IsNullOrEmpty(form.Mobile)) {
+            res.Code = CmdCode.MobileNotBlank;
+            session.SendData(package, package.Code, res.ToByteString());
+            return;
+        }
+
+        res = _loginService.Login(form);
         session.SendData(package, package.Code, res.ToByteString());
     }
 
@@ -40,7 +57,7 @@ public class LoginController : IContainer {
     /// </summary>
     private void OnRegisterHandle(BasePackage package) {
         R res = new R();
-        RegisterReq form = RegisterReq.Parser.ParseFrom(package.Data);
+        RegisterBo form = RegisterBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
 
         if (!form.SmsCode.Equals("6666")) {
@@ -54,7 +71,7 @@ public class LoginController : IContainer {
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
-        
+
         if (string.IsNullOrEmpty(form.Password)) {
             res.Code = CmdCode.PasswordNotBlank;
             session.SendData(package, package.Code, res.ToByteString());
@@ -64,5 +81,19 @@ public class LoginController : IContainer {
         res.Code = _loginService.Register(form);
         // 将结果返回给Unity
         session.SendData(package, package.Code, res.ToByteString());
+    }
+
+    /// <summary>
+    /// 修改用户信息
+    /// </summary>
+    private void OnUpdateHandle(BasePackage package) {
+        UpdateUserBo form = UpdateUserBo.Parser.ParseFrom(package.Data);
+        Session session = SessionMgr.Instance.GetSession(package.SessionId);
+
+        CmdCode code = _loginService.UpdateUserInfo(form);
+        R result = new R {
+            Code = code
+        };
+        session.SendData(package, package.Code, result.ToByteString());
     }
 }

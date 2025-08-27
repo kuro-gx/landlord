@@ -53,7 +53,7 @@ public class RegisterPanel : UIBase {
                 return;
             }
 
-            RegisterReq form = new RegisterReq() {
+            RegisterBo form = new RegisterBo() {
                 Mobile = _mobileInput.text.Trim(),
                 SmsCode = _smsInput.text.Trim(),
                 Password = _pwdInput.text.Trim()

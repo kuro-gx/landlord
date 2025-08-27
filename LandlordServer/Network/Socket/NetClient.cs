@@ -72,7 +72,7 @@ public class NetClient : ServerBase {
             _reconnectTimer = new Timer(Reconnect);
         }
 
-        _reconnectTimer.Change(3000, 1000);
+        _reconnectTimer.Change(3000, 10000);
     }
 
     private void Reconnect(object state) {

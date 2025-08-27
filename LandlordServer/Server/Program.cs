@@ -13,6 +13,7 @@ namespace Server {
             // 注册指令集
             server.RegisterCommand(NetDefine.CMD_RegisterCode, loginController);
             server.RegisterCommand(NetDefine.CMD_LoginCode, loginController);
+            server.RegisterCommand(NetDefine.CMD_UpdateUserInfoCode, loginController);
 
             while (true) {
                 Thread.Sleep(1);

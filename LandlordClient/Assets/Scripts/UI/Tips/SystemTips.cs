@@ -12,10 +12,10 @@ public class SystemTips : MonoBehaviour {
         _tipMessage.color = color;
 
         RectTransform rectTrans = transform as RectTransform;
-        rectTrans.DOAnchorPosY(rectTrans.anchoredPosition.y - 130, 2);
+        rectTrans.DOAnchorPosY(rectTrans.anchoredPosition.y - 130, 1);
         
         // 定时销毁当前对象
-        Observable.Timer(TimeSpan.FromSeconds(3)).Subscribe(v => {
+        Observable.Timer(TimeSpan.FromSeconds(2.5)).Subscribe(v => {
             Destroy(gameObject);
         });
     }

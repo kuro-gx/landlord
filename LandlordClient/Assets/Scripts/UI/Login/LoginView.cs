@@ -35,6 +35,9 @@ public class LoginView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_LoginCode, OnLoginHandle);
     }
 
+    /// <summary>
+    /// 登录结果回调
+    /// </summary>
     private void OnLoginHandle(ByteString data) {
         _loadingPanel.Show(false);
         LoginRes res = LoginRes.Parser.ParseFrom(data);
@@ -69,6 +72,9 @@ public class LoginView : UIBase {
         }
     }
 
+    /// <summary>
+    /// 注册结果回调
+    /// </summary>
     private void OnRegisterHandle(ByteString data) {
         _loadingPanel.Show(false);
         R res = R.Parser.ParseFrom(data);
