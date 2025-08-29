@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoginView : UIBase {
     public static LoginView Instance;
@@ -10,29 +10,20 @@ public class LoginView : UIBase {
     [SerializeField, Header("登录窗口")] private RegisterPanel _registerPanel;
     [SerializeField, Header("Loading窗口")] private LoadingPanel _loadingPanel;
 
-    private Dictionary<PanelType, UIBase> _panelDict;
+    [SerializeField, Header("登录按钮")] private Button _loginBtn;
+    [SerializeField, Header("注册按钮")] private Button _registerBtn;
 
     protected void Awake() {
         Instance = this;
     }
 
-    /// <summary>
-    /// 显示面板
-    /// </summary>
-    public void ShowPanel(PanelType type) {
-        _panelDict[type].Show();
-    }
-
     public override void Init() {
-        _panelDict = new Dictionary<PanelType, UIBase> {
-            { PanelType.LoginPanel, _loginPanel },
-            { PanelType.RegisterPanel, _registerPanel },
-            { PanelType.LoadingPanel, _loadingPanel }
-        };
-
         // 监听服务器返回的注册 & 登录结果
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RegisterCode, OnRegisterHandle);
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_LoginCode, OnLoginHandle);
+        
+        _loginBtn.onClick.AddListener(() => { _loginPanel.Show(); });
+        _registerBtn.onClick.AddListener(() => { _registerPanel.Show(); });
     }
 
     /// <summary>
@@ -101,5 +92,12 @@ public class LoginView : UIBase {
                 ShowSystemTips("服务器异常!", Color.red);
                 break;
         }
+    }
+
+    /// <summary>
+    /// 显示加载面板
+    /// </summary>
+    public void ShowLoading() {
+        _loadingPanel.Show();
     }
 }
