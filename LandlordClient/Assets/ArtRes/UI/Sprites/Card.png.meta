@@ -136,7 +136,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Card_0
+      name: joker_small
       rect:
         serializedVersion: 2
         x: 2
@@ -157,7 +157,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Card_1
+      name: joker_big
       rect:
         serializedVersion: 2
         x: 36
@@ -178,7 +178,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Card_2
+      name: landlord
       rect:
         serializedVersion: 2
         x: 157
@@ -199,7 +199,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Card_3
+      name: farmer
       rect:
         serializedVersion: 2
         x: 278
@@ -228,7 +228,7 @@ TextureImporter:
         width: 42
         height: 55
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -251,11 +251,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Card_0: 1287478564
-      Card_1: -1609358471
-      Card_2: 770928483
-      Card_3: -1675502854
       card_small: 939475635
+      farmer: -1675502854
+      joker_big: -1609358471
+      joker_small: 1287478564
+      landlord: 770928483
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ae0b804b05692354a81671766d8ed6f3
+guid: 85d278b15b7c4f44db58e38a7547dd30
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,106 +97,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: callLandlord
+      name: btn_yellow3_0
       rect:
         serializedVersion: 2
-        x: 272
-        y: 813
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ccc06ee6cb1714d438c42d6aa49d4431
-      internalID: -1290053026
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: playHand
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 492
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 84b90cb84c8ffcc4eb557e82e77d2630
-      internalID: 953170609
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: noCall
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 170
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a49b8cfee8540134391bcc165b109ef5
-      internalID: 2066258039
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pass
-      rect:
-        serializedVersion: 2
-        x: 272
-        y: 64
-        width: 222
-        height: 82
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99b33e80206de5349996297e59bd0f34
-      internalID: 886387876
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hint
-      rect:
-        serializedVersion: 2
-        x: 401
-        y: 1529
-        width: 82
-        height: 222
+        x: 0
+        y: 3
+        width: 102
+        height: 66
       alignment: 0
       pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 42, y: 8, z: 40, w: 8}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 627325e49af809942acbcae07817d7bc
-      internalID: -1127207752
+      spriteID: dd0e02157d9be6440ba8f2adda1cdd74
+      internalID: 2057843779
       vertices: []
       indices: 
       edges: []
@@ -212,11 +128,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      callLandlord: -1290053026
-      hint: -1127207752
-      noCall: 2066258039
-      pass: 886387876
-      playHand: 953170609
+      btn_yellow3_0: 2057843779
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -14,7 +14,6 @@ public class MainView : UIBase {
     [SerializeField, Header("用户信息面板")] private InfoPanel _infoPanel;
     [SerializeField, Header("设置面板")] private SettingPanel _settingPanel;
     [SerializeField, Header("加入房间面板")] private JoinPanel _joinPanel;
-    [SerializeField, Header("战绩面板")] private FeatsPanel _featsPanel;
 
     // 临时保存修改用户信息参数
     private UpdateUserBo _userParam;
@@ -22,9 +21,6 @@ public class MainView : UIBase {
     public override void Init() {
         // 设置按钮点击事件
         _settingButton.onClick.AddListener(() => { _settingPanel.Show(); });
-
-        // 战绩按钮点击事件
-        _featsButton.onClick.AddListener(() => { _featsPanel.Show(); });
 
         // 创建房间按钮点击事件
         _createRoomBtn.onClick.AddListener(() => { });
