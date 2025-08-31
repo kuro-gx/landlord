@@ -7,29 +7,23 @@ public class MainView : UIBase {
     [SerializeField, Header("豆子")] private Text _money;
 
     [SerializeField, Header("设置按钮")] private Button _settingButton;
-    [SerializeField, Header("战绩按钮")] private Button _featsButton;
-    [SerializeField, Header("创建房间按钮")] private Button _createRoomBtn;
-    [SerializeField, Header("加入房间按钮")] private Button _joinRoomBtn;
-
-    [SerializeField, Header("用户信息面板")] private InfoPanel _infoPanel;
-    [SerializeField, Header("设置面板")] private SettingPanel _settingPanel;
-    [SerializeField, Header("加入房间面板")] private JoinPanel _joinPanel;
+    [SerializeField, Header("修改昵称面板")] private SetInfoPanel _setInfoPanel;
 
     // 临时保存修改用户信息参数
     private UpdateUserBo _userParam;
 
     public override void Init() {
-        // 设置按钮点击事件
-        _settingButton.onClick.AddListener(() => { _settingPanel.Show(); });
-
-        // 创建房间按钮点击事件
-        _createRoomBtn.onClick.AddListener(() => { });
-
-        // 加入房间按钮点击事件
-        _joinRoomBtn.onClick.AddListener(() => { _joinPanel.Show(); });
-
-        _infoPanel.UpdateUserInfoAction = UpdateUserInfoHandle;
+        if (Global.LoginUser != null) {
+            // 设置登录用户的昵称和欢乐豆
+            _username.text = Global.LoginUser.Username;
+            _money.text = Global.LoginUser.Money.ToString();
+        }
         
+        // 设置按钮点击事件
+        _settingButton.onClick.AddListener(() => { });
+
+        _setInfoPanel.UpdateUserInfoAction = UpdateUserInfoHandle;
+
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_UpdateUserInfoCode, OnUpdateInfoHandle);
     }
 
@@ -41,9 +35,8 @@ public class MainView : UIBase {
         if (res.Code == CmdCode.Success) {
             ShowSystemTips("修改成功!", Color.green);
             _username.text = _userParam.Username;
-            Debug.Log(_username.text);
             Global.LoginUser.Username = _userParam.Username;
-            Global.LoginUser.Gender = _userParam.Gender;
+            _setInfoPanel.Show(false);
         } else {
             ShowSystemTips("服务器异常!", Color.red);
         }
@@ -57,23 +50,7 @@ public class MainView : UIBase {
         NetSocketMgr.Client.SendData(NetDefine.CMD_UpdateUserInfoCode, form.ToByteString());
     }
 
-    private void Awake() {
-        if (Global.LoginUser != null) {
-            // 设置登录用户的昵称和欢乐豆
-            _username.text = Global.LoginUser.Username;
-            _money.text = Global.LoginUser.Money.ToString();
-        }
-    }
-
     private void OnDestroy() {
         _settingButton.onClick.RemoveAllListeners();
-        _featsButton.onClick.RemoveAllListeners();
-        _createRoomBtn.onClick.RemoveAllListeners();
-        _joinRoomBtn.onClick.RemoveAllListeners();
-    }
-
-    // 点击头像显示用户设置面板
-    public void OnAvatarClicked() {
-        _infoPanel.Show();
     }
 }

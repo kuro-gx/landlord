@@ -306,6 +306,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: back
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 24
+        width: 61
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1f98619fa1e624087c0c4dfb7b6e1b
+      internalID: -205370068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -317,6 +338,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      back: -205370068
       backpack: -1452452725
       bean: -873738743
       bg1: -2090615282

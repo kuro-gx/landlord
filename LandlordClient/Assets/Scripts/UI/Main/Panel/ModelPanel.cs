@@ -2,6 +2,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 中间按钮区域面板
+/// </summary>
 public class ModelPanel : UIBase {
     [SerializeField, Header("经典模式按钮")] private Button _classifyModelBtn;
     private Sequence _closeSequence;

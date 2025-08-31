@@ -3,10 +3,10 @@ using System.Security.Cryptography;
 using System.Text;
 using SqlSugar;
 
-public class LoginService {
+public class UserService {
     private readonly SqlSugarClient _db;
 
-    public LoginService(SqlSugarClient db) {
+    public UserService(SqlSugarClient db) {
         _db = db;
     }
 

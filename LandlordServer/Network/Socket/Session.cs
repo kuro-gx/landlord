@@ -4,10 +4,12 @@ using System.Net.Sockets;
 
 public class Session : ServerBase {
     public int SessionId { get; set; }
+    public int UserId { get; set; }
     private readonly Dictionary<int, IContainer> _cmdDict;
 
     public Session(Dictionary<int, IContainer> cmdDict) {
         _cmdDict = cmdDict;
+        UserId = 0;
         SessionMgr.Instance.AddSession(this);
     }
 
@@ -33,6 +35,8 @@ public class Session : ServerBase {
 
     public override void DisconnectHandle() {
         Console.WriteLine("Disconnect: " + _socket.RemoteEndPoint + "断开了连接...");
+        SessionMgr.Instance.RemoveSession(SessionId);
+        UserId = 0;
         base.DisconnectHandle();
     }
 }

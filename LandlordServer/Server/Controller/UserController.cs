@@ -3,11 +3,11 @@
 /// <summary>
 /// 登录控制器
 /// </summary>
-public class LoginController : IContainer {
-    private LoginService _loginService;
+public class UserController : IContainer {
+    private UserService _userService;
 
-    public LoginController(LoginService service) {
-        _loginService = service;
+    public UserController(UserService service) {
+        _userService = service;
     }
 
     public void OnInit() {
@@ -48,8 +48,12 @@ public class LoginController : IContainer {
             return;
         }
 
-        res = _loginService.Login(form);
+        res = _userService.Login(form);
         session.SendData(package, package.Code, res.ToByteString());
+        // 登录成功，保存用户的ID
+        if (res.Code == CmdCode.Success) {
+            session.UserId = res.UserId;
+        }
     }
 
     /// <summary>
@@ -78,7 +82,7 @@ public class LoginController : IContainer {
             return;
         }
 
-        res.Code = _loginService.Register(form);
+        res.Code = _userService.Register(form);
         // 将结果返回给Unity
         session.SendData(package, package.Code, res.ToByteString());
     }
@@ -90,7 +94,7 @@ public class LoginController : IContainer {
         UpdateUserBo form = UpdateUserBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
 
-        CmdCode code = _loginService.UpdateUserInfo(form);
+        CmdCode code = _userService.UpdateUserInfo(form);
         R result = new R {
             Code = code
         };

@@ -9,14 +9,14 @@ namespace Server {
 
             SqlSugarClient db = DBMgr.Instance.InitDB();
 
-            LoginController loginController = new LoginController(new LoginService(db));
+            UserController userController = new UserController(new UserService(db));
             // 注册指令集
-            server.RegisterCommand(NetDefine.CMD_RegisterCode, loginController);
-            server.RegisterCommand(NetDefine.CMD_LoginCode, loginController);
-            server.RegisterCommand(NetDefine.CMD_UpdateUserInfoCode, loginController);
+            server.RegisterCommand(NetDefine.CMD_RegisterCode, userController);
+            server.RegisterCommand(NetDefine.CMD_LoginCode, userController);
+            server.RegisterCommand(NetDefine.CMD_UpdateUserInfoCode, userController);
 
             while (true) {
-                Thread.Sleep(1);
+                Thread.Sleep(10);
             }
         }
     }

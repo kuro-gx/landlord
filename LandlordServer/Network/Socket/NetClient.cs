@@ -56,6 +56,7 @@ public class NetClient : ServerBase {
     /// 断开连接的处理
     /// </summary>
     public override void DisconnectHandle() {
+        // 重新连接
         SetReconnectTimer();
         base.DisconnectHandle();
     }

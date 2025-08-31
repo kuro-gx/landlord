@@ -64,7 +64,7 @@ public class ServerBase {
             _socket = null;
         }
     }
-    
+
     protected virtual void HandleCommand(BasePackage package) {
     }
 
@@ -96,9 +96,7 @@ public class ServerBase {
     }
 
     public void SendError(BasePackage package, CmdCode code) {
-        R res = new R() {
-            Code = code
-        };
+        R res = new R { Code = code };
         SendData(package, NetDefine.CMD_ErrCode, res.ToByteString());
     }
 }

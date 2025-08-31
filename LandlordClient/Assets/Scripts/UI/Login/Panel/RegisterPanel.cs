@@ -22,6 +22,7 @@ public class RegisterPanel : UIBase {
     private void OnDestroy() {
         _registerBtn.onClick.RemoveListener(OnRegisterBtnClicked);
         _sendCodeBtn.onClick.RemoveAllListeners();
+        _closeBtn.onClick.RemoveAllListeners();
     }
 
     /// <summary>
