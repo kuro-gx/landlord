@@ -19,11 +19,16 @@ public class User {
     public byte State { get; set; }
 
     public int Money { get; set; }
-    
+    public int Diamond { get; set; }
+
     [SugarColumn(ColumnName = "win_count")]
     public int WinCount { get; set; }
+
     [SugarColumn(ColumnName = "lose_count")]
     public int LoseCount { get; set; }
+
+    [SugarColumn(ColumnName = "win_last")]
+    public int WinLast { get; set; }
 
     // 备注
     public string Remark { get; set; }
@@ -33,4 +38,12 @@ public class User {
 
     [SugarColumn(ColumnName = "update_time")]
     public DateTime UpdateTime { get; set; }
+    
+    public User() {}
+
+    public User(int id, string username, int money) {
+        this.Id = id;
+        this.Username = username;
+        this.Money = money;
+    }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// 底部按钮组面板
 /// </summary>
-public class BottomPanel : MonoBehaviour {
+public class MainBottomPanel : MonoBehaviour {
     private RectTransform _transform;
 
     void Start() {

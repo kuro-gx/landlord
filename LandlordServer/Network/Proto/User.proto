@@ -1,0 +1,46 @@
+﻿syntax = "proto3";
+
+import "ResultCode.proto";
+import "Card.proto";
+
+// 注册请求参数
+message RegisterBo {
+  string mobile = 1; // 手机号
+  string sms_code = 2; // 短信验证码
+  string password = 3; // 密码
+}
+
+// 登录请求参数
+message LoginBo {
+  string mobile = 1; // 手机号
+  string password = 2; // 密码
+}
+
+// 修改用户信息请求参数
+message UpdateUserBo {
+  int32 user_id = 1;
+  string username = 2; // 用户名
+  int32 gender = 3; // 性别
+}
+
+// 登录成功返回的数据
+message LoginResponse {
+  ResultCode code = 1;
+  int32 user_id = 2;
+  string username = 3;
+  int32 gender = 4;
+  int32 money = 5;
+  int32 diamond = 6;
+  int32 win_count = 7;
+  int32 lose_count = 8;
+  int32 win_last = 9;
+}
+
+// 游戏角色的信息
+message Player {
+  int32 id = 1;
+  string username = 2;
+  int32 money = 3; // 金币
+  int32 pos = 4; // 位置
+  repeated Card card_list = 5; // 手牌
+}

@@ -9,11 +9,11 @@ public class CardMgr : Singleton<CardMgr> {
     /// <returns></returns>
     public List<Card> InitAllCards() {
         List<Card> cards = new List<Card>(54);
-        CardPoint[] points = (CardPoint[])Enum.GetValues(typeof(CardPoint));
         foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit))) {
             if (suit == CardSuit.None) continue;
-            for (int i = 1; i < Convert.ToInt32(CardPoint.JokerSmall); i++) {
-                cards.Add(new Card(points[i], suit));
+            foreach (CardPoint point in Enum.GetValues(typeof(CardPoint))) {
+                if (point == CardPoint.None || point == CardPoint.JokerSmall || point == CardPoint.JokerBig) continue;
+                cards.Add(new Card(point, suit));
             }
         }
 

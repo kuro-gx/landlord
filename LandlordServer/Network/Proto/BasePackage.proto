@@ -1,0 +1,7 @@
+﻿syntax = "proto3";
+
+message BasePackage {
+  int32 code = 1; // 协议码 or 请求码
+  int32 session_id = 2; // Unity连接服务器的ClientID
+  bytes data = 10; // 数据
+}

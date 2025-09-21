@@ -46,6 +46,6 @@ public class Card : IEquatable<Card> {
     }
 
     public override string ToString() {
-        return $"[{Convert.ToInt32(CardPoint) + 2}, {nameof(CardSuit)}: {CardSuit}]";
+        return $"[{Convert.ToInt32(CardPoint)}, {nameof(CardSuit)}: {CardSuit}]";
     }
 }

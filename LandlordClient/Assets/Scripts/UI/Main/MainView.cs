@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MainView : UIBase {
     [SerializeField, Header("用户昵称")] private Text _username;
     [SerializeField, Header("豆子")] private Text _money;
+    [SerializeField, Header("钻石")] private Text _diamond;
 
     [SerializeField, Header("设置按钮")] private Button _settingButton;
     [SerializeField, Header("修改昵称面板")] private SetInfoPanel _setInfoPanel;
@@ -17,6 +18,7 @@ public class MainView : UIBase {
             // 设置登录用户的昵称和欢乐豆
             _username.text = Global.LoginUser.Username;
             _money.text = Global.LoginUser.Money.ToString();
+            _diamond.text = Global.LoginUser.Diamond.ToString();
         }
         
         // 设置按钮点击事件
@@ -31,8 +33,8 @@ public class MainView : UIBase {
     /// 修改用户信息结果回调
     /// </summary>
     private void OnUpdateInfoHandle(ByteString data) {
-        R res = R.Parser.ParseFrom(data);
-        if (res.Code == CmdCode.Success) {
+        Result res = Result.Parser.ParseFrom(data);
+        if (res.Code == ResultCode.Success) {
             ShowSystemTips("修改成功!", Color.green);
             _username.text = _userParam.Username;
             Global.LoginUser.Username = _userParam.Username;

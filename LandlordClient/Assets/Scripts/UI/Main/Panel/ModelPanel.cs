@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,7 +13,11 @@ public class ModelPanel : UIBase {
     public override void Init() {
         StartAnimation();
         
-        _classifyModelBtn.onClick.AddListener(() => {});
+        // 点击经典模式，跳转对局界面
+        _classifyModelBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            SceneManager.LoadScene("GameScene");
+        });
     }
 
     private void OnDestroy() {

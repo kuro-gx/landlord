@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 底牌面板
+/// </summary>
 public class PocketCardPanel : UIBase {
     [SerializeField, Header("底牌左")] private Image _cardLeft;
     [SerializeField, Header("底牌中")] private Image _cardCenter;

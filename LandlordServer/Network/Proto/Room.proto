@@ -1,0 +1,31 @@
+﻿syntax = "proto3";
+
+import "User.proto";
+import "Card.proto";
+
+// 房间状态
+enum RoomState {
+  None = 0;
+  Matching = 1;
+  Matched = 2;
+  CallLord = 3;
+  RobLord = 4;
+  AddTimes = 5;
+  PlayHand = 6;
+  End = 7;
+}
+
+// 房间
+message Room {
+  int32 room_id = 1;
+  repeated Player player = 2;
+  RoomState room_state = 3;
+  repeated Card card_list = 4;
+}
+
+// 匹配成功的响应
+message MatchResponse {
+  int32 room_id = 1;
+  int32 self_pos = 2; // 自己坐位的索引
+  repeated Player player = 3;
+}

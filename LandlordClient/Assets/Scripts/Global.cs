@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Global : MonoBehaviour {
     public static Global Instance;
-    public static LoginRes LoginUser;
+    public static LoginResponse LoginUser;
 
     private void Awake() {
         Instance = this;

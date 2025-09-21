@@ -22,8 +22,14 @@ public class LoginView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RegisterCode, OnRegisterHandle);
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_LoginCode, OnLoginHandle);
         
-        _loginBtn.onClick.AddListener(() => { _loginPanel.Show(); });
-        _registerBtn.onClick.AddListener(() => { _registerPanel.Show(); });
+        _loginBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            _loginPanel.Show();
+        });
+        _registerBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            _registerPanel.Show();
+        });
     }
 
     /// <summary>
@@ -31,30 +37,30 @@ public class LoginView : UIBase {
     /// </summary>
     private void OnLoginHandle(ByteString data) {
         _loadingPanel.Show(false);
-        LoginRes res = LoginRes.Parser.ParseFrom(data);
+        LoginResponse res = LoginResponse.Parser.ParseFrom(data);
         if (res == null) {
             return;
         }
 
         switch (res.Code) {
-            case CmdCode.Success:
+            case ResultCode.Success:
                 // ShowSystemTips("登录成功!", Color.green);
                 Global.LoginUser = res;
                 SceneManager.LoadScene("MainScene");
                 break;
-            case CmdCode.PasswordNotBlank:
+            case ResultCode.PasswordNotBlank:
                 ShowSystemTips("密码不能为空!", Color.red);
                 break;
-            case CmdCode.MobileNotBlank:
+            case ResultCode.MobileNotBlank:
                 ShowSystemTips("手机号不能为空!", Color.red);
                 break;
-            case CmdCode.AccountNotExist:
+            case ResultCode.AccountNotExist:
                 ShowSystemTips("该手机号尚未注册!", Color.red);
                 break;
-            case CmdCode.PasswordError:
+            case ResultCode.PasswordError:
                 ShowSystemTips("账号或密码错误!", Color.red);
                 break;
-            case CmdCode.AccountTerminate:
+            case ResultCode.AccountTerminate:
                 ShowSystemTips("账号已被封禁!", Color.red);
                 break;
             default:
@@ -68,27 +74,27 @@ public class LoginView : UIBase {
     /// </summary>
     private void OnRegisterHandle(ByteString data) {
         _loadingPanel.Show(false);
-        R res = R.Parser.ParseFrom(data);
+        Result res = Result.Parser.ParseFrom(data);
         switch (res.Code) {
-            case CmdCode.Success: {
+            case ResultCode.Success: {
                 ShowSystemTips("注册成功!", Color.green);
                 _registerPanel.Show(false);
                 _loginPanel.Show();
                 break;
             }
-            case CmdCode.MobileNotBlank:
+            case ResultCode.MobileNotBlank:
                 ShowSystemTips("手机号不能为空!", Color.red);
                 break;
-            case CmdCode.PasswordNotBlank:
+            case ResultCode.PasswordNotBlank:
                 ShowSystemTips("密码不能为空!", Color.red);
                 break;
-            case CmdCode.SmsCodeError:
+            case ResultCode.SmsCodeError:
                 ShowSystemTips("短信验证码错误!", Color.red);
                 break;
-            case CmdCode.AccountExist:
+            case ResultCode.AccountExist:
                 ShowSystemTips("该手机号已被注册!", Color.red);
                 break;
-            case CmdCode.ServerError:
+            case ResultCode.ServerError:
                 ShowSystemTips("服务器异常!", Color.red);
                 break;
         }

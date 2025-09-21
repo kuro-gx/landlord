@@ -11,8 +11,15 @@ public class LoginPanel : UIBase {
     [SerializeField, Header("关闭按钮")] private Button _closeBtn;
 
     public override void Init() {
+        // 填充账号密码
+        _mobileInput.text = "13000000001";
+        _pwdInput.text = "123456";
+        
         _loginBtn.onClick.AddListener(OnLoginBtnClicked);
-        _closeBtn.onClick.AddListener(() => { Show(false); });
+        _closeBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            Show(false);
+        });
     }
 
     private void OnDestroy() {
@@ -24,6 +31,8 @@ public class LoginPanel : UIBase {
     /// 登录按钮点击事件
     /// </summary>
     private void OnLoginBtnClicked() {
+        AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+
         if (string.IsNullOrEmpty(_mobileInput.text.Trim())) {
             ShowSystemTips("手机号不能为空!", Color.red);
             return;

@@ -35,15 +35,15 @@ public class UserController : IContainer {
         LoginBo form = LoginBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
 
-        LoginRes res = new LoginRes();
+        LoginResponse res = new LoginResponse();
         if (string.IsNullOrEmpty(form.Password)) {
-            res.Code = CmdCode.PasswordNotBlank;
+            res.Code = ResultCode.PasswordNotBlank;
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
 
         if (string.IsNullOrEmpty(form.Mobile)) {
-            res.Code = CmdCode.MobileNotBlank;
+            res.Code = ResultCode.MobileNotBlank;
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
@@ -51,8 +51,12 @@ public class UserController : IContainer {
         res = _userService.Login(form);
         session.SendData(package, package.Code, res.ToByteString());
         // 登录成功，保存用户的ID
-        if (res.Code == CmdCode.Success) {
+        if (res.Code == ResultCode.Success) {
             session.UserId = res.UserId;
+            // 缓存Player类和连接对象
+            User loginUser = new User(res.UserId, res.Username, res.Money);
+            Cache.Instance.UserDict.Add(res.UserId, loginUser);
+            Cache.Instance.SessionDict.Add(res.UserId, session);
         }
     }
 
@@ -60,24 +64,24 @@ public class UserController : IContainer {
     /// 处理注册事件
     /// </summary>
     private void OnRegisterHandle(BasePackage package) {
-        R res = new R();
+        Result res = new Result();
         RegisterBo form = RegisterBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
 
         if (!form.SmsCode.Equals("6666")) {
-            res.Code = CmdCode.SmsCodeError;
+            res.Code = ResultCode.SmsCodeError;
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
 
         if (string.IsNullOrEmpty(form.Mobile)) {
-            res.Code = CmdCode.MobileNotBlank;
+            res.Code = ResultCode.MobileNotBlank;
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
 
         if (string.IsNullOrEmpty(form.Password)) {
-            res.Code = CmdCode.PasswordNotBlank;
+            res.Code = ResultCode.PasswordNotBlank;
             session.SendData(package, package.Code, res.ToByteString());
             return;
         }
@@ -94,10 +98,8 @@ public class UserController : IContainer {
         UpdateUserBo form = UpdateUserBo.Parser.ParseFrom(package.Data);
         Session session = SessionMgr.Instance.GetSession(package.SessionId);
 
-        CmdCode code = _userService.UpdateUserInfo(form);
-        R result = new R {
-            Code = code
-        };
+        ResultCode code = _userService.UpdateUserInfo(form);
+        Result result = new Result { Code = code };
         session.SendData(package, package.Code, result.ToByteString());
     }
 }

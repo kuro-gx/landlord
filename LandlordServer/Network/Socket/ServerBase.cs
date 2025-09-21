@@ -95,8 +95,8 @@ public class ServerBase {
         SendData(package, code, data);
     }
 
-    public void SendError(BasePackage package, CmdCode code) {
-        R res = new R { Code = code };
-        SendData(package, NetDefine.CMD_ErrCode, res.ToByteString());
+    public void SendError(BasePackage package, ResultCode code) {
+        Result result = new Result { Code = code };
+        SendData(package, NetDefine.CMD_ErrCode, result.ToByteString());
     }
 }

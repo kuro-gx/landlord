@@ -14,9 +14,15 @@ public class RegisterPanel : UIBase {
     [SerializeField, Header("关闭按钮")] private Button _closeBtn;
 
     public override void Init() {
-        _sendCodeBtn.onClick.AddListener(() => { ShowSystemTips("验证码已发送", Color.green); });
+        _sendCodeBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            ShowSystemTips("验证码已发送", Color.green);
+        });
         _registerBtn.onClick.AddListener(OnRegisterBtnClicked);
-        _closeBtn.onClick.AddListener(() => { Show(false); });
+        _closeBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            Show(false);
+        });
     }
 
     private void OnDestroy() {
@@ -29,6 +35,8 @@ public class RegisterPanel : UIBase {
     /// 注册按钮点击事件
     /// </summary>
     private void OnRegisterBtnClicked() {
+        AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+        
         if (string.IsNullOrEmpty(_mobileInput.text.Trim())) {
             ShowSystemTips("手机号不能为空!", Color.red);
             return;

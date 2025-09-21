@@ -13,6 +13,7 @@ public class InfoPanel : UIBase {
     public override void Init() {
         // 退出登录
         _logoutBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             Global.LoginUser = null;
             // 返回登录界面
             SceneManager.LoadScene("LoginScene");
@@ -20,6 +21,7 @@ public class InfoPanel : UIBase {
         
         // 点击用户头像，显示设置用户信息面板
         _avatar.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             _setInfoPanel.Show();
         });
     }

@@ -1,0 +1,64 @@
+﻿syntax = "proto3";
+
+// 卡牌点数
+enum CardPoint {
+    PointNone = 0;
+    Three = 3;       // 3
+    Four = 4;        // 4
+    Five = 5;        // 5
+    Six = 6;         // 6
+    Seven = 7;       // 7
+    Eight = 8;       // 8
+    Nine = 9;        // 9
+    Ten = 10;        // 10
+    Jack = 11;       // J
+    Queen = 12;      // Q
+    King = 13;       // K
+    One = 14;        // A
+    Two = 15;        // 2
+    JokerSmall = 16; // 小王
+    JokerBig = 17;   // 大王
+}
+
+// 卡牌花色
+enum CardSuit {
+    SuitNone = 0;
+    Diamond = 1;   // 方块
+    Club = 2;      // 梅花
+    Heart = 3;     // 红桃
+    Spade = 4;     // 黑桃
+}
+
+// 卡牌组合类型
+enum CardType {
+    Hand_Unknown = 0;                  // 未知 or 非法
+    Hand_Pass = 1;                     // 过
+
+    Hand_Single = 2;                   // 单
+    Hand_Pair = 3;                     // 对
+
+    Hand_Triple = 4;                   // 三个
+    Hand_Triple_Single = 5;            // 三带一
+    Hand_Triple_Pair = 6;              // 三带二
+
+    Hand_Plane = 7;                    // 飞机，555_666
+    Hand_Plane_Two_Single = 8;         // 飞机带单，555_666_3_4
+    Hand_Plane_Two_Pair = 9;           // 飞机带双，555_666_33_44
+
+    Hand_Seq_Pair = 10;                // 连对，33_44_55(_66...)
+    Hand_Seq_Single = 11;              // 顺子，34567(8...)
+
+    Hand_Bomb  = 12;                   // 炸弹
+    Hand_Bomb_Pair  = 13;              // 炸弹带一对
+    Hand_Bomb_Two_Single  = 14;        // 炸弹带两单
+
+    Hand_Bomb_Jokers  = 15;            // 王炸
+    Hand_Bomb_Jokers_Pair  = 16;       // 王炸带一对
+    Hand_Bomb_Jokers_Two_Single  = 17; // 王炸带两单
+}
+
+// 卡牌
+message Card {
+    CardPoint point = 1;
+    CardSuit suit = 2;
+}

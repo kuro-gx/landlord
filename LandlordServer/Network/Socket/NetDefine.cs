@@ -7,6 +7,7 @@
     public const ushort CMD_RegisterCode = 801; // 注册请求码
     public const ushort CMD_LoginCode = 802; // 登录请求码
     public const ushort CMD_UpdateUserInfoCode = 803; // 修改用户信息请求码
+    public const ushort CMD_MatchCode = 811; // 匹配请求码
 }
 
 /// <summary>

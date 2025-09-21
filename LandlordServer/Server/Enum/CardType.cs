@@ -21,12 +21,10 @@ public enum CardType {
     Hand_Seq_Single,            // 顺子，34567(8...)
 
     Hand_Bomb,                  // 炸弹
-    Hand_Bomb_Single,           // 炸弹带一张单牌
     Hand_Bomb_Pair,             // 炸弹带一对
     Hand_Bomb_Two_Single,       // 炸弹带两单
 
     Hand_Bomb_Jokers,           // 王炸
-    Hand_Bomb_Jokers_Single,    // 王炸带一个
     Hand_Bomb_Jokers_Pair,      // 王炸带一对
     Hand_Bomb_Jokers_Two_Single	// 王炸带两单
 }
@@ -46,20 +44,20 @@ public enum CardSuit {
 /// 卡牌点数
 /// </summary>
 public enum CardPoint {
-    None,
-    Three,      // 3
-    Four,       // 4
-    Five,       // 5
-    Six,        // 6
-    Seven,      // 7
-    Eight,      // 8
-    Nine,       // 9
-    Ten,        // 10
-    Jack,       // J
-    Queen,      // Q
-    King,       // K
-    One,        // A
-    Two,        // 2
-    JokerSmall, // 小王
-    JokerBig    // 大王
+    None = 0,
+    Three = 3,       // 3
+    Four = 4,        // 4
+    Five = 5,        // 5
+    Six = 6,         // 6
+    Seven = 7,       // 7
+    Eight = 8,       // 8
+    Nine = 9,        // 9
+    Ten = 10,        // 10
+    Jack = 11,       // J
+    Queen = 12,      // Q
+    King = 13,       // K
+    One = 14,        // A
+    Two = 15,        // 2
+    JokerSmall = 16, // 小王
+    JokerBig = 17    // 大王
 }

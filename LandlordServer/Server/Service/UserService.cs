@@ -14,11 +14,11 @@ public class UserService {
     /// 注册账号
     /// </summary>
     /// <param name="form">请求参数</param>
-    public CmdCode Register(RegisterBo form) {
+    public ResultCode Register(RegisterBo form) {
         int count = _db.Queryable<User>().Where(v => v.Mobile == form.Mobile).Count();
         // 账号已存在
         if (count > 0) {
-            return CmdCode.AccountExist;
+            return ResultCode.AccountExist;
         }
 
         User user = new User {
@@ -27,47 +27,50 @@ public class UserService {
             Password = MD5Encrypt64(form.Password),
             Gender = 0,
             State = 1,
+            Money = 8000,
+            Diamond = 500,
             CreateTime = DateTime.Now,
             UpdateTime = DateTime.Now
         };
         int res = _db.Insertable(user).ExecuteCommand();
         if (res <= 0) {
-            return CmdCode.ServerError;
+            return ResultCode.ServerError;
         }
 
-        return CmdCode.Success;
+        return ResultCode.Success;
     }
 
     /// <summary>
     /// 登录
     /// </summary>
     /// <param name="form">登录参数</param>
-    public LoginRes Login(LoginBo form) {
-        LoginRes res = new LoginRes();
+    public LoginResponse Login(LoginBo form) {
+        LoginResponse res = new LoginResponse();
 
         User user = _db.Queryable<User>()
             .Where(v => v.Mobile == form.Mobile).Where(v => v.State != 3).First();
         if (user == null) {
-            res.Code = CmdCode.AccountNotExist;
+            res.Code = ResultCode.AccountNotExist;
             return res;
         }
 
         if (!MD5Encrypt64(form.Password).Equals(user.Password)) {
-            res.Code = CmdCode.PasswordError;
+            res.Code = ResultCode.PasswordError;
             return res;
         }
 
         // 账号被冻结
         if (user.State == 2) {
-            res.Code = CmdCode.AccountTerminate;
+            res.Code = ResultCode.AccountTerminate;
             return res;
         }
 
-        res.Code = CmdCode.Success;
+        res.Code = ResultCode.Success;
         res.UserId = user.Id;
         res.Username = user.Username;
         res.Gender = user.Gender;
         res.Money = user.Money;
+        res.Diamond = user.Diamond;
         res.WinCount = user.WinCount;
         res.LoseCount = user.LoseCount;
         return res;
@@ -76,10 +79,10 @@ public class UserService {
     /// <summary>
     /// 修改用户信息
     /// </summary>
-    public CmdCode UpdateUserInfo(UpdateUserBo form) {
+    public ResultCode UpdateUserInfo(UpdateUserBo form) {
         User user = _db.Queryable<User>().Where(v => v.Id == form.UserId).First();
         if (user == null) {
-            return CmdCode.AccountNotExist;
+            return ResultCode.AccountNotExist;
         }
 
         user.Username = form.Username;
@@ -89,10 +92,10 @@ public class UserService {
 
         int result = _db.Updateable(user).ExecuteCommand();
         if (result <= 0) {
-            return CmdCode.ServerError;
+            return ResultCode.ServerError;
         }
 
-        return CmdCode.Success;
+        return ResultCode.Success;
     }
 
     private string MD5Encrypt64(string password) {
