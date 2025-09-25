@@ -46,8 +46,9 @@ public class MatchController : IContainer {
         } else {
             _matchingRoom.Player.Insert(_posIndex, player);
         }
+
         _posIndex++;
-        
+
         // 用户加入房间后，将消息发送给房间内的所有玩家
         for (var i = 0; i < _matchingRoom.Player.Count; i++) {
             Player roomPlayer = _matchingRoom.Player[i];
@@ -58,15 +59,28 @@ public class MatchController : IContainer {
             matchResult.Player.AddRange(_matchingRoom.Player);
             Cache.Instance.SessionDict[roomPlayer.Id].SendData(package, package.Code, matchResult.ToByteString());
         }
-        
+
         // 匹配满3个人之后开始游戏
         if (_matchingRoom.RoomState == RoomState.Matching && _posIndex > 2) {
-            _matchingRoom.RoomState = RoomState.Matched;
-            // todo 开始游戏
+            // 开始游戏
+            _fightService.StartDispatchCardHandle(_matchingRoom.Player);
+            // 将分发好的卡牌传给玩家
+            foreach (Player p in _matchingRoom.Player) {
+                DispatchCardResponse dispatchCardRes = new DispatchCardResponse {
+                    BaseScore = 3,
+                    Multiple = 1
+                };
+                dispatchCardRes.CardList.AddRange(p.CardList);
+                Cache.Instance.SessionDict[p.Id]
+                    .SendData(package, NetDefine.CMD_DispatchCardCode, dispatchCardRes.ToByteString());
+            }
 
+            // 修改房间状态为“叫地主”
+            _matchingRoom.RoomState = RoomState.CallLord;
+            
+            // 重置数据
             _matchingRoom = null;
             _posIndex = 0;
-            _roomId = 0;
         }
     }
 }

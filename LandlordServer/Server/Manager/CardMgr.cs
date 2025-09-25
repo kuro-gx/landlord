@@ -9,16 +9,15 @@ public class CardMgr : Singleton<CardMgr> {
     /// <returns></returns>
     public List<Card> InitAllCards() {
         List<Card> cards = new List<Card>(54);
-        foreach (CardSuit suit in Enum.GetValues(typeof(CardSuit))) {
-            if (suit == CardSuit.None) continue;
-            foreach (CardPoint point in Enum.GetValues(typeof(CardPoint))) {
-                if (point == CardPoint.None || point == CardPoint.JokerSmall || point == CardPoint.JokerBig) continue;
-                cards.Add(new Card(point, suit));
+
+        for (int i = (int)CardSuit.Diamond; i <= (int)CardSuit.Spade; i++) {
+            for (int j = (int)CardPoint.Three; j < (int)CardPoint.JokerSmall; j++) {
+                cards.Add(new Card { Suit = (CardSuit)i, Point = (CardPoint)j });
             }
         }
 
-        cards.Add(new Card(CardPoint.JokerSmall, CardSuit.None));
-        cards.Add(new Card(CardPoint.JokerBig, CardSuit.None));
+        cards.Add(new Card { Suit = CardSuit.SuitNone, Point = CardPoint.JokerSmall });
+        cards.Add(new Card { Suit = CardSuit.SuitNone, Point = CardPoint.JokerBig });
 
         Random random = new Random((int)DateTime.Now.Ticks);
         for (int i = cards.Count - 1; i >= 0; i--) {
@@ -47,7 +46,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// 其它为0
     /// 即：x带y对，那么count=x+y（x>=3）；x带y，那么count=x；如果x=4同时y=0那么这就是炸弹。
     /// </summary>
-    private bool IsWith(List<Card> cards, int count) {
+    private bool IsWith(List<CardEntity> cards, int count) {
         int r = 0, n = 0, p, k, tmp, code;
         for (int i = 0; i < cards.Count; i++) {
             // code: 牌码 枚举值+2=牌的实际点数 
@@ -77,11 +76,11 @@ public class CardMgr : Singleton<CardMgr> {
     /// dict[3]: 存放3张相同牌的集合
     /// dict[4]: 存放普通炸弹的集合
     /// </summary>
-    private Dictionary<string, List<int>> Classify(List<Card> cards) {
+    private Dictionary<string, List<int>> Classify(List<CardEntity> cards) {
         int maxPoint = Convert.ToInt32(CardPoint.JokerBig + 1);
         // 创建空数组，以牌的点数为下标，牌的张数为值进行存储
         int[] cardRecord = new int[maxPoint];
-        foreach (Card card in cards) {
+        foreach (CardEntity card in cards) {
             cardRecord[Convert.ToInt32(card.CardPoint)]++;
         }
 
@@ -107,35 +106,35 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 单张牌
     /// </summary>
-    public bool IsSingle(List<Card> cards) {
+    public bool IsSingle(List<CardEntity> cards) {
         return cards.Count == 1;
     }
 
     /// <summary>
     /// 对子
     /// </summary>
-    public bool IsPair(List<Card> cards) {
+    public bool IsPair(List<CardEntity> cards) {
         return cards.Count == 2 && cards[0].CardPoint == cards[1].CardPoint;
     }
 
     /// <summary>
     /// 3张相同的牌，3不带
     /// </summary>
-    public bool IsTriple(List<Card> cards) {
+    public bool IsTriple(List<CardEntity> cards) {
         return cards.Count == 3 && IsWith(cards, 3);
     }
 
     /// <summary>
     /// 三带一
     /// </summary>
-    public bool IsTripleSingle(List<Card> cards) {
+    public bool IsTripleSingle(List<CardEntity> cards) {
         return cards.Count == 4 && IsWith(cards, 3);
     }
 
     /// <summary>
     /// 三带对
     /// </summary>
-    public bool IsTriplePair(List<Card> cards) {
+    public bool IsTriplePair(List<CardEntity> cards) {
         bool f = cards.Count == 5 && IsWith(cards, 4);
         if (f) {
             int code, min = 99, max = 0, sum = 0;
@@ -160,7 +159,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 飞机
     /// </summary>
-    public bool IsPlane(List<Card> cards) {
+    public bool IsPlane(List<CardEntity> cards) {
         Dictionary<string, List<int>> classify = Classify(cards);
         List<int> list = classify["3"];
         if (classify["1"].Count == 0 && classify["2"].Count == 0 && list.Count >= 2 && classify["4"].Count == 0) {
@@ -184,7 +183,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 飞机带两张单
     /// </summary>
-    public bool IsPlaneTwoSingle(List<Card> cards) {
+    public bool IsPlaneTwoSingle(List<CardEntity> cards) {
         Dictionary<string, List<int>> classify = Classify(cards);
         List<int> list = classify["3"];
         if (classify["1"].Count == 2 && classify["2"].Count == 0 && list.Count == 2 && classify["4"].Count == 0) {
@@ -194,13 +193,14 @@ public class CardMgr : Singleton<CardMgr> {
                 return true;
             }
         }
+
         return false;
     }
 
     /// <summary>
     /// 飞机带两对
     /// </summary>
-    public bool IsPlaneTwoPair(List<Card> cards) {
+    public bool IsPlaneTwoPair(List<CardEntity> cards) {
         Dictionary<string, List<int>> classify = Classify(cards);
         List<int> list = classify["3"];
         if (classify["1"].Count == 0 && classify["2"].Count == 2 && list.Count == 2 && classify["4"].Count == 0) {
@@ -210,13 +210,14 @@ public class CardMgr : Singleton<CardMgr> {
                 return true;
             }
         }
+
         return false;
     }
 
     /// <summary>
     /// 连对
     /// </summary>
-    public bool IsSeqPair(List<Card> cards) {
+    public bool IsSeqPair(List<CardEntity> cards) {
         int count = cards.Count;
         int seqSingle0 = 0, seqSingle1 = 0, min = 99;
         if (count >= 6 && count % 2 == 0) {
@@ -246,7 +247,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 顺子
     /// </summary>
-    public bool IsSeqSingle(List<Card> cards) {
+    public bool IsSeqSingle(List<CardEntity> cards) {
         if (cards.Count >= 5) {
             int tmp = 0, temp, code, min = 99;
             for (int i = 0; i < cards.Count; i++) {
@@ -272,22 +273,14 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 炸弹
     /// </summary>
-    public bool IsBomb(List<Card> cards) {
+    public bool IsBomb(List<CardEntity> cards) {
         return cards.Count == 4 && IsWith(cards, 4);
-    }
-
-    /// <summary>
-    /// 炸弹带一单
-    /// </summary>
-    public bool IsBombSingle(List<Card> cards) {
-        Dictionary<string, List<int>> classify = Classify(cards);
-        return classify["1"].Count == 1 && classify["2"].Count == 0 && classify["3"].Count == 0 && classify["4"].Count == 1;
     }
 
     /// <summary>
     /// 炸弹带一对
     /// </summary>
-    public bool IsBombPair(List<Card> cards) {
+    public bool IsBombPair(List<CardEntity> cards) {
         Dictionary<string, List<int>> classify = Classify(cards);
         return classify["1"].Count == 0 && classify["2"].Count == 1 && classify["3"].Count == 0 && classify["4"].Count == 1;
     }
@@ -295,7 +288,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 炸弹带两单
     /// </summary>
-    public bool IsBombTwoSingle(List<Card> cards) {
+    public bool IsBombTwoSingle(List<CardEntity> cards) {
         Dictionary<string, List<int>> classify = Classify(cards);
 
         if (classify["1"].Count == 2 && classify["2"].Count == 0 && classify["3"].Count == 0 &&
@@ -313,30 +306,20 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 王炸
     /// </summary>
-    public bool IsBombJokers(List<Card> cards) {
+    public bool IsBombJokers(List<CardEntity> cards) {
         if (cards.Count != 2) return false;
         // 升序排序
-        List<Card> list = cards.OrderBy(c => c.CardPoint).ThenBy(c => c.CardSuit).ToList();
+        List<CardEntity> list = cards.OrderBy(c => c.CardPoint).ThenBy(c => c.CardSuit).ToList();
         return list[0].CardPoint == CardPoint.JokerSmall && list[1].CardPoint == CardPoint.JokerBig;
-    }
-
-    /// <summary>
-    /// 王炸带一单
-    /// </summary>
-    public bool IsBombJokersSingle(List<Card> cards) {
-        if (cards.Count != 3) return false;
-        // 升序排序
-        List<Card> list = cards.OrderBy(c => c.CardPoint).ThenBy(c => c.CardSuit).ToList();
-        return list[1].CardPoint == CardPoint.JokerSmall && list[2].CardPoint == CardPoint.JokerBig;
     }
 
     /// <summary>
     /// 王炸带两张
     /// </summary>
-    public bool IsBombJokersWithTwo(List<Card> cards) {
+    public bool IsBombJokersWithTwo(List<CardEntity> cards) {
         if (cards.Count != 4) return false;
         // 升序排序
-        List<Card> list = cards.OrderBy(c => c.CardPoint).ThenBy(c => c.CardSuit).ToList();
+        List<CardEntity> list = cards.OrderBy(c => c.CardPoint).ThenBy(c => c.CardSuit).ToList();
         return list[2].CardPoint == CardPoint.JokerSmall && list[3].CardPoint == CardPoint.JokerBig;
     }
 }

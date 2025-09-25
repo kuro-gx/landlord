@@ -26,10 +26,10 @@ public static partial class RoomReflection {
           "DwoHcm9vbV9pZBgBIAEoBRIXCgZwbGF5ZXIYAiADKAsyBy5QbGF5ZXISHgoK",
           "cm9vbV9zdGF0ZRgDIAEoDjIKLlJvb21TdGF0ZRIYCgljYXJkX2xpc3QYBCAD",
           "KAsyBS5DYXJkIksKDU1hdGNoUmVzcG9uc2USDwoHcm9vbV9pZBgBIAEoBRIQ",
-          "CghzZWxmX3BvcxgCIAEoBRIXCgZwbGF5ZXIYAyADKAsyBy5QbGF5ZXIqcAoJ",
-          "Um9vbVN0YXRlEggKBE5vbmUQABIMCghNYXRjaGluZxABEgsKB01hdGNoZWQQ",
-          "AhIMCghDYWxsTG9yZBADEgsKB1JvYkxvcmQQBBIMCghBZGRUaW1lcxAFEgwK",
-          "CFBsYXlIYW5kEAYSBwoDRW5kEAdiBnByb3RvMw=="));
+          "CghzZWxmX3BvcxgCIAEoBRIXCgZwbGF5ZXIYAyADKAsyBy5QbGF5ZXIqYwoJ",
+          "Um9vbVN0YXRlEggKBE5vbmUQABIMCghNYXRjaGluZxABEgwKCENhbGxMb3Jk",
+          "EAMSCwoHUm9iTG9yZBAEEgwKCEFkZFRpbWVzEAUSDAoIUGxheUhhbmQQBhIH",
+          "CgNFbmQQB2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::UserReflection.Descriptor, global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::RoomState), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -47,7 +47,6 @@ public static partial class RoomReflection {
 public enum RoomState {
   [pbr::OriginalName("None")] None = 0,
   [pbr::OriginalName("Matching")] Matching = 1,
-  [pbr::OriginalName("Matched")] Matched = 2,
   [pbr::OriginalName("CallLord")] CallLord = 3,
   [pbr::OriginalName("RobLord")] RobLord = 4,
   [pbr::OriginalName("AddTimes")] AddTimes = 5,

@@ -62,3 +62,10 @@ message Card {
     CardPoint point = 1;
     CardSuit suit = 2;
 }
+
+// 发牌
+message DispatchCardResponse {
+    int32 base_score = 1; // 底分
+    int32 multiple = 2; // 加倍倍数
+    repeated Card card_list = 3; // 分发的卡牌
+}

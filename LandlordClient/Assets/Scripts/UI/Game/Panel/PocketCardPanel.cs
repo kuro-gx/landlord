@@ -5,9 +5,9 @@ using UnityEngine.UI;
 /// 底牌面板
 /// </summary>
 public class PocketCardPanel : UIBase {
-    [SerializeField, Header("底牌左")] private Image _cardLeft;
-    [SerializeField, Header("底牌中")] private Image _cardCenter;
-    [SerializeField, Header("底牌右")] private Image _cardRight;
+    [SerializeField, Header("底牌左")] private Image cardLeftImage;
+    [SerializeField, Header("底牌中")] private Image cardCenterImage;
+    [SerializeField, Header("底牌右")] private Image cardRightImage;
 
     public override void Init() {
         // Sprite[] cardImages = Resources.LoadAll<Sprite>("Sprites/card_small");

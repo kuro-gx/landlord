@@ -7,7 +7,6 @@ import "Card.proto";
 enum RoomState {
   None = 0;
   Matching = 1;
-  Matched = 2;
   CallLord = 3;
   RobLord = 4;
   AddTimes = 5;

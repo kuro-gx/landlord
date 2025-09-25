@@ -1,28 +1,33 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf;
 using UnityEngine;
 
 public class GameView : UIBase {
-    [SerializeField, Header("底牌面板")] private PocketCardPanel _pocketCardPanel;
-    [SerializeField, Header("游戏界面顶部面板")] private GameTopPanel _gameTopPanel;
-    [SerializeField, Header("按钮组面板")] private ButtonsPanel _buttonsPanel;
-    [SerializeField, Header("自己的信息面板")] private SelfPlayerPanel _selfPlayerPanel;
-    [SerializeField, Header("左侧玩家信息面板")] private LeftPlayerPanel _leftPlayerPanel;
-    [SerializeField, Header("右侧玩家信息面板")] private RightPlayerPanel _rightPlayerPanel;
+    [SerializeField, Header("底牌面板")] private PocketCardPanel pocketCardPanel;
+    [SerializeField, Header("游戏界面顶部面板")] private GameTopPanel gameTopPanel;
+    [SerializeField, Header("游戏界面底部面板")] private GameBottomPanel gameBottomPanel;
+    [SerializeField, Header("按钮组面板")] private ButtonsPanel buttonsPanel;
+    [SerializeField, Header("自己的信息面板")] private SelfPlayerPanel selfPlayerPanel;
+    [SerializeField, Header("左侧玩家信息面板")] private LeftPlayerPanel leftPlayerPanel;
+    [SerializeField, Header("右侧玩家信息面板")] private RightPlayerPanel rightPlayerPanel;
+    [SerializeField, Header("手牌区域")] private RectTransform selfCardArea;
 
     private int _leftPosIndex = -1; // 左边玩家坐位索引
-    private int _selfPosIndex = -1; // 自己的坐位索引
     private int _rightPosIndex = -1; // 右边玩家的坐位索引
-    private Player _leftPlayerInfo = null; // 左边玩家信息
-    private Player _selfPlayerInfo = null; // 自己的信息
-    private Player _rightPlayerInfo = null; // 右边玩家信息
-    private int _baseScore = 3; // 底分
-    private int _multipleNum = 1; // 倍数
-    private int _robTimes = 0; // 抢地主次数
+    private int _selfPosIndex = -1; // 自己的坐位索引
+    private Player _leftPlayerInfo; // 左边玩家信息
+    private Player _selfPlayerInfo; // 自己的信息
+    private Player _rightPlayerInfo; // 右边玩家信息
+    private readonly List<CardPanel> _selfCardPanelList = new(); // 自己的手牌预制体列表
+    // private int _robTimes = 0; // 抢地主次数
 
     public override void Init() {
         // 监听服务器返回的匹配结果
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_MatchCode, OnMatchHandle);
+        // 监听服务器响应的发牌信息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_DispatchCardCode, OnDispatchCardHandle);
     }
 
     /// <summary>
@@ -45,14 +50,87 @@ public class GameView : UIBase {
                 _rightPosIndex = 0;
                 break;
         }
-        
+
+        _selfPosIndex = response.SelfPos;
         _selfPlayerInfo = response.Player.ElementAtOrDefault(response.SelfPos);
         _leftPlayerInfo = response.Player.ElementAtOrDefault(_leftPosIndex);
         _rightPlayerInfo = response.Player.ElementAtOrDefault(_rightPosIndex);
-        
+
         // 更新UI
-        _selfPlayerPanel.RefreshPanel(_selfPlayerInfo);
-        _leftPlayerPanel.RefreshPanel(_leftPlayerInfo);
-        _rightPlayerPanel.RefreshPanel(_rightPlayerInfo);
+        selfPlayerPanel.RefreshPanel(_selfPlayerInfo);
+        leftPlayerPanel.RefreshPanel(_leftPlayerInfo);
+        rightPlayerPanel.RefreshPanel(_rightPlayerInfo);
+    }
+
+    /// <summary>
+    /// 服务器发牌响应的处理
+    /// </summary>
+    private void OnDispatchCardHandle(ByteString data) {
+        var response = DispatchCardResponse.Parser.ParseFrom(data);
+        // 隐藏匹配提示
+        buttonsPanel.HideMatchTips();
+        // 设置倍数
+        gameBottomPanel.SetMultipleText(response.Multiple);
+        // 显示底牌背景图
+        pocketCardPanel.Show();
+        // 对手牌进行排序
+        var list = response.CardList.ToList();
+        list.Sort((a, b) => ((int)b.Point * 10 + (int)b.Suit).CompareTo((int)a.Point * 10 + (int)a.Suit));
+        // 手牌距离左侧屏幕的宽度：(屏幕宽度 - ((卡牌数量 - 1) * 卡牌间距 + 卡牌宽度)) / 2
+        float cardDistanceWidth = (selfCardArea.rect.width - (Constant.CardDistance * (list.Count - 1) + 135)) / 2;
+        // 最左边第一张牌的起始X坐标：出牌区域起始X坐标 + 手牌距离左侧屏幕的宽度
+        float firstCardX = selfCardArea.rect.width * -1 / 2 + cardDistanceWidth;
+        // 创建卡牌预制体
+        for (var i = 0; i < list.Count; i++) {
+            CardPanel cardPanel = Resources.Load<CardPanel>("Prefabs/CardPanel");
+            if (cardPanel == null) return;
+            CardPanel panel = Instantiate(cardPanel, selfCardArea);
+            panel.SetCardInfo(list[i]);
+            _selfCardPanelList.Add(panel);
+            // 设置卡牌之间的间距
+            panel.transform.localPosition = new Vector2(firstCardX + i * Constant.CardDistance, -20);
+        }
+
+        // 显示左右玩家手牌数量
+        leftPlayerPanel.SetCardStack(17);
+        rightPlayerPanel.SetCardStack(17);
+
+        // 动画显示手牌
+        StartCoroutine(DelayMoveCard());
+    }
+
+    /// <summary>
+    /// 移动卡牌的动画
+    /// </summary>
+    IEnumerator DelayMoveCard() {
+        AudioService.Instance.PlayEffectAudio(Constant.CardDispatch);
+        for (int i = 0; i < _selfCardPanelList.Count; i++) {
+            _selfCardPanelList[i].gameObject.SetActive(true);
+            _selfCardPanelList[i].MovePosInTime(Constant.CardMoveDelay, new Vector3(Constant.CardDistance, 0, 0));
+
+            yield return new WaitForSeconds(Constant.CardMoveDelay);
+        }
+
+        // 动画结束后切换游戏状态为'叫地主'，0号位置的玩家先叫地主
+        if (_selfPosIndex == 0) {
+            GameStateChangedHandle(GameState.CallLord);
+        }
+    }
+
+    /// <summary>
+    /// 游戏状态改变处理
+    /// </summary>
+    /// <param name="state">状态</param>
+    private void GameStateChangedHandle(GameState state) {
+        switch (state) {
+            case GameState.CallLord:
+                buttonsPanel.ChangeCallLordVisibility(true);
+                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.CallLord, () => { });
+                break;
+            case GameState.Raise:
+                break;
+            case GameState.PlayingHand:
+                break;
+        }
     }
 }

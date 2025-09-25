@@ -23,26 +23,29 @@ public static partial class CardReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "CgpDYXJkLnByb3RvIjoKBENhcmQSGQoFcG9pbnQYASABKA4yCi5DYXJkUG9p",
-          "bnQSFwoEc3VpdBgCIAEoDjIJLkNhcmRTdWl0KroBCglDYXJkUG9pbnQSDQoJ",
-          "UG9pbnROb25lEAASCQoFVGhyZWUQAxIICgRGb3VyEAQSCAoERml2ZRAFEgcK",
-          "A1NpeBAGEgkKBVNldmVuEAcSCQoFRWlnaHQQCBIICgROaW5lEAkSBwoDVGVu",
-          "EAoSCAoESmFjaxALEgkKBVF1ZWVuEAwSCAoES2luZxANEgcKA09uZRAOEgcK",
-          "A1R3bxAPEg4KCkpva2VyU21hbGwQEBIMCghKb2tlckJpZxARKkUKCENhcmRT",
-          "dWl0EgwKCFN1aXROb25lEAASCwoHRGlhbW9uZBABEggKBENsdWIQAhIJCgVI",
-          "ZWFydBADEgkKBVNwYWRlEAQqhQMKCENhcmRUeXBlEhAKDEhhbmRfVW5rbm93",
-          "bhAAEg0KCUhhbmRfUGFzcxABEg8KC0hhbmRfU2luZ2xlEAISDQoJSGFuZF9Q",
-          "YWlyEAMSDwoLSGFuZF9UcmlwbGUQBBIWChJIYW5kX1RyaXBsZV9TaW5nbGUQ",
-          "BRIUChBIYW5kX1RyaXBsZV9QYWlyEAYSDgoKSGFuZF9QbGFuZRAHEhkKFUhh",
-          "bmRfUGxhbmVfVHdvX1NpbmdsZRAIEhcKE0hhbmRfUGxhbmVfVHdvX1BhaXIQ",
-          "CRIRCg1IYW5kX1NlcV9QYWlyEAoSEwoPSGFuZF9TZXFfU2luZ2xlEAsSDQoJ",
-          "SGFuZF9Cb21iEAwSEgoOSGFuZF9Cb21iX1BhaXIQDRIYChRIYW5kX0JvbWJf",
-          "VHdvX1NpbmdsZRAOEhQKEEhhbmRfQm9tYl9Kb2tlcnMQDxIZChVIYW5kX0Jv",
-          "bWJfSm9rZXJzX1BhaXIQEBIfChtIYW5kX0JvbWJfSm9rZXJzX1R3b19TaW5n",
-          "bGUQEWIGcHJvdG8z"));
+          "bnQSFwoEc3VpdBgCIAEoDjIJLkNhcmRTdWl0IlYKFERpc3BhdGNoQ2FyZFJl",
+          "c3BvbnNlEhIKCmJhc2Vfc2NvcmUYASABKAUSEAoIbXVsdGlwbGUYAiABKAUS",
+          "GAoJY2FyZF9saXN0GAMgAygLMgUuQ2FyZCq6AQoJQ2FyZFBvaW50Eg0KCVBv",
+          "aW50Tm9uZRAAEgkKBVRocmVlEAMSCAoERm91chAEEggKBEZpdmUQBRIHCgNT",
+          "aXgQBhIJCgVTZXZlbhAHEgkKBUVpZ2h0EAgSCAoETmluZRAJEgcKA1RlbhAK",
+          "EggKBEphY2sQCxIJCgVRdWVlbhAMEggKBEtpbmcQDRIHCgNPbmUQDhIHCgNU",
+          "d28QDxIOCgpKb2tlclNtYWxsEBASDAoISm9rZXJCaWcQESpFCghDYXJkU3Vp",
+          "dBIMCghTdWl0Tm9uZRAAEgsKB0RpYW1vbmQQARIICgRDbHViEAISCQoFSGVh",
+          "cnQQAxIJCgVTcGFkZRAEKoUDCghDYXJkVHlwZRIQCgxIYW5kX1Vua25vd24Q",
+          "ABINCglIYW5kX1Bhc3MQARIPCgtIYW5kX1NpbmdsZRACEg0KCUhhbmRfUGFp",
+          "chADEg8KC0hhbmRfVHJpcGxlEAQSFgoSSGFuZF9UcmlwbGVfU2luZ2xlEAUS",
+          "FAoQSGFuZF9UcmlwbGVfUGFpchAGEg4KCkhhbmRfUGxhbmUQBxIZChVIYW5k",
+          "X1BsYW5lX1R3b19TaW5nbGUQCBIXChNIYW5kX1BsYW5lX1R3b19QYWlyEAkS",
+          "EQoNSGFuZF9TZXFfUGFpchAKEhMKD0hhbmRfU2VxX1NpbmdsZRALEg0KCUhh",
+          "bmRfQm9tYhAMEhIKDkhhbmRfQm9tYl9QYWlyEA0SGAoUSGFuZF9Cb21iX1R3",
+          "b19TaW5nbGUQDhIUChBIYW5kX0JvbWJfSm9rZXJzEA8SGQoVSGFuZF9Cb21i",
+          "X0pva2Vyc19QYWlyEBASHwobSGFuZF9Cb21iX0pva2Vyc19Ud29fU2luZ2xl",
+          "EBFiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CardPoint), typeof(global::CardSuit), typeof(global::CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::Card), global::Card.Parser, new[]{ "Point", "Suit" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Card), global::Card.Parser, new[]{ "Point", "Suit" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::DispatchCardResponse), global::DispatchCardResponse.Parser, new[]{ "BaseScore", "Multiple", "CardList" }, null, null, null, null)
         }));
   }
   #endregion
@@ -449,6 +452,279 @@ public sealed partial class Card : pb::IMessage<Card>
         }
         case 16: {
           Suit = (global::CardSuit) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 发牌
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class DispatchCardResponse : pb::IMessage<DispatchCardResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<DispatchCardResponse> _parser = new pb::MessageParser<DispatchCardResponse>(() => new DispatchCardResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<DispatchCardResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CardReflection.Descriptor.MessageTypes[1]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public DispatchCardResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public DispatchCardResponse(DispatchCardResponse other) : this() {
+    baseScore_ = other.baseScore_;
+    multiple_ = other.multiple_;
+    cardList_ = other.cardList_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public DispatchCardResponse Clone() {
+    return new DispatchCardResponse(this);
+  }
+
+  /// <summary>Field number for the "base_score" field.</summary>
+  public const int BaseScoreFieldNumber = 1;
+  private int baseScore_;
+  /// <summary>
+  /// 底分
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int BaseScore {
+    get { return baseScore_; }
+    set {
+      baseScore_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "multiple" field.</summary>
+  public const int MultipleFieldNumber = 2;
+  private int multiple_;
+  /// <summary>
+  /// 加倍倍数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Multiple {
+    get { return multiple_; }
+    set {
+      multiple_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "card_list" field.</summary>
+  public const int CardListFieldNumber = 3;
+  private static readonly pb::FieldCodec<global::Card> _repeated_cardList_codec
+      = pb::FieldCodec.ForMessage(26, global::Card.Parser);
+  private readonly pbc::RepeatedField<global::Card> cardList_ = new pbc::RepeatedField<global::Card>();
+  /// <summary>
+  /// 分发的卡牌
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::Card> CardList {
+    get { return cardList_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as DispatchCardResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(DispatchCardResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (BaseScore != other.BaseScore) return false;
+    if (Multiple != other.Multiple) return false;
+    if(!cardList_.Equals(other.cardList_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (BaseScore != 0) hash ^= BaseScore.GetHashCode();
+    if (Multiple != 0) hash ^= Multiple.GetHashCode();
+    hash ^= cardList_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (BaseScore != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(BaseScore);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(Multiple);
+    }
+    cardList_.WriteTo(output, _repeated_cardList_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (BaseScore != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(BaseScore);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(Multiple);
+    }
+    cardList_.WriteTo(ref output, _repeated_cardList_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (BaseScore != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(BaseScore);
+    }
+    if (Multiple != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Multiple);
+    }
+    size += cardList_.CalculateSize(_repeated_cardList_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(DispatchCardResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.BaseScore != 0) {
+      BaseScore = other.BaseScore;
+    }
+    if (other.Multiple != 0) {
+      Multiple = other.Multiple;
+    }
+    cardList_.Add(other.cardList_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          BaseScore = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(input, _repeated_cardList_codec);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          BaseScore = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
           break;
         }
       }

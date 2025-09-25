@@ -1824,13 +1824,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e54707ee17e8c1b459dff085fde3b232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mobileInput: {fileID: 355311854}
-  _smsInput: {fileID: 1853539421}
-  _pwdInput: {fileID: 1638920995}
-  _repwdInput: {fileID: 1678921333}
-  _sendCodeBtn: {fileID: 1410922971}
-  _registerBtn: {fileID: 1142292876}
-  _closeBtn: {fileID: 918259378}
+  mobileInput: {fileID: 355311854}
+  smsInput: {fileID: 1853539421}
+  pwdInput: {fileID: 1638920995}
+  rePwdInput: {fileID: 1678921333}
+  sendCodeBtn: {fileID: 1410922971}
+  registerBtn: {fileID: 1142292876}
+  closeBtn: {fileID: 918259378}
 --- !u!1 &887631131
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,10 +2648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2296bbb0cbec5f44382a2af3a485ca61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mobileInput: {fileID: 1156271204}
-  _pwdInput: {fileID: 956551044}
-  _loginBtn: {fileID: 1716029264}
-  _closeBtn: {fileID: 1904028827}
+  mobileInput: {fileID: 1156271204}
+  pwdInput: {fileID: 956551044}
+  loginBtn: {fileID: 1716029264}
+  closeBtn: {fileID: 1904028827}
 --- !u!1 &1070970256
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,11 +2745,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ab949e0c8f4d4d46be8c23c213eba9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loginPanel: {fileID: 1053562619}
-  _registerPanel: {fileID: 787119707}
-  _loadingPanel: {fileID: 46846821}
-  _loginBtn: {fileID: 1237442593}
-  _registerBtn: {fileID: 1455918567}
+  loginPanel: {fileID: 1053562619}
+  registerPanel: {fileID: 787119707}
+  loadingPanel: {fileID: 46846821}
+  loginBtn: {fileID: 1237442593}
+  registerBtn: {fileID: 1455918567}
 --- !u!1 &1086438236
 GameObject:
   m_ObjectHideFlags: 0

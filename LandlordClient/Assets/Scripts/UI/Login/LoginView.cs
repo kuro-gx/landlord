@@ -6,12 +6,12 @@ using UnityEngine.UI;
 public class LoginView : UIBase {
     public static LoginView Instance;
 
-    [SerializeField, Header("登录窗口")] private LoginPanel _loginPanel;
-    [SerializeField, Header("登录窗口")] private RegisterPanel _registerPanel;
-    [SerializeField, Header("Loading窗口")] private LoadingPanel _loadingPanel;
+    [SerializeField, Header("登录窗口")] private LoginPanel loginPanel;
+    [SerializeField, Header("注册窗口")] private RegisterPanel registerPanel;
+    [SerializeField, Header("Loading窗口")] private LoadingPanel loadingPanel;
 
-    [SerializeField, Header("登录按钮")] private Button _loginBtn;
-    [SerializeField, Header("注册按钮")] private Button _registerBtn;
+    [SerializeField, Header("登录按钮")] private Button loginBtn;
+    [SerializeField, Header("注册按钮")] private Button registerBtn;
 
     protected void Awake() {
         Instance = this;
@@ -22,13 +22,13 @@ public class LoginView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RegisterCode, OnRegisterHandle);
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_LoginCode, OnLoginHandle);
         
-        _loginBtn.onClick.AddListener(() => {
+        loginBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
-            _loginPanel.Show();
+            loginPanel.Show();
         });
-        _registerBtn.onClick.AddListener(() => {
+        registerBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
-            _registerPanel.Show();
+            registerPanel.Show();
         });
     }
 
@@ -36,7 +36,7 @@ public class LoginView : UIBase {
     /// 登录结果回调
     /// </summary>
     private void OnLoginHandle(ByteString data) {
-        _loadingPanel.Show(false);
+        loadingPanel.Show(false);
         LoginResponse res = LoginResponse.Parser.ParseFrom(data);
         if (res == null) {
             return;
@@ -73,13 +73,13 @@ public class LoginView : UIBase {
     /// 注册结果回调
     /// </summary>
     private void OnRegisterHandle(ByteString data) {
-        _loadingPanel.Show(false);
+        loadingPanel.Show(false);
         Result res = Result.Parser.ParseFrom(data);
         switch (res.Code) {
             case ResultCode.Success: {
                 ShowSystemTips("注册成功!", Color.green);
-                _registerPanel.Show(false);
-                _loginPanel.Show();
+                registerPanel.Show(false);
+                loginPanel.Show();
                 break;
             }
             case ResultCode.MobileNotBlank:
@@ -104,6 +104,6 @@ public class LoginView : UIBase {
     /// 显示加载面板
     /// </summary>
     public void ShowLoading() {
-        _loadingPanel.Show();
+        loadingPanel.Show();
     }
 }

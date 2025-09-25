@@ -26,4 +26,10 @@ public class AudioService : MonoBehaviour {
         _uiAudio.clip = audio;
         _uiAudio.Play();
     }
+
+    public void PlayEffectAudio(string name) {
+        AudioClip audio = Resources.Load<AudioClip>("Audio/Effect/" + name);
+        _effectAudio.clip = audio;
+        _effectAudio.Play();
+    }
 }

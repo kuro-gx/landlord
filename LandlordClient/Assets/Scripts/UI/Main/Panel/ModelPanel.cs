@@ -7,21 +7,21 @@ using UnityEngine.UI;
 /// 中间按钮区域面板
 /// </summary>
 public class ModelPanel : UIBase {
-    [SerializeField, Header("经典模式按钮")] private Button _classifyModelBtn;
+    [SerializeField, Header("经典模式按钮")] private Button classifyModelBtn;
     private Sequence _closeSequence;
 
     public override void Init() {
         StartAnimation();
         
         // 点击经典模式，跳转对局界面
-        _classifyModelBtn.onClick.AddListener(() => {
+        classifyModelBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             SceneManager.LoadScene("GameScene");
         });
     }
 
     private void OnDestroy() {
-        _classifyModelBtn.onClick.RemoveAllListeners();
+        classifyModelBtn.onClick.RemoveAllListeners();
         DOTween.KillAll();
     }
 

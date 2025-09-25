@@ -3,7 +3,7 @@
 /// <summary>
 /// 卡牌对象
 /// </summary>
-public class Card : IEquatable<Card> {
+public class CardEntity : IEquatable<CardEntity> {
     /// <summary>
     /// 花色
     /// </summary>
@@ -14,10 +14,10 @@ public class Card : IEquatable<Card> {
     /// </summary>
     public CardPoint CardPoint { get; set; }
 
-    public Card() {
+    public CardEntity() {
     }
 
-    public Card(CardPoint point, CardSuit suit) {
+    public CardEntity(CardPoint point, CardSuit suit) {
         CardPoint = point;
         CardSuit = suit;
     }
@@ -25,7 +25,7 @@ public class Card : IEquatable<Card> {
     /// <summary>
     /// 比较两种卡牌是否相等
     /// </summary>
-    public bool Equals(Card other) {
+    public bool Equals(CardEntity other) {
         if (ReferenceEquals(null, other)) return false;
         if (ReferenceEquals(this, other)) return true;
         return CardPoint == other.CardPoint && CardSuit == other.CardSuit;
@@ -37,11 +37,11 @@ public class Card : IEquatable<Card> {
         }
     }
 
-    public static bool operator ==(Card left, Card right) {
+    public static bool operator ==(CardEntity left, CardEntity right) {
         return Equals(left, right);
     }
 
-    public static bool operator !=(Card left, Card right) {
+    public static bool operator !=(CardEntity left, CardEntity right) {
         return !Equals(left, right);
     }
 

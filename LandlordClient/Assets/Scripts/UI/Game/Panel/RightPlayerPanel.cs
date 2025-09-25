@@ -5,13 +5,15 @@ using UnityEngine.UI;
 /// 右侧玩家面板
 /// </summary>
 public class RightPlayerPanel : UIBase {
-    [SerializeField, Header("昵称")] private Text _usernameEl;
-    [SerializeField, Header("豆子")] private Text _moneyEl;
-    [SerializeField, Header("剩余卡牌")] private Image _cardStackEl;
-    [SerializeField, Header("地主图片标识")] private Image _landlordIconEl;
-    [SerializeField, Header("人物形象")] private Image _characterEl;
-    [SerializeField, Header("聊天气泡")] private Image _chatContainerEl;
-    [SerializeField, Header("提示文字")] private Image _readyTextEl;
+    [SerializeField, Header("昵称")] private Text usernameEl;
+    [SerializeField, Header("豆子")] private Text moneyEl;
+    [SerializeField, Header("手牌背景")] private Image cardStackImageEl;
+    [SerializeField, Header("剩余卡牌")] private Text cardStackTextEl;
+    [SerializeField, Header("地主图片标识")] private Image landlordIconEl;
+    [SerializeField, Header("人物形象")] private Image characterEl;
+    [SerializeField, Header("聊天气泡")] private Image chatContainerEl;
+    [SerializeField, Header("提示文字")] private Image tipTextEl;
+    [SerializeField, Header("倒计时图片")] private Image clockImageEl;
 
     public override void Init() {
     }
@@ -25,13 +27,25 @@ public class RightPlayerPanel : UIBase {
             return;
         }
         
-        _usernameEl.text = playerInfo.Username;
-        _moneyEl.text = playerInfo.Money.ToString();
-        _characterEl.sprite = Resources.Load<Sprite>("Character/Tex_1" + playerInfo.Pos);
+        usernameEl.text = playerInfo.Username;
+        moneyEl.text = playerInfo.Money.ToString();
+        characterEl.sprite = Resources.Load<Sprite>("Character/Tex_1" + playerInfo.Pos);
         
         // 显示UI
-        _usernameEl.gameObject.SetActive(true);
-        _moneyEl.gameObject.SetActive(true);
-        _characterEl.gameObject.SetActive(true);
+        usernameEl.gameObject.SetActive(true);
+        moneyEl.gameObject.SetActive(true);
+        characterEl.gameObject.SetActive(true);
+    }
+    
+    /// <summary>
+    /// 设置卡牌剩余数量
+    /// </summary>
+    /// <param name="num">数量</param>
+    public void SetCardStack(int num) {
+        cardStackTextEl.text = num.ToString();
+        // 显示卡牌剩余数量
+        if (!cardStackImageEl.gameObject.activeSelf) {
+            cardStackImageEl.gameObject.SetActive(true);
+        }
     }
 }

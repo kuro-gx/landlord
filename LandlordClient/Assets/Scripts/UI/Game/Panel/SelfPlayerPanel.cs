@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,19 +6,25 @@ using UnityEngine.UI;
 /// 玩家面板
 /// </summary>
 public class SelfPlayerPanel : UIBase {
-    [SerializeField, Header("昵称")] private Text _usernameEl;
-    [SerializeField, Header("豆子")] private Text _moneyEl;
-    [SerializeField, Header("地主图片标识")] private Image _landlordIconEl;
-    [SerializeField, Header("人物形象")] private Image _characterEl;
-    [SerializeField, Header("聊天气泡")] private Image _chatContainerEl;
-    [SerializeField, Header("提示文字")] private Image _readyTextEl;
+    [SerializeField, Header("昵称")] private Text usernameEl;
+    [SerializeField, Header("豆子")] private Text moneyEl;
+    [SerializeField, Header("地主图片标识")] private Image landlordIconEl;
+    [SerializeField, Header("人物形象")] private Image characterEl;
+    [SerializeField, Header("聊天气泡")] private Image chatContainerEl;
+    [SerializeField, Header("提示文字")] private Image tipTextEl;
+
+    private List<Card> _selfCardList = new List<Card>(); // 自己的手牌
+    private List<Card> _prepareCardList = new List<Card>(); // 将要打出去的牌
 
     public override void Init() {
         // 设置用户信息
         if (Global.LoginUser != null) {
-            _usernameEl.text = Global.LoginUser.Username;
-            _moneyEl.text = Global.LoginUser.Money.ToString();
+            usernameEl.text = Global.LoginUser.Username;
+            moneyEl.text = Global.LoginUser.Money.ToString();
         }
+        
+        _selfCardList.Clear();
+        _prepareCardList.Clear();
     }
 
     /// <summary>
@@ -29,8 +36,8 @@ public class SelfPlayerPanel : UIBase {
             return;
         }
         
-        _usernameEl.text = playerInfo.Username;
-        _moneyEl.text = playerInfo.Money.ToString();
-        _characterEl.sprite = Resources.Load<Sprite>("Character/Tex_0" + playerInfo.Pos);
+        usernameEl.text = playerInfo.Username;
+        moneyEl.text = playerInfo.Money.ToString();
+        characterEl.sprite = Resources.Load<Sprite>("Character/Tex_0" + playerInfo.Pos);
     }
 }
