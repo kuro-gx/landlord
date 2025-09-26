@@ -6,20 +6,27 @@ import "Card.proto";
 // 房间状态
 enum RoomState {
   None = 0;
-  Matching = 1;
-  CallLord = 3;
-  RobLord = 4;
-  AddTimes = 5;
-  PlayHand = 6;
-  End = 7;
+  Matching = 1; // 匹配
+  CallLord = 3; // 叫地主
+  GrabLord = 4; // 抢地主
+  Raise = 5; // 加倍
+  PlayHand = 6; // 出牌
+  GameEnd = 7; // 游戏结束
 }
 
 // 房间
 message Room {
   int32 room_id = 1;
-  repeated Player player = 2;
-  RoomState room_state = 3;
-  repeated Card card_list = 4;
+  repeated Player players = 2; // 玩家列表
+  RoomState room_state = 3; // 房间状态
+  repeated Card card_list = 4; // 54张牌
+  repeated Card hole_cards = 5; // 底牌
+  int32 call_pos = 6; // 叫地主玩家的坐位索引
+  int32 call_times = 7; // 请求叫地主的次数
+  int32 base_score = 8; // 底分
+  int32 multiple = 9; // 倍数
+  int32 grab_times = 10; // 抢地主的次数
+  int32 cur_lord_pos = 11; // 地主的位置索引
 }
 
 // 匹配成功的响应

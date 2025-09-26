@@ -40,4 +40,15 @@ public class SelfPlayerPanel : UIBase {
         moneyEl.text = playerInfo.Money.ToString();
         characterEl.sprite = Resources.Load<Sprite>("Character/Tex_0" + playerInfo.Pos);
     }
+
+    /// <summary>
+    /// 显示or隐藏提示消息
+    /// </summary>
+    public void ChangeTipVisibility(string tipImageName, bool visibility = true) {
+        if (tipImageName != null) {
+            tipTextEl.sprite = Resources.Load<Sprite>("TipText/" + tipImageName);
+            tipTextEl.SetNativeSize();
+        }
+        tipTextEl.gameObject.SetActive(visibility);
+    }
 }

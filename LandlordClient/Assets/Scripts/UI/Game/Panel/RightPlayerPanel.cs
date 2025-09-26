@@ -32,8 +32,7 @@ public class RightPlayerPanel : UIBase {
         characterEl.sprite = Resources.Load<Sprite>("Character/Tex_1" + playerInfo.Pos);
         
         // 显示UI
-        usernameEl.gameObject.SetActive(true);
-        moneyEl.gameObject.SetActive(true);
+        Show();
         characterEl.gameObject.SetActive(true);
     }
     
@@ -47,5 +46,16 @@ public class RightPlayerPanel : UIBase {
         if (!cardStackImageEl.gameObject.activeSelf) {
             cardStackImageEl.gameObject.SetActive(true);
         }
+    }
+    
+    /// <summary>
+    /// 显示or隐藏提示消息
+    /// </summary>
+    public void ChangeTipVisibility(string tipImageName, bool visibility = true) {
+        if (tipImageName != null) {
+            tipTextEl.sprite = Resources.Load<Sprite>("TipText/" + tipImageName);
+            tipTextEl.SetNativeSize();
+        }
+        tipTextEl.gameObject.SetActive(visibility);
     }
 }

@@ -31,9 +31,9 @@ public static partial class UserReflection {
           "c2VyX2lkGAIgASgFEhAKCHVzZXJuYW1lGAMgASgJEg4KBmdlbmRlchgEIAEo",
           "BRINCgVtb25leRgFIAEoBRIPCgdkaWFtb25kGAYgASgFEhEKCXdpbl9jb3Vu",
           "dBgHIAEoBRISCgpsb3NlX2NvdW50GAggASgFEhAKCHdpbl9sYXN0GAkgASgF",
-          "IlwKBlBsYXllchIKCgJpZBgBIAEoBRIQCgh1c2VybmFtZRgCIAEoCRINCgVt",
+          "Im0KBlBsYXllchIKCgJpZBgBIAEoBRIQCgh1c2VybmFtZRgCIAEoCRINCgVt",
           "b25leRgDIAEoBRILCgNwb3MYBCABKAUSGAoJY2FyZF9saXN0GAUgAygLMgUu",
-          "Q2FyZGIGcHJvdG8z"));
+          "Q2FyZBIPCgdjYW5HcmFiGAYgASgIYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ResultCodeReflection.Descriptor, global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -41,7 +41,7 @@ public static partial class UserReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginBo), global::LoginBo.Parser, new[]{ "Mobile", "Password" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::UpdateUserBo), global::UpdateUserBo.Parser, new[]{ "UserId", "Username", "Gender" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginResponse), global::LoginResponse.Parser, new[]{ "Code", "UserId", "Username", "Gender", "Money", "Diamond", "WinCount", "LoseCount", "WinLast" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Player), global::Player.Parser, new[]{ "Id", "Username", "Money", "Pos", "CardList" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Player), global::Player.Parser, new[]{ "Id", "Username", "Money", "Pos", "CardList", "CanGrab" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1397,6 +1397,7 @@ public sealed partial class Player : pb::IMessage<Player>
     money_ = other.money_;
     pos_ = other.pos_;
     cardList_ = other.cardList_.Clone();
+    canGrab_ = other.canGrab_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1474,6 +1475,21 @@ public sealed partial class Player : pb::IMessage<Player>
     get { return cardList_; }
   }
 
+  /// <summary>Field number for the "canGrab" field.</summary>
+  public const int CanGrabFieldNumber = 6;
+  private bool canGrab_;
+  /// <summary>
+  /// 是否可以抢地主
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool CanGrab {
+    get { return canGrab_; }
+    set {
+      canGrab_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -1494,6 +1510,7 @@ public sealed partial class Player : pb::IMessage<Player>
     if (Money != other.Money) return false;
     if (Pos != other.Pos) return false;
     if(!cardList_.Equals(other.cardList_)) return false;
+    if (CanGrab != other.CanGrab) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1506,6 +1523,7 @@ public sealed partial class Player : pb::IMessage<Player>
     if (Money != 0) hash ^= Money.GetHashCode();
     if (Pos != 0) hash ^= Pos.GetHashCode();
     hash ^= cardList_.GetHashCode();
+    if (CanGrab != false) hash ^= CanGrab.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1541,6 +1559,10 @@ public sealed partial class Player : pb::IMessage<Player>
       output.WriteInt32(Pos);
     }
     cardList_.WriteTo(output, _repeated_cardList_codec);
+    if (CanGrab != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(CanGrab);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1568,6 +1590,10 @@ public sealed partial class Player : pb::IMessage<Player>
       output.WriteInt32(Pos);
     }
     cardList_.WriteTo(ref output, _repeated_cardList_codec);
+    if (CanGrab != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(CanGrab);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1591,6 +1617,9 @@ public sealed partial class Player : pb::IMessage<Player>
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
     }
     size += cardList_.CalculateSize(_repeated_cardList_codec);
+    if (CanGrab != false) {
+      size += 1 + 1;
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -1616,6 +1645,9 @@ public sealed partial class Player : pb::IMessage<Player>
       Pos = other.Pos;
     }
     cardList_.Add(other.cardList_);
+    if (other.CanGrab != false) {
+      CanGrab = other.CanGrab;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1655,6 +1687,10 @@ public sealed partial class Player : pb::IMessage<Player>
           cardList_.AddEntriesFrom(input, _repeated_cardList_codec);
           break;
         }
+        case 48: {
+          CanGrab = input.ReadBool();
+          break;
+        }
       }
     }
   #endif
@@ -1692,6 +1728,10 @@ public sealed partial class Player : pb::IMessage<Player>
         }
         case 42: {
           cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
+          break;
+        }
+        case 48: {
+          CanGrab = input.ReadBool();
           break;
         }
       }

@@ -11,11 +11,14 @@ namespace Server {
 
             UserController userController = new UserController(new UserService(db));
             MatchController matchController = new MatchController(new FightService());
+            FightController fightController = new FightController(new FightService());
             // 注册指令集
             server.RegisterCommand(NetDefine.CMD_RegisterCode, userController);
             server.RegisterCommand(NetDefine.CMD_LoginCode, userController);
             server.RegisterCommand(NetDefine.CMD_UpdateUserInfoCode, userController);
             server.RegisterCommand(NetDefine.CMD_MatchCode, matchController);
+            server.RegisterCommand(NetDefine.CMD_CallLordCode, fightController);
+            server.RegisterCommand(NetDefine.CMD_GrabLordCode, fightController);
 
             while (true) {
                 Thread.Sleep(10);

@@ -9,7 +9,18 @@
     public const int RaiseCountDown = 15;
     // 出牌倒计时
     public const int PlayHandCountDown = 30;
-    // 音频
+    // UI音频
     public const string NormalClick = "SpecOk";
+    // 特效音频
     public const string CardDispatch = "Special_DiscardDispatch";
+    // 操作音频
+    public const string CallLord = "CallLord";
+    public const string NotCall = "NotCall";
+    public static string[] GrabArr = { "Grab1", "Grab2", "Grab3" };
+    public const string NotGrab = "NotGrab";
+    public const string Raise = "Raise";
+    public const string NotRaise = "NotRaise";
+    public static string[] PassArr = { "Pass1", "Pass2", "Pass3", "Pass4" };
+    public const string Alarm1 = "Alarm1"; // 剩1张牌
+    public const string Alarm2 = "Alarm1"; // 剩2张牌
 }

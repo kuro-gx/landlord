@@ -13,4 +13,9 @@ public class Cache : Singleton<Cache> {
     /// 用户ID 与 连接对象的映射
     /// </summary>
     public readonly Dictionary<int, Session> SessionDict = new Dictionary<int, Session>();
+
+    /// <summary>
+    /// 用户ID 与 游戏房间的映射
+    /// </summary>
+    public readonly Dictionary<int, Room> UserRoomDict = new Dictionary<int, Room>();
 }

@@ -1,0 +1,37 @@
+﻿syntax = "proto3";
+
+import "Card.proto";
+
+// 叫地主参数
+message CallLordBo {
+  int32 pos = 1; // 发起请求玩家的坐位
+  bool is_call = 2; // 叫地主 or 不叫
+}
+
+// 叫地主响应
+message CallLordResponse {
+  int32 last_pos = 1; // 上次请求的玩家的坐位
+  bool is_call = 2; // 上次请求的玩家是否叫了地主
+  int32 call_pos = 3; // 叫地主玩家的坐位
+}
+
+// 抢地主参数
+message GrabLordBo {
+  int32 pos = 1; // 发起请求玩家的坐位索引
+  bool is_grab = 2; // 抢地主 or 不抢
+}
+
+// 抢地主响应
+message GrabLordResponse {
+  int32 last_pos = 1; // 上次请求的玩家的坐位
+  bool is_grab = 2; // 上次请求的玩家是否抢了地主
+  int32 multiple = 3; // 倍数
+  int32 grab_times = 4; // 抢地主的次数
+  int32 can_grab_pos = 5; // 可以抢地主的玩家的坐位
+}
+
+// 成为地主响应
+message BecomeLordResponse {
+  int32 pos = 1; // 成为地主的玩家的坐位
+  repeated Card hole_cards = 2; // 底牌
+}

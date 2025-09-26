@@ -1,5 +1,6 @@
 using System;
 using DG.Tweening;
+using Google.Protobuf;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,14 +10,17 @@ using UnityEngine.UI;
 public class ButtonsPanel : UIBase {
     [SerializeField, Header("开始游戏or匹配按钮")] private Button startBtnEl;
     [SerializeField, Header("匹配提示文字")] private Text matchTipEl;
+
     [SerializeField, Header("出牌按钮页")] private GameObject playHandBtnPage;
     [SerializeField, Header("出牌倒计时文本")] private Text playHandCountDownEl;
+
     [SerializeField, Header("叫地主按钮页")] private GameObject callLordBtnPage;
     [SerializeField, Header("叫地主按钮")] private Button callLordBtnEl;
     [SerializeField, Header("叫地主按钮文本")] private Text callLordTextEl;
     [SerializeField, Header("叫地主倒计时文本")] private Text callLordCountDownEl;
     [SerializeField, Header("不叫按钮")] private Button notCallLordBtnEl;
     [SerializeField, Header("不叫按钮文本")] private Text notCallLordTextEl;
+
     [SerializeField, Header("加倍按钮页")] private GameObject raiseBtnPage;
 
     private readonly string _matchText = "正在速配玩伴"; // 匹配文字
@@ -29,6 +33,10 @@ public class ButtonsPanel : UIBase {
     public override void Init() {
         // 开始匹配
         startBtnEl.onClick.AddListener(StartMatchClicked);
+        // 叫地主 or 抢地主
+        callLordBtnEl.onClick.AddListener(CallLordClicked);
+        // 不叫 or 不抢
+        notCallLordBtnEl.onClick.AddListener(NotCallLordClicked);
     }
 
     /// <summary>
@@ -79,16 +87,20 @@ public class ButtonsPanel : UIBase {
     /// <summary>
     /// 显示or隐藏叫地主按钮页
     /// </summary>
-    /// <param name="isFirstCall">是否是第一人叫地主</param>
-    /// <param name="visibility">显示or隐藏</param>
-    public void ChangeCallLordVisibility(bool isFirstCall, bool visibility = true) {
-        callLordBtnPage.SetActive(visibility);
-        if (isFirstCall) {
-            callLordTextEl.text = "叫地主";
-            notCallLordTextEl.text = "不叫";
-        } else {
+    /// <param name="isGrab">是否为抢地主环节</param>
+    /// <param name="isShow">是否显示</param>
+    public void ChangeCallLordBtnPage(bool isGrab, bool isShow = true) {
+        callLordBtnPage.SetActive(isShow);
+        if (isGrab) {
             callLordTextEl.text = "抢地主";
             notCallLordTextEl.text = "不抢";
+            callLordBtnEl.tag = "grab";
+            notCallLordBtnEl.tag = "grab";
+        } else {
+            callLordTextEl.text = "叫地主";
+            notCallLordTextEl.text = "不叫";
+            callLordBtnEl.tag = "call";
+            notCallLordBtnEl.tag = "call";
         }
     }
 
@@ -97,10 +109,35 @@ public class ButtonsPanel : UIBase {
     /// </summary>
     /// <param name="time">倒计时秒数</param>
     /// <param name="state">游戏状态</param>
-    /// <param name="callback">回调函数</param>
+    /// <param name="callback">倒计时结束的回调函数</param>
     public void SetClockCallback(int time, GameState state, Action callback) {
+        SetClockText(time, state);
+
+        // 每隔1秒修改闹钟内文字
+        TimerTask timerTask = new TimerTask {
+            RateTime = 1,
+            RateCallback = () => {
+                time -= 1;
+                SetClockText(time, state);
+            },
+            EndTime = time,
+            EndCallback = callback
+        };
+
+        // 挂载组件
+        TimerUtil timerUtil = gameObject.AddComponent<TimerUtil>();
+        timerUtil.AddTimerTask(timerTask);
+    }
+
+    /// <summary>
+    /// 设置倒计时闹钟倒计时文字
+    /// </summary>
+    /// <param name="time">剩余秒数</param>
+    /// <param name="state">游戏状态</param>
+    private void SetClockText(int time, GameState state) {
         switch (state) {
             case GameState.CallLord:
+            case GameState.GrabLord:
                 callLordCountDownEl.text = time.ToString();
                 break;
             case GameState.Raise:
@@ -108,6 +145,55 @@ public class ButtonsPanel : UIBase {
             case GameState.PlayingHand:
                 playHandCountDownEl.text = time.ToString();
                 break;
+        }
+    }
+
+    /// <summary>
+    /// 叫地主按钮点击事件
+    /// </summary>
+    private void CallLordClicked() {
+        AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+        if (callLordBtnEl.CompareTag("call")) {
+            CallOrGrabLordApi(false, true);
+        }
+
+        if (callLordBtnEl.CompareTag("grab")) {
+            CallOrGrabLordApi(true, true);
+        }
+
+        // 隐藏按钮组
+        callLordBtnPage.SetActive(false);
+    }
+
+    /// <summary>
+    /// 不叫地主点击事件
+    /// </summary>
+    private void NotCallLordClicked() {
+        AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+        if (callLordBtnEl.CompareTag("call")) {
+            CallOrGrabLordApi(false, false);
+        }
+
+        if (callLordBtnEl.CompareTag("grab")) {
+            CallOrGrabLordApi(true, false);
+        }
+
+        // 隐藏按钮组
+        callLordBtnPage.SetActive(false);
+    }
+
+    /// <summary>
+    /// 叫地主 or 抢地主请求
+    /// </summary>
+    public void CallOrGrabLordApi(bool isGrab, bool param) {
+        if (isGrab) {
+            var form = new GrabLordBo { Pos = Global.CurPos, IsGrab = param };
+            // 发送抢地主请求
+            NetSocketMgr.Client.SendData(NetDefine.CMD_GrabLordCode, form.ToByteString());
+        } else {
+            var form = new CallLordBo { Pos = Global.CurPos, IsCall = param };
+            // 发送叫地主请求
+            NetSocketMgr.Client.SendData(NetDefine.CMD_CallLordCode, form.ToByteString());
         }
     }
 }

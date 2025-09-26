@@ -2201,7 +2201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   logoutBtn: {fileID: 2116608698}
   avatarEl: {fileID: 1316684350}
-  usernameEl: {fileID: 0}
+  usernameEl: {fileID: 1183627586}
   setInfoPanel: {fileID: 559253132}
 --- !u!1 &605369255
 GameObject:
@@ -6258,7 +6258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb2bab642d84d4f4a89b5aed71eca0ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infoPanel: {fileID: 0}
+  infoPanel: {fileID: 573281532}
   setInfoPanel: {fileID: 559253132}
   topPanel: {fileID: 1026885919}
 --- !u!1 &1934583959

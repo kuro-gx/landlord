@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class Global : MonoBehaviour {
     public static Global Instance;
+    // 登录用户的信息
     public static LoginResponse LoginUser;
+    // 登录用户的坐位索引
+    public static int CurPos = -1;
 
     private void Awake() {
         Instance = this;

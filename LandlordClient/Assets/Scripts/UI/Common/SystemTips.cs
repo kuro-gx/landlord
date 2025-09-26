@@ -1,6 +1,4 @@
-using System;
 using DG.Tweening;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +15,6 @@ public class SystemTips : MonoBehaviour {
         }
         
         // 定时销毁当前对象
-        Observable.Timer(TimeSpan.FromSeconds(2.5)).Subscribe(v => {
-            Destroy(gameObject);
-        });
+        Destroy(gameObject, 2.5f);
     }
 }

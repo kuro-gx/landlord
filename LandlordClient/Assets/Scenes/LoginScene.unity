@@ -3142,7 +3142,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -5648,10 +5648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf43b2fc119fe44448bf082dce49c5a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bgmAudio: {fileID: 1154095964}
-  _effectAudio: {fileID: 962026357}
-  _uiAudio: {fileID: 1086438238}
-  _oparateAudio: {fileID: 1207459154}
+  bgmAudio: {fileID: 1154095964}
+  effectAudio: {fileID: 962026357}
+  uiAudio: {fileID: 1086438238}
+  operateAudio: {fileID: 1207459154}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

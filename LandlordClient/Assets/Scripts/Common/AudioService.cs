@@ -6,10 +6,10 @@ using UnityEngine;
 public class AudioService : MonoBehaviour {
     public static AudioService Instance;
     
-    [SerializeField, Header("BGM")] private AudioSource _bgmAudio;
-    [SerializeField, Header("特效音效")] private AudioSource _effectAudio;
-    [SerializeField, Header("点击UI音效")] private AudioSource _uiAudio;
-    [SerializeField, Header("操作音效")] private AudioSource _oparateAudio;
+    [SerializeField, Header("BGM")] private AudioSource bgmAudio;
+    [SerializeField, Header("特效音效")] private AudioSource effectAudio;
+    [SerializeField, Header("点击UI音效")] private AudioSource uiAudio;
+    [SerializeField, Header("操作音效")] private AudioSource operateAudio;
 
     private void Awake() {
         Instance = this;
@@ -20,16 +20,22 @@ public class AudioService : MonoBehaviour {
     /// <summary>
     /// 播放音频
     /// </summary>
-    /// <param name="name">音频文件名</param>
-    public void PlayUIAudio(string name) {
-        AudioClip audio = Resources.Load<AudioClip>("Audio/UI/" + name);
-        _uiAudio.clip = audio;
-        _uiAudio.Play();
+    /// <param name="audioName">音频文件名</param>
+    public void PlayUIAudio(string audioName) {
+        AudioClip source = Resources.Load<AudioClip>("Audio/UI/" + audioName);
+        uiAudio.clip = source;
+        uiAudio.Play();
     }
 
-    public void PlayEffectAudio(string name) {
-        AudioClip audio = Resources.Load<AudioClip>("Audio/Effect/" + name);
-        _effectAudio.clip = audio;
-        _effectAudio.Play();
+    public void PlayEffectAudio(string audioName) {
+        AudioClip source = Resources.Load<AudioClip>("Audio/Effect/" + audioName);
+        effectAudio.clip = source;
+        effectAudio.Play();
+    }
+
+    public void PlayOperateAudio(int pos, string audioName) {
+        AudioClip source = Resources.Load<AudioClip>($"Audio/Operate/Character{pos}/{audioName}");
+        operateAudio.clip = source;
+        operateAudio.Play();
     }
 }

@@ -15,7 +15,6 @@ public class MainView : UIBase {
             infoPanel.SetUsername(Global.LoginUser.Username);
             topPanel.SetMoney(Global.LoginUser.Money, Global.LoginUser.Diamond);
         }
-
         setInfoPanel.UpdateUserInfoAction = UpdateUserInfoHandle;
 
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_UpdateUserInfoCode, OnUpdateInfoHandle);
