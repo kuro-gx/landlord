@@ -30,7 +30,7 @@ public class ButtonsPanel : UIBase {
     private bool _isAnimating;
     private bool _isStartGame;
 
-    public override void Init() {
+    protected override void Init() {
         // 开始匹配
         startBtnEl.onClick.AddListener(StartMatchClicked);
         // 叫地主 or 抢地主

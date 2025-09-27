@@ -32,6 +32,6 @@ message GrabLordResponse {
 
 // 成为地主响应
 message BecomeLordResponse {
-  int32 pos = 1; // 成为地主的玩家的坐位
+  int32 lord_pos = 1; // 成为地主的玩家的坐位
   repeated Card hole_cards = 2; // 底牌
 }

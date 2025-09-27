@@ -9,7 +9,7 @@ public class MainView : UIBase {
     // 临时保存修改用户信息参数
     private UpdateUserBo _userParam;
 
-    public override void Init() {
+    protected override void Init() {
         if (Global.LoginUser != null) {
             // 设置登录用户的昵称和欢乐豆
             infoPanel.SetUsername(Global.LoginUser.Username);

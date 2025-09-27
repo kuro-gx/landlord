@@ -1,8 +1,7 @@
 using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour {
-
-    public abstract void Init();
+    protected abstract void Init();
 
     public void Show(bool isShow = true) {
         gameObject.SetActive(isShow);
@@ -11,8 +10,8 @@ public abstract class UIBase : MonoBehaviour {
     protected virtual void Start() {
         Init();
     }
-    
-    public void ShowSystemTips(string msg, Color color) {
+
+    protected void ShowSystemTips(string msg, Color color) {
         GameObject obj = Resources.Load<GameObject>("Prefabs/SystemTips");
         if (obj == null) {
             return;
@@ -25,5 +24,14 @@ public abstract class UIBase : MonoBehaviour {
         if (tips != null) {
             tips.RefreshUI(msg, color);
         }
+    }
+    
+    protected T GetOrAddComponent<T>(GameObject obj) where T : Component {
+        T cpt = obj.GetComponent<T>();
+        if (cpt == null) {
+            cpt = obj.AddComponent<T>();
+        }
+
+        return cpt;
     }
 }

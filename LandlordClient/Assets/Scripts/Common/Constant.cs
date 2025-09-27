@@ -1,6 +1,10 @@
 ﻿public class Constant {
-    // 卡牌之间的距离
-    public const float CardDistance = 50;
+    // 卡牌之间的横向距离
+    public const float CardHDistance = 50;
+    // 卡牌选中之后向上位移的距离
+    public const float CardVDistance = 20;
+    // 卡牌滑动的时间
+    public const float CardSlideTime = 0.3f;
     // 卡牌移动的时间间隔
     public const float CardMoveDelay = 0.14f;
     // 叫/抢地主倒计时
@@ -16,7 +20,6 @@
     // 操作音频
     public const string CallLord = "CallLord";
     public const string NotCall = "NotCall";
-    public static string[] GrabArr = { "Grab1", "Grab2", "Grab3" };
     public const string NotGrab = "NotGrab";
     public const string Raise = "Raise";
     public const string NotRaise = "NotRaise";

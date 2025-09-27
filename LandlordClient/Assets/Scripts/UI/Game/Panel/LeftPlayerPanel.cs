@@ -14,8 +14,8 @@ public class LeftPlayerPanel : UIBase {
     [SerializeField, Header("聊天气泡")] private Image chatContainerEl;
     [SerializeField, Header("提示文字")] private Image tipTextEl;
     [SerializeField, Header("倒计时图片")] private Image clockImageEl;
-    
-    public override void Init() {
+
+    protected override void Init() {
     }
     
     /// <summary>
@@ -58,5 +58,26 @@ public class LeftPlayerPanel : UIBase {
             tipTextEl.SetNativeSize();
         }
         tipTextEl.gameObject.SetActive(visibility);
+    }
+    
+    /// <summary>
+    /// 显示 or 隐藏地主图标
+    /// </summary>
+    public void ChangeLordIconVisibility(bool visibility = true) {
+        // 缩放显示，普通隐藏
+        if (visibility) {
+            // 如果是显示地主图标，说明玩家成为了地主，设置手牌剩余数量
+            cardStackTextEl.text = "20";
+            landlordIconEl.gameObject.SetActive(true);
+
+            var scaleTween = GetOrAddComponent<RectScaleTween>(landlordIconEl.gameObject);
+            scaleTween.ScaleTo(0.3f, Vector3.zero * 1.5f, () => {
+                scaleTween.ScaleTo(0.15f, Vector3.zero, () => {
+                    Destroy(scaleTween);
+                });
+            });
+        } else {
+            landlordIconEl.gameObject.SetActive(false);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Google.Protobuf;
+using Google.Protobuf.Collections;
 
 public class FightController : IContainer {
     private FightService _fightService;
@@ -45,10 +46,9 @@ public class FightController : IContainer {
         if (room.CallTimes == 3) {
             if (form.IsCall) {
                 // 只有最后一人“叫地主”，则直接成为地主进入加倍环节
-                // todo 成为地主
                 room.CallPos = form.Pos;
                 room.CurLordPos = form.Pos;
-                room.RoomState = RoomState.Raise;
+                _fightService.BecomeLord(room);
             } else {
                 // 没人"叫地主"，重新发牌
                 room.CallTimes = 0;
@@ -77,10 +77,9 @@ public class FightController : IContainer {
             IsCall = form.IsCall,
             CallPos = room.CallPos
         };
+        
         // 将进行抢地主操作的玩家广播给房间内的玩家
-        foreach (var p in room.Players) {
-            Cache.Instance.SessionDict[p.Id].SendData(package, package.Code, response.ToByteString());
-        }
+        Broadcast(room.Players, package, response.ToByteString());
     }
 
     /// <summary>
@@ -110,42 +109,73 @@ public class FightController : IContainer {
             room.GrabTimes++;
             room.CurLordPos = form.Pos;
         }
-        // 用户选择“抢”或“不抢”，都无法再进行抢地主，只能抢1次
-        grabLordPlayer.CanGrab = false;
-
+        
         var response = new GrabLordResponse {
             LastPos = form.Pos,
             IsGrab = form.IsGrab,
             Multiple = room.Multiple,
-            GrabTimes = room.GrabTimes
+            GrabTimes = room.GrabTimes,
+            CanGrabPos = -1
         };
-        
-        /*
-         * 遍历玩家列表，查看是否还有玩家可以抢地主
-         * 玩家1：叫地主                                    CurLordPos = 0
-         * 玩家2：不抢，玩家3：抢                            CurLordPos = 2
-         * 玩家1：抢 -> 玩家1成为地主，不抢 -> 玩家3成为地主
-         */
-        int nextCanGrabPlayerPos = -1;
-        foreach (var p in room.Players) {
-            if (p.CanGrab) {
-                nextCanGrabPlayerPos = p.Pos;
-            }
+
+        // 获取下个玩家的坐位
+        int nextPlayerPos = form.Pos + 1;
+        if (nextPlayerPos > 2) {
+            nextPlayerPos = 0;
         }
 
-        // 已经没有人可以"抢地主"了
-        if (nextCanGrabPlayerPos == -1) {
-            // 游戏进入加倍状态
-            room.RoomState = RoomState.Raise;
-            // todo 设置地主
+        // 下个玩家有资格抢地主
+        if (room.Players[nextPlayerPos].CanGrab) {
+            /*
+             * 玩家1：叫地主                                    CurLordPos = 0
+             * 玩家2：不抢，玩家3：抢                            CurLordPos = 2
+             * 玩家1：抢 -> 玩家1成为地主，不抢 -> 玩家3成为地主
+             */
+            if (room.CurLordPos != nextPlayerPos) {
+                // 设置下一个可以抢地主的玩家的坐位
+                response.CanGrabPos = nextPlayerPos;
+                Broadcast(room.Players, package, response.ToByteString());
+            } else {
+                // 走到这里说明没人抢地主，“叫地主”的玩家可直接成为地主
+                response.CanGrabPos = -1;
+                Broadcast(room.Players, package, response.ToByteString());
+                _fightService.BecomeLord(room);
+            }
         } else {
-            // 设置下一个可以抢地主的玩家的坐位
-            response.CanGrabPos = nextCanGrabPlayerPos;
+            // 获取上个玩家的坐位
+            int prevPlayerPos = nextPlayerPos + 1;
+            if (prevPlayerPos > 2) {
+                prevPlayerPos = 0;
+            }
+
+            // 上个玩家有资格抢地主
+            if (room.Players[prevPlayerPos].CanGrab) {
+                if (room.CurLordPos != prevPlayerPos) {
+                    response.CanGrabPos = prevPlayerPos;
+                    Broadcast(room.Players, package, response.ToByteString());
+                } else {
+                    response.CanGrabPos = -1;
+                    Broadcast(room.Players, package, response.ToByteString());
+                    _fightService.BecomeLord(room);
+                }
+            } else {
+                response.CanGrabPos = -1;
+                Broadcast(room.Players, package, response.ToByteString());
+                _fightService.BecomeLord(room);
+            }
         }
         
+        // 用户选择“抢”或“不抢”，都无法再进行抢地主，只能抢1次
+        grabLordPlayer.CanGrab = false;
+    }
+
+    /// <summary>
+    /// 群发消息给房间内的用户
+    /// </summary>
+    private void Broadcast(RepeatedField<Player> players, BasePackage package, ByteString response) {
         // 将进行抢地主操作的玩家广播给房间内的玩家
-        foreach (var p in room.Players) {
-            Cache.Instance.SessionDict[p.Id].SendData(package, package.Code, response.ToByteString());
+        foreach (var p in players) {
+            Cache.Instance.SessionDict[p.Id].SendData(package, package.Code, response);
         }
     }
 }

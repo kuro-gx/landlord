@@ -1,4 +1,4 @@
 public class LoadingPanel : UIBase {
-    public override void Init() {
+    protected override void Init() {
     }
 }

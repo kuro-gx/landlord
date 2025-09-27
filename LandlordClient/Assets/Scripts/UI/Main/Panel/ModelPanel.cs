@@ -10,7 +10,7 @@ public class ModelPanel : UIBase {
     [SerializeField, Header("经典模式按钮")] private Button classifyModelBtn;
     private Sequence _closeSequence;
 
-    public override void Init() {
+    protected override void Init() {
         StartAnimation();
         
         // 点击经典模式，跳转对局界面

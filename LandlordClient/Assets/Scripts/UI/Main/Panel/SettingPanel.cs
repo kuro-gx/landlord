@@ -6,8 +6,8 @@ public class SettingPanel : UIBase {
     [SerializeField, Header("关闭按钮")] private Button closeBtn;
     [SerializeField, Header("音量复选框")] private Toggle toggleAudio;
     [SerializeField, Header("音量进度条")] private Slider sliderVolume;
-    
-    public override void Init() {
+
+    protected override void Init() {
         closeBtn.onClick.AddListener(() => {
             Show(false);
         });

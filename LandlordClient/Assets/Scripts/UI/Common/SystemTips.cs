@@ -2,6 +2,9 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// 全局提示组件
+/// </summary>
 public class SystemTips : MonoBehaviour {
     [SerializeField, Header("提示信息")] private Text tipMessageText;
 

@@ -10,7 +10,7 @@ public class LoginPanel : UIBase {
     [SerializeField, Header("登录按钮")] private Button loginBtn;
     [SerializeField, Header("关闭按钮")] private Button closeBtn;
 
-    public override void Init() {
+    protected override void Init() {
         // 填充账号密码
         mobileInput.text = "13000000001";
         pwdInput.text = "123456";

@@ -11,7 +11,7 @@ public class InfoPanel : UIBase {
     [SerializeField, Header("用户昵称")] private Text usernameEl;
     [SerializeField, Header("设置信息面板")] private SetInfoPanel setInfoPanel;
 
-    public override void Init() {
+    protected override void Init() {
         // 退出登录
         logoutBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);

@@ -2,11 +2,17 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardPanel : MonoBehaviour {
+/// <summary>
+/// 卡牌窗体
+/// </summary>
+public class CardPanel : UIBase {
     [SerializeField, Header("卡牌背景")] private Image cardBg;
     [SerializeField, Header("卡牌数值1")] private Image cardValue1Image;
     [SerializeField, Header("卡牌数值2")] private Image cardValue2Image;
     [SerializeField, Header("地主图标")] private Image landlordIcon;
+    
+    protected override void Init() {
+    }
 
     /// <summary>
     /// 设置卡牌信息
@@ -45,14 +51,5 @@ public class CardPanel : MonoBehaviour {
     public void MovePosInTime(float time, Vector3 offset, Action cb = null) {
         RectPosTween component = GetOrAddComponent<RectPosTween>(gameObject);
         component.MoveLocalPosTime(time, offset, cb);
-    }
-
-    private T GetOrAddComponent<T>(GameObject obj) where T : Component {
-        T cpt = obj.GetComponent<T>();
-        if (cpt == null) {
-            cpt = obj.AddComponent<T>();
-        }
-
-        return cpt;
     }
 }

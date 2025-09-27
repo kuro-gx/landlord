@@ -28,9 +28,9 @@ public static partial class CallLordReflection {
           "X3BvcxgDIAEoBSIqCgpHcmFiTG9yZEJvEgsKA3BvcxgBIAEoBRIPCgdpc19n",
           "cmFiGAIgASgIInEKEEdyYWJMb3JkUmVzcG9uc2USEAoIbGFzdF9wb3MYASAB",
           "KAUSDwoHaXNfZ3JhYhgCIAEoCBIQCghtdWx0aXBsZRgDIAEoBRISCgpncmFi",
-          "X3RpbWVzGAQgASgFEhQKDGNhbl9ncmFiX3BvcxgFIAEoBSI8ChJCZWNvbWVM",
-          "b3JkUmVzcG9uc2USCwoDcG9zGAEgASgFEhkKCmhvbGVfY2FyZHMYAiADKAsy",
-          "BS5DYXJkYgZwcm90bzM="));
+          "X3RpbWVzGAQgASgFEhQKDGNhbl9ncmFiX3BvcxgFIAEoBSJBChJCZWNvbWVM",
+          "b3JkUmVzcG9uc2USEAoIbG9yZF9wb3MYASABKAUSGQoKaG9sZV9jYXJkcxgC",
+          "IAMoCzIFLkNhcmRiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -38,7 +38,7 @@ public static partial class CallLordReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::CallLordResponse), global::CallLordResponse.Parser, new[]{ "LastPos", "IsCall", "CallPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordBo), global::GrabLordBo.Parser, new[]{ "Pos", "IsGrab" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordResponse), global::GrabLordResponse.Parser, new[]{ "LastPos", "IsGrab", "Multiple", "GrabTimes", "CanGrabPos" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BecomeLordResponse), global::BecomeLordResponse.Parser, new[]{ "Pos", "HoleCards" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::BecomeLordResponse), global::BecomeLordResponse.Parser, new[]{ "LordPos", "HoleCards" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1219,7 +1219,7 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public BecomeLordResponse(BecomeLordResponse other) : this() {
-    pos_ = other.pos_;
+    lordPos_ = other.lordPos_;
     holeCards_ = other.holeCards_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -1230,18 +1230,18 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
     return new BecomeLordResponse(this);
   }
 
-  /// <summary>Field number for the "pos" field.</summary>
-  public const int PosFieldNumber = 1;
-  private int pos_;
+  /// <summary>Field number for the "lord_pos" field.</summary>
+  public const int LordPosFieldNumber = 1;
+  private int lordPos_;
   /// <summary>
   /// 成为地主的玩家的坐位
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int Pos {
-    get { return pos_; }
+  public int LordPos {
+    get { return lordPos_; }
     set {
-      pos_ = value;
+      lordPos_ = value;
     }
   }
 
@@ -1274,7 +1274,7 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (Pos != other.Pos) return false;
+    if (LordPos != other.LordPos) return false;
     if(!holeCards_.Equals(other.holeCards_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -1283,7 +1283,7 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override int GetHashCode() {
     int hash = 1;
-    if (Pos != 0) hash ^= Pos.GetHashCode();
+    if (LordPos != 0) hash ^= LordPos.GetHashCode();
     hash ^= holeCards_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -1303,9 +1303,9 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
     output.WriteRawMessage(this);
   #else
-    if (Pos != 0) {
+    if (LordPos != 0) {
       output.WriteRawTag(8);
-      output.WriteInt32(Pos);
+      output.WriteInt32(LordPos);
     }
     holeCards_.WriteTo(output, _repeated_holeCards_codec);
     if (_unknownFields != null) {
@@ -1318,9 +1318,9 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-    if (Pos != 0) {
+    if (LordPos != 0) {
       output.WriteRawTag(8);
-      output.WriteInt32(Pos);
+      output.WriteInt32(LordPos);
     }
     holeCards_.WriteTo(ref output, _repeated_holeCards_codec);
     if (_unknownFields != null) {
@@ -1333,8 +1333,8 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public int CalculateSize() {
     int size = 0;
-    if (Pos != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
+    if (LordPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(LordPos);
     }
     size += holeCards_.CalculateSize(_repeated_holeCards_codec);
     if (_unknownFields != null) {
@@ -1349,8 +1349,8 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
     if (other == null) {
       return;
     }
-    if (other.Pos != 0) {
-      Pos = other.Pos;
+    if (other.LordPos != 0) {
+      LordPos = other.LordPos;
     }
     holeCards_.Add(other.holeCards_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1373,7 +1373,7 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 8: {
-          Pos = input.ReadInt32();
+          LordPos = input.ReadInt32();
           break;
         }
         case 18: {
@@ -1400,7 +1400,7 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
           break;
         case 8: {
-          Pos = input.ReadInt32();
+          LordPos = input.ReadInt32();
           break;
         }
         case 18: {

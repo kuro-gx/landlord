@@ -8,7 +8,7 @@ public class TopPanel : UIBase {
     [SerializeField, Header("钻石")] private Text diamondText;
     private RectTransform _transform;
 
-    public override void Init() {
+    protected override void Init() {
         // 面板从右往左出现
         _transform = GetComponent<RectTransform>();
         _transform.DOAnchorPos(new Vector2(0.0f, 0.0f), 0.4f).From(new Vector2(550.0f, 0.0f));

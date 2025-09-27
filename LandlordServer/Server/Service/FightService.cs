@@ -27,13 +27,31 @@ public class FightService {
         }
 
         // 将卡牌分发给用户
+        var dispatchCardRes = new DispatchCardResponse { BaseScore = 3, Multiple = 1 };
         foreach (var p in room.Players) {
-            var dispatchCardRes = new DispatchCardResponse {
-                BaseScore = 3,
-                Multiple = 1
-            };
+            dispatchCardRes.CardList.Clear();
             dispatchCardRes.CardList.AddRange(p.CardList);
             Cache.Instance.SessionDict[p.Id].SendData(NetDefine.CMD_DispatchCardCode, dispatchCardRes.ToByteString());
+        }
+    }
+
+    /// <summary>
+    /// 成为地主
+    /// </summary>
+    /// <param name="room">房间信息</param>
+    public void BecomeLord(Room room) {
+        // 设置出牌人坐位
+        room.PendPos = room.CurLordPos;
+        // 分发底牌
+        var holeCards = room.HoleCards;
+        room.Players[room.CurLordPos].CardList.AddRange(holeCards);
+        // 修改房间状态为加倍
+        room.RoomState = RoomState.Raise;
+
+        var response = new BecomeLordResponse { LordPos = room.CurLordPos };
+        response.HoleCards.AddRange(room.HoleCards);
+        foreach (var p in room.Players) {
+            Cache.Instance.SessionDict[p.Id].SendData(NetDefine.CMD_BecomeLordCode, response.ToByteString());
         }
     }
 }

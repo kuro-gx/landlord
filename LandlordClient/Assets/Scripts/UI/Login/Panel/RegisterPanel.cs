@@ -13,7 +13,7 @@ public class RegisterPanel : UIBase {
     [SerializeField, Header("注册按钮")] private Button registerBtn;
     [SerializeField, Header("关闭按钮")] private Button closeBtn;
 
-    public override void Init() {
+    protected override void Init() {
         sendCodeBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             ShowSystemTips("验证码已发送", Color.green);

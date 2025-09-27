@@ -21,9 +21,8 @@ public class GameView : UIBase {
     private Player _selfPlayerInfo; // 自己的信息
     private Player _rightPlayerInfo; // 右边玩家信息
     private readonly List<CardPanel> _selfCardPanelList = new(); // 自己的手牌预制体列表
-    // private int _robTimes = 0; // 抢地主次数
 
-    public override void Init() {
+    protected override void Init() {
         // 监听服务器返回的匹配结果
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_MatchCode, OnMatchHandle);
         // 监听服务器响应的发牌消息
@@ -32,6 +31,8 @@ public class GameView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_CallLordCode, OnCallLordHandle);
         // 监听服务器响应的抢地主消息
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_GrabLordCode, OnGrabLordHandle);
+        // 监听服务器响应的玩家成为地主消息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_BecomeLordCode, OnBecomeLordHandle);
     }
 
     /// <summary>
@@ -82,16 +83,19 @@ public class GameView : UIBase {
         foreach (var child in _selfCardPanelList) {
             Destroy(child.gameObject);
         }
+
         _selfCardPanelList.Clear();
         // 隐藏玩家的提示文字
         leftPlayerPanel.ChangeTipVisibility(null, false);
         rightPlayerPanel.ChangeTipVisibility(null, false);
         selfPlayerPanel.ChangeTipVisibility(null, false);
-        // 对手牌进行排序
+        // 对手牌进行排序，从大到小
         var list = response.CardList.ToList();
         list.Sort((a, b) => ((int)b.Point * 10 + (int)b.Suit).CompareTo((int)a.Point * 10 + (int)a.Suit));
+        // 保存手牌
+        selfPlayerPanel.SelfCardList = list;
         // 手牌距离左侧屏幕的宽度：(屏幕宽度 - ((卡牌数量 - 1) * 卡牌间距 + 卡牌宽度)) / 2
-        float cardDistanceWidth = (selfCardArea.rect.width - (Constant.CardDistance * (list.Count - 1) + 135)) / 2;
+        float cardDistanceWidth = (selfCardArea.rect.width - (Constant.CardHDistance * (list.Count - 1) + 135)) / 2;
         // 最左边第一张牌的起始X坐标：出牌区域起始X坐标 + 手牌距离左侧屏幕的宽度
         float firstCardX = selfCardArea.rect.width * -1 / 2 + cardDistanceWidth;
         // 创建卡牌预制体
@@ -100,9 +104,10 @@ public class GameView : UIBase {
             if (cardPanel == null) return;
             CardPanel panel = Instantiate(cardPanel, selfCardArea);
             panel.SetCardInfo(list[i]);
+            // 保存卡牌预制体，做位移动画使用
             _selfCardPanelList.Add(panel);
             // 设置卡牌之间的间距
-            panel.transform.localPosition = new Vector2(firstCardX + i * Constant.CardDistance, -20);
+            panel.transform.localPosition = new Vector2(firstCardX + i * Constant.CardHDistance, -20);
         }
 
         // 显示左右玩家手牌数量
@@ -112,13 +117,13 @@ public class GameView : UIBase {
         // 动画显示手牌
         StartCoroutine(DelayMoveCard());
     }
-    
+
     /// <summary>
     /// 处理服务器响应的叫地主消息
     /// </summary>
     private void OnCallLordHandle(ByteString data) {
         var response = CallLordResponse.Parser.ParseFrom(data);
-        var tipAndAudioName = response.IsCall ? "CallLord" : "NotCall";
+        var tipAndAudioName = response.IsCall ? Constant.CallLord : Constant.NotCall;
         // 播放音频
         AudioService.Instance.PlayOperateAudio(response.LastPos, tipAndAudioName);
 
@@ -138,15 +143,16 @@ public class GameView : UIBase {
             rightPlayerPanel.ChangeTipVisibility(tipAndAudioName);
         }
     }
-    
+
     /// <summary>
     /// 处理服务器响应的抢地主消息
     /// </summary>
     private void OnGrabLordHandle(ByteString data) {
         var response = GrabLordResponse.Parser.ParseFrom(data);
-        var tipImageName = response.IsGrab ? "Grab" : "NotGrab";
+        var tipImageName = response.IsGrab ? "Grab" : Constant.NotGrab;
         // 播放音频
-        AudioService.Instance.PlayOperateAudio(response.LastPos, response.IsGrab ? $"Grab{response.GrabTimes}" : "NotGrab");
+        AudioService.Instance.PlayOperateAudio(response.LastPos,
+            response.IsGrab ? $"Grab{response.GrabTimes}" : Constant.NotGrab);
 
         // 显示上一个叫地主玩家的操作提示
         if (response.LastPos == _leftPosIndex) {
@@ -156,10 +162,10 @@ public class GameView : UIBase {
         } else {
             rightPlayerPanel.ChangeTipVisibility(tipImageName);
         }
-        
-        // 重新设置倍数
+
+        // 设置倍数
         gameBottomPanel.SetMultipleText(response.Multiple);
-        // 如果还能抢地主的坐位是自己，则显示抢地主按钮页
+        // 如果还能抢地主的玩家是自己，则显示抢地主按钮页
         if (response.CanGrabPos == _selfPosIndex) {
             buttonsPanel.ChangeCallLordBtnPage(true);
             // 倒计时结束，发送“不抢”请求并隐藏按钮页
@@ -169,6 +175,61 @@ public class GameView : UIBase {
             });
         }
     }
+    
+    /// <summary>
+    /// 处理服务器响应的玩家成为地主消息
+    /// </summary>
+    private void OnBecomeLordHandle(ByteString data) {
+        var response = BecomeLordResponse.Parser.ParseFrom(data);
+        // 对底牌进行排序，从大到小
+        var list = response.HoleCards.ToList();
+        list.Sort((a, b) => ((int)b.Point * 10 + (int)b.Suit).CompareTo((int)a.Point * 10 + (int)a.Suit));
+        // 显示底牌
+        pocketCardPanel.SetPocketCard(list);
+        // 隐藏叫/抢地主的提示文字
+        leftPlayerPanel.ChangeTipVisibility(null, false);
+        rightPlayerPanel.ChangeTipVisibility(null, false);
+        selfPlayerPanel.ChangeTipVisibility(null, false);
+        
+        // 显示地主图标
+        if (response.LordPos == _leftPosIndex) {
+            leftPlayerPanel.ChangeLordIconVisibility();
+        } else if (response.LordPos == _rightPosIndex) {
+            rightPlayerPanel.ChangeLordIconVisibility();
+        } else {
+            selfPlayerPanel.ChangeLordIconVisibility();
+            // 保存手牌
+            selfPlayerPanel.SelfCardList.AddRange(list);
+            // 要插入的底牌
+            var pocketCards = new Dictionary<int, CardPanel>();
+            // 手牌偏移的位置
+            float[] offsetArr = new float[20];
+            for (var i = 0; i < list.Count; i++) {
+                CardPanel cardPanel = Resources.Load<CardPanel>("Prefabs/CardPanel");
+                if (cardPanel == null) return;
+                CardPanel panel = Instantiate(cardPanel, selfCardArea);
+                panel.SetCardInfo(list[i]);
+                _selfCardPanelList.Add(panel);
+                
+                // 计算底牌该插入的位置
+                int replaceIndex = selfPlayerPanel.GetCardPos(list[i]);
+                pocketCards.Add(replaceIndex - i, panel);
+                
+                for (var j = 0; j < offsetArr.Length; j++) {
+                    // 索引大于等于底牌插入的位置，则该卡牌在原位置往后挪
+                    if (j >= replaceIndex) {
+                        offsetArr[j] += Constant.CardHDistance;
+                    }
+                }
+                
+                // 设置卡牌预制体在父组件中的次序
+                panel.transform.SetSiblingIndex(replaceIndex - i);
+            }
+        }
+        
+        // 游戏进入加倍状态
+        GameStateChangedHandle(GameState.Raise);
+    }
 
     /// <summary>
     /// 移动卡牌的动画
@@ -177,7 +238,7 @@ public class GameView : UIBase {
         AudioService.Instance.PlayEffectAudio(Constant.CardDispatch);
         foreach (var panel in _selfCardPanelList) {
             panel.gameObject.SetActive(true);
-            panel.MovePosInTime(Constant.CardMoveDelay, new Vector3(Constant.CardDistance, 0, 0));
+            panel.MovePosInTime(Constant.CardMoveDelay, new Vector3(Constant.CardHDistance, 0, 0));
 
             yield return new WaitForSeconds(Constant.CardMoveDelay);
         }
@@ -196,11 +257,11 @@ public class GameView : UIBase {
         switch (state) {
             case GameState.CallLord:
                 buttonsPanel.ChangeCallLordBtnPage(false);
-                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.CallLord, () => {});
+                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.CallLord, () => { });
                 break;
             case GameState.GrabLord:
                 buttonsPanel.ChangeCallLordBtnPage(true);
-                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord, () => {});
+                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord, () => { });
                 break;
             case GameState.Raise:
                 break;

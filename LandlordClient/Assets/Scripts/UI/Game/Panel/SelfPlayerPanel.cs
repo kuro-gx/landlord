@@ -13,17 +13,16 @@ public class SelfPlayerPanel : UIBase {
     [SerializeField, Header("聊天气泡")] private Image chatContainerEl;
     [SerializeField, Header("提示文字")] private Image tipTextEl;
 
-    private List<Card> _selfCardList = new List<Card>(); // 自己的手牌
-    private List<Card> _prepareCardList = new List<Card>(); // 将要打出去的牌
+    public List<Card> SelfCardList; // 自己的手牌
+    private List<Card> _prepareCardList = new(); // 将要打出去的牌
 
-    public override void Init() {
+    protected override void Init() {
         // 设置用户信息
         if (Global.LoginUser != null) {
             usernameEl.text = Global.LoginUser.Username;
             moneyEl.text = Global.LoginUser.Money.ToString();
         }
-        
-        _selfCardList.Clear();
+
         _prepareCardList.Clear();
     }
 
@@ -35,7 +34,7 @@ public class SelfPlayerPanel : UIBase {
         if (playerInfo == null) {
             return;
         }
-        
+
         usernameEl.text = playerInfo.Username;
         moneyEl.text = playerInfo.Money.ToString();
         characterEl.sprite = Resources.Load<Sprite>("Character/Tex_0" + playerInfo.Pos);
@@ -49,6 +48,41 @@ public class SelfPlayerPanel : UIBase {
             tipTextEl.sprite = Resources.Load<Sprite>("TipText/" + tipImageName);
             tipTextEl.SetNativeSize();
         }
+
         tipTextEl.gameObject.SetActive(visibility);
+    }
+
+    /// <summary>
+    /// 显示 or 隐藏地主图标
+    /// </summary>
+    public void ChangeLordIconVisibility(bool visibility = true) {
+        // 缩放显示，普通隐藏
+        if (visibility) {
+            landlordIconEl.gameObject.SetActive(true);
+
+            var scaleTween = GetOrAddComponent<RectScaleTween>(landlordIconEl.gameObject);
+            scaleTween.ScaleTo(0.3f, Vector3.zero * 1.5f,
+                () => { scaleTween.ScaleTo(0.15f, Vector3.zero, () => { Destroy(scaleTween); }); });
+        } else {
+            landlordIconEl.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
+    /// 计算底牌该插入手牌的位置
+    /// </summary>
+    /// <param name="card">底牌</param>
+    /// <returns>该插入的位置索引</returns>
+    public int GetCardPos(Card card) {
+        int index = -1;
+        for (int i = 0; i < SelfCardList.Count; i++) {
+            Card c = SelfCardList[i];
+            if ((int)c.Point * 10 + (int)c.Suit >= (int)card.Point * 10 + (int)card.Suit) {
+                index = i;
+                break;
+            }
+        }
+
+        return index;
     }
 }

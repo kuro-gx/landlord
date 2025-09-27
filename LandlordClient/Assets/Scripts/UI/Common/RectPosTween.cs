@@ -6,12 +6,12 @@ using UnityEngine;
 /// </summary>
 public class RectPosTween : MonoBehaviour {
     private RectTransform _rectTransform;
-    private bool _isRun = false;
-    private float _moveTime = 0; // 移动耗时
+    private bool _isRun;
+    private float _moveTime; // 移动耗时
     private Vector3 _startPos = Vector3.zero; // 起始位置
     private Vector3 _moveSpeed = Vector3.zero; // 移动速度
     private Vector3 _targetPos = Vector3.zero; // 目标位置
-    private float _countTime = 0; // 总耗时
+    private float _countTime; // 总耗时
     private Action _callback; // 回调函数
 
     private void Awake() {

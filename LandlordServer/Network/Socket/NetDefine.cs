@@ -11,6 +11,7 @@
     public const ushort CMD_DispatchCardCode = 821; // 发牌
     public const ushort CMD_CallLordCode = 822; // 叫地主
     public const ushort CMD_GrabLordCode = 823; // 抢地主
+    public const ushort CMD_BecomeLordCode = 824; // 成为地主
 }
 
 /// <summary>

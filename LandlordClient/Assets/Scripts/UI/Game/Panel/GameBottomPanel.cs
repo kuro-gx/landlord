@@ -9,7 +9,7 @@ public class GameBottomPanel : UIBase {
     [SerializeField, Header("聊天按钮")] private Button chatBtnEl;
     [SerializeField, Header("聊天面板")] private ChatPanel chatPanel;
 
-    public override void Init() {
+    protected override void Init() {
         chatBtnEl.onClick.AddListener(ChatBtnClicked);
     }
 

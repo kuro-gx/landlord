@@ -97,32 +97,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: flower
+      name: 16_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 97
-        width: 64
-        height: 91
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5aa080a4dc9c9804186502dc247584cf
-      internalID: 2096480347
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: joker_small
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 97
+        x: 67
+        y: 99
         width: 64
         height: 91
       alignment: 0
@@ -139,11 +118,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_spade
+      name: 12_4
       rect:
         serializedVersion: 2
         x: 134
-        y: 97
+        y: 98
         width: 64
         height: 91
       alignment: 0
@@ -160,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_spade
+      name: 10_4
       rect:
         serializedVersion: 2
         x: 200
@@ -181,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 6_spade
+      name: 8_4
       rect:
         serializedVersion: 2
         x: 266
@@ -202,7 +181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_spade
+      name: 6_4
       rect:
         serializedVersion: 2
         x: 332
@@ -223,7 +202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_spade
+      name: 4_4
       rect:
         serializedVersion: 2
         x: 398
@@ -244,7 +223,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 13_spade
+      name: 15_4
       rect:
         serializedVersion: 2
         x: 464
@@ -265,7 +244,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 11_hearts
+      name: 13_3
       rect:
         serializedVersion: 2
         x: 530
@@ -286,7 +265,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_hearts
+      name: 11_3
       rect:
         serializedVersion: 2
         x: 596
@@ -307,7 +286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_hearts
+      name: 9_3
       rect:
         serializedVersion: 2
         x: 662
@@ -328,7 +307,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_hearts
+      name: 7_3
       rect:
         serializedVersion: 2
         x: 728
@@ -349,7 +328,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_hearts
+      name: 5_3
       rect:
         serializedVersion: 2
         x: 794
@@ -370,7 +349,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_hearts
+      name: 3_3
       rect:
         serializedVersion: 2
         x: 860
@@ -391,7 +370,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 12_hearts
+      name: 14_3
       rect:
         serializedVersion: 2
         x: 926
@@ -412,7 +391,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_diamond
+      name: 12_1
       rect:
         serializedVersion: 2
         x: 992
@@ -433,7 +412,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_diamond
+      name: 10_1
       rect:
         serializedVersion: 2
         x: 1058
@@ -454,7 +433,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 6_diamond
+      name: 8_1
       rect:
         serializedVersion: 2
         x: 1124
@@ -475,7 +454,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_diamond
+      name: 6_1
       rect:
         serializedVersion: 2
         x: 1190
@@ -496,7 +475,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_diamond
+      name: 4_1
       rect:
         serializedVersion: 2
         x: 1256
@@ -517,7 +496,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 13_diamond
+      name: 15_1
       rect:
         serializedVersion: 2
         x: 1322
@@ -538,7 +517,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 11_club
+      name: 13_2
       rect:
         serializedVersion: 2
         x: 1388
@@ -559,7 +538,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_club
+      name: 11_2
       rect:
         serializedVersion: 2
         x: 1454
@@ -580,7 +559,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_club
+      name: 9_2
       rect:
         serializedVersion: 2
         x: 1520
@@ -601,7 +580,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_club
+      name: 7_2
       rect:
         serializedVersion: 2
         x: 1586
@@ -622,7 +601,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_club
+      name: 5_2
       rect:
         serializedVersion: 2
         x: 1652
@@ -643,7 +622,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_club
+      name: 3_2
       rect:
         serializedVersion: 2
         x: 1718
@@ -664,7 +643,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 12_club
+      name: 14_2
       rect:
         serializedVersion: 2
         x: 1784
@@ -685,7 +664,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: jocker_big
+      name: 17_0
       rect:
         serializedVersion: 2
         x: 2
@@ -706,7 +685,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 11_spade
+      name: 13_4
       rect:
         serializedVersion: 2
         x: 68
@@ -727,7 +706,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_spade
+      name: 11_4
       rect:
         serializedVersion: 2
         x: 134
@@ -748,7 +727,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_spade
+      name: 9_4
       rect:
         serializedVersion: 2
         x: 200
@@ -769,7 +748,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_spade
+      name: 7_4
       rect:
         serializedVersion: 2
         x: 266
@@ -790,7 +769,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_spade
+      name: 5_4
       rect:
         serializedVersion: 2
         x: 332
@@ -811,7 +790,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_spade
+      name: 3_4
       rect:
         serializedVersion: 2
         x: 398
@@ -832,7 +811,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 12_spade
+      name: 14_4
       rect:
         serializedVersion: 2
         x: 464
@@ -853,7 +832,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_hearts
+      name: 12_3
       rect:
         serializedVersion: 2
         x: 530
@@ -874,7 +853,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_hearts
+      name: 10_3
       rect:
         serializedVersion: 2
         x: 596
@@ -895,7 +874,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 6_hearts
+      name: 8_3
       rect:
         serializedVersion: 2
         x: 662
@@ -916,7 +895,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_hearts
+      name: 6_3
       rect:
         serializedVersion: 2
         x: 728
@@ -937,7 +916,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_hearts
+      name: 4_3
       rect:
         serializedVersion: 2
         x: 794
@@ -958,7 +937,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 13_hearts
+      name: 15_3
       rect:
         serializedVersion: 2
         x: 860
@@ -979,7 +958,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 11_diamond
+      name: 13_1
       rect:
         serializedVersion: 2
         x: 926
@@ -1000,7 +979,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 9_diamond
+      name: 11_1
       rect:
         serializedVersion: 2
         x: 992
@@ -1021,7 +1000,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 7_diamond
+      name: 9_1
       rect:
         serializedVersion: 2
         x: 1058
@@ -1042,7 +1021,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 5_diamond
+      name: 7_1
       rect:
         serializedVersion: 2
         x: 1124
@@ -1063,7 +1042,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 3_diamond
+      name: 5_1
       rect:
         serializedVersion: 2
         x: 1190
@@ -1084,7 +1063,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 1_diamond
+      name: 3_1
       rect:
         serializedVersion: 2
         x: 1256
@@ -1105,7 +1084,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 12_diamond
+      name: 14_1
       rect:
         serializedVersion: 2
         x: 1322
@@ -1126,7 +1105,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 10_club
+      name: 12_2
       rect:
         serializedVersion: 2
         x: 1388
@@ -1147,7 +1126,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 8_club
+      name: 10_2
       rect:
         serializedVersion: 2
         x: 1454
@@ -1168,7 +1147,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 6_club
+      name: 8_2
       rect:
         serializedVersion: 2
         x: 1520
@@ -1189,7 +1168,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4_club
+      name: 6_2
       rect:
         serializedVersion: 2
         x: 1586
@@ -1210,7 +1189,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 2_club
+      name: 4_2
       rect:
         serializedVersion: 2
         x: 1652
@@ -1231,7 +1210,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 13_club
+      name: 15_2
       rect:
         serializedVersion: 2
         x: 1718
@@ -1262,61 +1241,61 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      10_club: 1948597495
-      10_diamond: -1388840196
-      10_hearts: -1557143436
-      10_spade: 548505612
-      11_club: 1046213797
-      11_diamond: 712418825
-      11_hearts: 2063407973
-      11_spade: -966232155
-      12_club: 791758242
-      12_diamond: 1509250479
-      12_hearts: -1219705565
-      12_spade: 370391842
-      13_club: -358072653
-      13_diamond: -328654457
-      13_hearts: 2037010292
-      13_spade: 1358214921
-      1_club: 1132414624
-      1_diamond: 34663240
-      1_hearts: -1577660043
-      1_spade: -1410611473
-      2_club: -1149927055
-      2_diamond: -1741240135
-      2_hearts: -379510010
-      2_spade: 765471288
-      3_club: 969067189
-      3_diamond: -445988531
-      3_hearts: -510022552
-      3_spade: -51883248
-      4_club: 86030411
-      4_diamond: 1448757456
-      4_hearts: -353096728
-      4_spade: 300783251
-      5_club: 2113968932
-      5_diamond: -481693359
-      5_hearts: -1975973473
-      5_spade: -707040357
-      6_club: 1050600358
-      6_diamond: -439882292
-      6_hearts: 510530973
-      6_spade: -2080815000
-      7_club: 952435278
-      7_diamond: -630702829
-      7_hearts: -243084089
-      7_spade: 1653034645
-      8_club: 1201066995
-      8_diamond: -1181993595
-      8_hearts: -389581024
-      8_spade: -947898200
-      9_club: 317201667
-      9_diamond: 373003118
-      9_hearts: -1982344032
-      9_spade: -567818799
+      10_1: -1181993595
+      10_2: 1201066995
+      10_3: -389581024
+      10_4: -947898200
+      11_1: 373003118
+      11_2: 317201667
+      11_3: -1982344032
+      11_4: -567818799
+      12_1: -1388840196
+      12_2: 1948597495
+      12_3: -1557143436
+      12_4: 548505612
+      13_1: 712418825
+      13_2: 1046213797
+      13_3: 2063407973
+      13_4: -966232155
+      14_1: 1509250479
+      14_2: 791758242
+      14_3: -1219705565
+      14_4: 370391842
+      15_1: -328654457
+      15_2: -358072653
+      15_3: 2037010292
+      15_4: 1358214921
+      16_0: -683127513
+      17_0: 1270978806
+      3_1: 34663240
+      3_2: 1132414624
+      3_3: -1577660043
+      3_4: -1410611473
+      4_1: -1741240135
+      4_2: -1149927055
+      4_3: -379510010
+      4_4: 765471288
+      5_1: -445988531
+      5_2: 969067189
+      5_3: -510022552
+      5_4: -51883248
+      6_1: 1448757456
+      6_2: 86030411
+      6_3: -353096728
+      6_4: 300783251
+      7_1: -481693359
+      7_2: 2113968932
+      7_3: -1975973473
+      7_4: -707040357
+      8_1: -439882292
+      8_2: 1050600358
+      8_3: 510530973
+      8_4: -2080815000
+      9_1: -630702829
+      9_2: 952435278
+      9_3: -243084089
+      9_4: 1653034645
       flower: 2096480347
-      jocker_big: 1270978806
-      joker_small: -683127513
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -17,7 +17,7 @@ public class LoginView : UIBase {
         Instance = this;
     }
 
-    public override void Init() {
+    protected override void Init() {
         // 监听服务器返回的注册 & 登录结果
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RegisterCode, OnRegisterHandle);
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_LoginCode, OnLoginHandle);

@@ -13,7 +13,7 @@ public class SetInfoPanel : UIBase {
     // 将参数传递给父组件让其发送网络请求
     public Action<UpdateUserBo> UpdateUserInfoAction;
 
-    public override void Init() {
+    protected override void Init() {
         closeBtn.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             Show(false);

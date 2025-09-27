@@ -11,7 +11,7 @@ public class GameTopPanel : UIBase {
     [SerializeField, Header("换桌按钮")] private Button changeTableBtnEl;
     [SerializeField, Header("托管按钮")] private Button hostedBtnEl;
 
-    public override void Init() {
+    protected override void Init() {
         // 退出按钮点击事件
         exitBtnEl.onClick.AddListener(() => {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
