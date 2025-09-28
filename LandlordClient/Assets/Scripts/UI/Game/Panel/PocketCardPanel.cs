@@ -18,38 +18,26 @@ public class PocketCardPanel : UIBase {
     /// </summary>
     /// <param name="holeCards">底牌</param>
     public void SetPocketCard(List<Card> holeCards) {
-        Show();
-        
         Sprite[] cardImages = Resources.LoadAll<Sprite>("Sprites/card_small");
         string leftName = $"{(int)holeCards[0].Point}_{(int)holeCards[0].Suit}";
         string centerName = $"{(int)holeCards[1].Point}_{(int)holeCards[1].Suit}";
         string rightName = $"{(int)holeCards[2].Point}_{(int)holeCards[2].Suit}";
+        
+        foreach (var img in cardImages) {
+            if (img.name == leftName) {
+                cardLeftImage.sprite = img;
+            } else if (img.name == centerName) {
+                cardCenterImage.sprite = img;
+            } else if (img.name == rightName) {
+                cardRightImage.sprite = img;
+            }
+        }
 
         // 设置缩放动画
-        RectScaleTween scaleTween = GetOrAddComponent<RectScaleTween>(gameObject);
+        var scaleTween = GetOrAddComponent<RectScaleTween>(gameObject);
         scaleTween.ScaleTo(0.15f, Vector3.zero * 1.2f, () => {
-            // 底牌背景放大到1.2倍后，显示底牌的正面
-            foreach (var img in cardImages) {
-                if (img.name == leftName) {
-                    cardLeftImage.sprite = img;
-                } else if (img.name == centerName) {
-                    cardCenterImage.sprite = img;
-                } else if (img.name == rightName) {
-                    cardRightImage.sprite = img;
-                }
-            }
-            
             scaleTween.ScaleTo(0.5f, Vector3.zero * 1.25f, () => {
-                scaleTween.ScaleTo(0.2f, Vector3.zero, () => {
-                    var timer = GetOrAddComponent<TimerUtil>(gameObject);
-                    timer.AddTimerTask(new TimerTask {
-                        EndTime = 5,
-                        EndCallback = () => {
-                            Show(false);
-                            Destroy(timer);
-                        }
-                    });
-                    
+                scaleTween.ScaleTo(0.2f, Vector3.one, () => {
                     Destroy(scaleTween);
                 });
             });

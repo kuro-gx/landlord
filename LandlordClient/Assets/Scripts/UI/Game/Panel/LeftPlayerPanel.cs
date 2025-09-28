@@ -69,13 +69,10 @@ public class LeftPlayerPanel : UIBase {
             // 如果是显示地主图标，说明玩家成为了地主，设置手牌剩余数量
             cardStackTextEl.text = "20";
             landlordIconEl.gameObject.SetActive(true);
-
-            var scaleTween = GetOrAddComponent<RectScaleTween>(landlordIconEl.gameObject);
-            scaleTween.ScaleTo(0.3f, Vector3.zero * 1.5f, () => {
-                scaleTween.ScaleTo(0.15f, Vector3.zero, () => {
-                    Destroy(scaleTween);
-                });
-            });
+            
+            // 地主图片从屏幕中间移动到昵称上面
+            var component = GetOrAddComponent<RectPosTween>(landlordIconEl.gameObject);
+            component.MoveLocalPosTime(1.6f, new Vector3(-605, 0, 0));
         } else {
             landlordIconEl.gameObject.SetActive(false);
         }

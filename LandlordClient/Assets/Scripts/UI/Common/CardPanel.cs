@@ -10,6 +10,9 @@ public class CardPanel : UIBase {
     [SerializeField, Header("卡牌数值1")] private Image cardValue1Image;
     [SerializeField, Header("卡牌数值2")] private Image cardValue2Image;
     [SerializeField, Header("地主图标")] private Image landlordIcon;
+
+    // 卡牌的数值，排序使用
+    public int CardValue;
     
     protected override void Init() {
     }
@@ -21,6 +24,10 @@ public class CardPanel : UIBase {
     /// <param name="isLord">是否是地主</param>
     public void SetCardInfo(Card card, bool isLord = false) {
         landlordIcon.gameObject.SetActive(isLord);
+
+        CardValue = (int)card.Point * 10 + (int)card.Suit;
+        // 设置预制体名称，方便调试
+        gameObject.name = $"{card.Point}_{card.Suit}";
         // 所有的卡牌图片
         Sprite[] cardImages = Resources.LoadAll<Sprite>("Sprites/card_big");
         // 大小王

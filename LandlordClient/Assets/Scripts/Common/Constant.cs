@@ -1,10 +1,14 @@
 ﻿public class Constant {
+    // 卡牌预制体的宽度
+    public const float CardPanelWidth = 135;
     // 卡牌之间的横向距离
     public const float CardHDistance = 50;
     // 卡牌选中之后向上位移的距离
-    public const float CardVDistance = 20;
-    // 卡牌滑动的时间
-    public const float CardSlideTime = 0.3f;
+    public const float CardVDistance = -20;
+    // 底牌从上往下滑动的时间
+    public const float CardSlideTime = 1.2f;
+    // 插入底牌后原手牌挪动的耗时
+    public const float CardMoveTime = 0.3f;
     // 卡牌移动的时间间隔
     public const float CardMoveDelay = 0.14f;
     // 叫/抢地主倒计时
