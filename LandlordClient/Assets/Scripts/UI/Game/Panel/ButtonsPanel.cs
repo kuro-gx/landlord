@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using Google.Protobuf;
 using UnityEngine;
@@ -13,6 +12,9 @@ public class ButtonsPanel : UIBase {
 
     [SerializeField, Header("出牌按钮页")] private GameObject playHandBtnPage;
     [SerializeField, Header("出牌倒计时文本")] private Text playHandCountDownEl;
+    [SerializeField, Header("不出按钮")] private Button passBtn;
+    [SerializeField, Header("提示按钮")] private Button hintBtn;
+    [SerializeField, Header("出牌按钮")] private Button playHandBtn;
 
     [SerializeField, Header("叫地主按钮页")] private GameObject callLordBtnPage;
     [SerializeField, Header("叫地主按钮")] private Button callLordBtnEl;
@@ -22,6 +24,9 @@ public class ButtonsPanel : UIBase {
     [SerializeField, Header("不叫按钮文本")] private Text notCallLordTextEl;
 
     [SerializeField, Header("加倍按钮页")] private GameObject raiseBtnPage;
+    [SerializeField, Header("加倍按钮")] private Button raiseBtn;
+    [SerializeField, Header("不加倍按钮")] private Button notRaiseBtn;
+    [SerializeField, Header("加倍倒计时文本")] private Text raiseCountDownEl;
 
     private readonly string _matchText = "正在速配玩伴"; // 匹配文字
     private readonly float _duration = 1.5f; // 点点出现的时间间隔
@@ -29,6 +34,7 @@ public class ButtonsPanel : UIBase {
     private int _dotIndex = 0; // 当前点点的索引
     private bool _isAnimating;
     private bool _isStartGame;
+    private TimerUtil _timer;
 
     protected override void Init() {
         // 开始匹配
@@ -37,8 +43,12 @@ public class ButtonsPanel : UIBase {
         callLordBtnEl.onClick.AddListener(CallLordClicked);
         // 不叫 or 不抢
         notCallLordBtnEl.onClick.AddListener(NotCallLordClicked);
+        // 加倍
+        raiseBtn.onClick.AddListener(RaiseClicked);
+        // 不加倍
+        notRaiseBtn.onClick.AddListener(NotRaiseClicked);
     }
-
+    
     /// <summary>
     /// 用户点击“快速开始按钮”，进行匹配
     /// </summary>
@@ -89,7 +99,7 @@ public class ButtonsPanel : UIBase {
     /// </summary>
     /// <param name="isGrab">是否为抢地主环节</param>
     /// <param name="isShow">是否显示</param>
-    public void ChangeCallLordBtnPage(bool isGrab, bool isShow = true) {
+    public void ShowCallLordBtnPage(bool isGrab, bool isShow = true) {
         callLordBtnPage.SetActive(isShow);
         if (isGrab) {
             callLordTextEl.text = "抢地主";
@@ -105,28 +115,52 @@ public class ButtonsPanel : UIBase {
     }
 
     /// <summary>
-    /// 设置倒计时结束的回调
+    /// 倒计时结束的处理
     /// </summary>
     /// <param name="time">倒计时秒数</param>
     /// <param name="state">游戏状态</param>
-    /// <param name="callback">倒计时结束的回调函数</param>
-    public void SetClockCallback(int time, GameState state, Action callback) {
+    public void SetClockCallback(int time, GameState state) {
         SetClockText(time, state);
 
         // 每隔1秒修改闹钟内文字
-        TimerTask timerTask = new TimerTask {
+        var timerTask = new TimerTask {
             RateTime = 1,
             RateCallback = () => {
                 time -= 1;
                 SetClockText(time, state);
             },
-            EndTime = time,
-            EndCallback = callback
+            EndTime = time
         };
 
-        // 挂载组件
-        TimerUtil timerUtil = gameObject.AddComponent<TimerUtil>();
-        timerUtil.AddTimerTask(timerTask);
+        // 根据游戏状态设置倒计时结束的回调
+        switch (state) {
+            case GameState.CallLord: {
+                // 挂载组件
+                _timer = GetOrAddComponent<TimerUtil>(callLordCountDownEl.gameObject);
+                timerTask.EndCallback = () => {
+                    CallOrGrabLordApi(false, false);
+                    callLordBtnPage.SetActive(false);
+                    Destroy(_timer);
+                };
+                break;
+            }
+            case GameState.GrabLord: {
+                _timer = GetOrAddComponent<TimerUtil>(callLordCountDownEl.gameObject);
+                timerTask.EndCallback = () => {
+                    CallOrGrabLordApi(true, false);
+                    callLordBtnPage.SetActive(false);
+                    Destroy(_timer);
+                };
+                break;
+            }
+            case GameState.Raise: {
+                _timer = GetOrAddComponent<TimerUtil>(raiseCountDownEl.gameObject);
+                timerTask.EndCallback = NotRaiseClicked;
+                break;
+            }
+        }
+
+        if (_timer) _timer.AddTimerTask(timerTask);
     }
 
     /// <summary>
@@ -141,6 +175,7 @@ public class ButtonsPanel : UIBase {
                 callLordCountDownEl.text = time.ToString();
                 break;
             case GameState.Raise:
+                raiseCountDownEl.text = time.ToString();
                 break;
             case GameState.PlayingHand:
                 playHandCountDownEl.text = time.ToString();
@@ -163,6 +198,8 @@ public class ButtonsPanel : UIBase {
 
         // 隐藏按钮组
         callLordBtnPage.SetActive(false);
+        // 销毁倒计时的组件
+        Destroy(_timer);
     }
 
     /// <summary>
@@ -180,12 +217,14 @@ public class ButtonsPanel : UIBase {
 
         // 隐藏按钮组
         callLordBtnPage.SetActive(false);
+        // 销毁倒计时的组件
+        if (_timer) Destroy(_timer);
     }
 
     /// <summary>
     /// 叫地主 or 抢地主请求
     /// </summary>
-    public void CallOrGrabLordApi(bool isGrab, bool param) {
+    private void CallOrGrabLordApi(bool isGrab, bool param) {
         if (isGrab) {
             var form = new GrabLordBo { Pos = Global.CurPos, IsGrab = param };
             // 发送抢地主请求
@@ -195,5 +234,61 @@ public class ButtonsPanel : UIBase {
             // 发送叫地主请求
             NetSocketMgr.Client.SendData(NetDefine.CMD_CallLordCode, form.ToByteString());
         }
+    }
+
+    /// <summary>
+    /// 显示or隐藏加倍按钮页面
+    /// </summary>
+    /// <param name="isShow">是否显示</param>
+    public void ShowRaiseBtnPage(bool isShow = true) {
+        raiseBtnPage.SetActive(isShow);
+    }
+
+    /// <summary>
+    /// 显示or隐藏出牌按钮页面
+    /// </summary>
+    /// <param name="state">显示</param>
+    /// <param name="isShow">是否显示</param>
+    public void ShowPlayHandBtnPage(PlayHandBtnEnum state, bool isShow = true) {
+        playHandBtnPage.SetActive(isShow);
+        // 隐藏3个按钮
+        passBtn.gameObject.SetActive(false);
+        hintBtn.gameObject.SetActive(false);
+        playHandBtn.gameObject.SetActive(false);
+
+        if (!isShow) return;
+        switch (state) {
+            case PlayHandBtnEnum.OnlyPass:
+                passBtn.gameObject.SetActive(true);
+                break;
+            case PlayHandBtnEnum.OnlyPlayHand:
+                playHandBtn.gameObject.SetActive(true);
+                break;
+            case PlayHandBtnEnum.ShowAll:
+                passBtn.gameObject.SetActive(true);
+                hintBtn.gameObject.SetActive(true);
+                playHandBtn.gameObject.SetActive(true);
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// 加倍请求
+    /// </summary>
+    private void RaiseClicked() {
+        var form = new RaiseBo { Pos = Global.CurPos, IsRaise = true };
+        NetSocketMgr.Client.SendData(NetDefine.CMD_RaiseCode, form.ToByteString());
+        raiseBtnPage.SetActive(false);
+        if (_timer) Destroy(_timer);
+    }
+    
+    /// <summary>
+    /// 不加倍请求
+    /// </summary>
+    private void NotRaiseClicked() {
+        var form = new RaiseBo { Pos = Global.CurPos, IsRaise = false };
+        NetSocketMgr.Client.SendData(NetDefine.CMD_RaiseCode, form.ToByteString());
+        raiseBtnPage.SetActive(false);
+        if (_timer) Destroy(_timer);
     }
 }

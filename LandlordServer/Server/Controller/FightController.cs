@@ -16,6 +16,9 @@ public class FightController : IContainer {
             case NetDefine.CMD_GrabLordCode:
                 OnGrabLordHandle(package);
                 break;
+            case NetDefine.CMD_RaiseCode:
+                OnRaiseHandle(package);
+                break;
         }
     }
 
@@ -167,6 +170,39 @@ public class FightController : IContainer {
         
         // 用户选择“抢”或“不抢”，都无法再进行抢地主，只能抢1次
         grabLordPlayer.CanGrab = false;
+    }
+    
+    /// <summary>
+    /// 加倍请求
+    /// </summary>
+    private void OnRaiseHandle(BasePackage package) {
+        Session session = SessionMgr.Instance.GetSession(package.SessionId);
+        Room room = Cache.Instance.UserRoomDict[session.UserId];
+        if (room.RoomState != RoomState.Raise) {
+            return;
+        }
+        
+        // 最多进行3次加倍
+        if (room.RaiseTimes >= 3) {
+            room.RoomState = RoomState.PlayHand;
+            return;
+        }
+        
+        var form = RaiseBo.Parser.ParseFrom(package.Data);
+        room.RaiseTimes++;
+        if (form.IsRaise) {
+            room.Multiple *= 2;
+        }
+
+        var response = new RaiseResponse {
+            LastPos = form.Pos,
+            IsRaise = form.IsRaise,
+            Multiple = room.Multiple,
+            CanRaise = room.RaiseTimes < 3,
+            LordPos = room.CurLordPos
+        };
+
+        Broadcast(room.Players, package, response.ToByteString());
     }
 
     /// <summary>

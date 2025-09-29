@@ -1,9 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using Google.Protobuf;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class GameView : UIBase {
     [SerializeField, Header("底牌面板")] private PocketCardPanel pocketCardPanel;
@@ -32,37 +30,8 @@ public class GameView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_GrabLordCode, OnGrabLordHandle);
         // 监听服务器响应的玩家成为地主消息
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_BecomeLordCode, OnBecomeLordHandle);
-
-        // var allCard = Shuffle();
-        // var list = new List<Card>();
-        // for (int i = 0; i < 17; i++) {
-        //     list.Add(allCard[i]);
-        // }
-        // selfPlayerPanel.InitCardPanelList(list);
-        // StartCoroutine(DelayMoveCard());
-        //
-        // var lastCard = new List<Card> { allCard[20], allCard[21], allCard[22] };
-        // selfPlayerPanel.BecomeLord(lastCard);
-    }
-    
-    // 测试用
-    private List<Card> Shuffle() {
-        List<Card> cards = new List<Card>(54);
-
-        for (int i = (int)CardSuit.Diamond; i <= (int)CardSuit.Spade; i++) {
-            for (int j = (int)CardPoint.Three; j < (int)CardPoint.JokerSmall; j++) {
-                cards.Add(new Card { Suit = (CardSuit)i, Point = (CardPoint)j });
-            }
-        }
-        cards.Add(new Card { Suit = CardSuit.SuitNone, Point = CardPoint.JokerSmall });
-        cards.Add(new Card { Suit = CardSuit.SuitNone, Point = CardPoint.JokerBig });
-        
-        for (int i = cards.Count - 1; i >= 0; i--) {
-            int j = Random.Range(0, i + 1);
-            (cards[i], cards[j]) = (cards[j], cards[i]);
-        }
-
-        return cards;
+        // 监听服务器响应的加倍消息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RaiseCode, OnRaiseHandle);
     }
 
     /// <summary>
@@ -140,7 +109,7 @@ public class GameView : UIBase {
             leftPlayerPanel.ChangeTipVisibility(tipAndAudioName);
             // 上个叫地主的玩家是左侧玩家，且左侧玩家选择“不叫”，则轮到自己叫地主
             if (!response.IsCall) {
-                buttonsPanel.ChangeCallLordBtnPage(false);
+                buttonsPanel.ShowCallLordBtnPage(false);
             } else {
                 // 左侧玩家叫地主，进入抢地主环节
                 GameStateChangedHandle(GameState.GrabLord);
@@ -177,17 +146,14 @@ public class GameView : UIBase {
         // 如果没人抢地主
         if (response.CanGrabPos == -1) {
             // 隐藏抢地主按钮组
-            buttonsPanel.ChangeCallLordBtnPage(true, false);
+            buttonsPanel.ShowCallLordBtnPage(true, false);
         }
         
         // 如果还能抢地主的玩家是自己，则显示抢地主按钮页
         if (response.CanGrabPos == _selfPosIndex) {
-            buttonsPanel.ChangeCallLordBtnPage(true);
+            buttonsPanel.ShowCallLordBtnPage(true);
             // 倒计时结束，发送“不抢”请求并隐藏按钮页
-            buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord, () => {
-                buttonsPanel.CallOrGrabLordApi(true, false);
-                buttonsPanel.ChangeCallLordBtnPage(true, false);
-            });
+            buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord);
         }
     }
     
@@ -218,6 +184,38 @@ public class GameView : UIBase {
         // 游戏进入加倍状态
         GameStateChangedHandle(GameState.Raise);
     }
+    
+    /// <summary>
+    /// 处理服务器响应的加倍消息
+    /// </summary>
+    private void OnRaiseHandle(ByteString data) {
+        var response = RaiseResponse.Parser.ParseFrom(data);
+        var tipAndAudioName = response.IsRaise ? Constant.Raise : Constant.NotRaise;
+        AudioService.Instance.PlayOperateAudio(response.LastPos, tipAndAudioName);
+        
+        if (response.LastPos == _leftPosIndex) {
+            leftPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+        } else if (response.LastPos == _selfPosIndex) {
+            selfPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+        } else {
+            rightPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+        }
+
+        // 设置新的倍数
+        gameBottomPanel.SetMultipleText(response.Multiple);
+
+        // 所有人都选择过后，隐藏文字提示
+        if (response.CanRaise) return;
+        leftPlayerPanel.ChangeTipVisibility(null, false);
+        rightPlayerPanel.ChangeTipVisibility(null, false);
+        selfPlayerPanel.ChangeTipVisibility(null, false);
+        // 游戏进入出牌阶段
+        GameStateChangedHandle(GameState.PlayingHand);
+        // 如果自己是地主，则显示出牌按钮页面
+        if (response.LordPos == _selfPosIndex) {
+            buttonsPanel.ShowPlayHandBtnPage(PlayHandBtnEnum.OnlyPlayHand);
+        }
+    }
 
     /// <summary>
     /// 移动卡牌的动画
@@ -244,14 +242,16 @@ public class GameView : UIBase {
     private void GameStateChangedHandle(GameState state) {
         switch (state) {
             case GameState.CallLord:
-                buttonsPanel.ChangeCallLordBtnPage(false);
-                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.CallLord, () => { });
+                buttonsPanel.ShowCallLordBtnPage(false);
+                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.CallLord);
                 break;
             case GameState.GrabLord:
-                buttonsPanel.ChangeCallLordBtnPage(true);
-                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord, () => { });
+                buttonsPanel.ShowCallLordBtnPage(true);
+                buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord);
                 break;
             case GameState.Raise:
+                buttonsPanel.ShowRaiseBtnPage();
+                buttonsPanel.SetClockCallback(Constant.RaiseCountDown, GameState.Raise);
                 break;
             case GameState.PlayingHand:
                 break;

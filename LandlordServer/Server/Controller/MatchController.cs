@@ -53,7 +53,8 @@ public class MatchController : IContainer {
                 Multiple = 1,
                 GrabTimes = 0,
                 CurLordPos = -1,
-                PendPos = -1
+                PendPos = -1,
+                RaiseTimes = 0
             };
         } else {
             _matchingRoom.Players.Insert(_posIndex, player);

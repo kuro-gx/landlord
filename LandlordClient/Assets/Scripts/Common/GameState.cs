@@ -8,3 +8,12 @@ public enum GameState {
     PlayingHand, // 出牌
     GameEnd // 游戏结束
 }
+
+/// <summary>
+/// 出牌按钮页应该显示的按钮
+/// </summary>
+public enum PlayHandBtnEnum {
+    OnlyPass, // 只显示不出
+    OnlyPlayHand, // 只显示出牌
+    ShowAll // 全部显示
+}

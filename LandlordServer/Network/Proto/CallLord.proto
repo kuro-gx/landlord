@@ -35,3 +35,18 @@ message BecomeLordResponse {
   int32 lord_pos = 1; // 成为地主的玩家的坐位
   repeated Card hole_cards = 2; // 底牌
 }
+
+// 加倍参数
+message RaiseBo {
+  int32 pos = 1; // 发起请求玩家的坐位索引
+  bool is_raise = 2; // 加倍 or 不加倍
+}
+
+// 加倍响应
+message RaiseResponse {
+  int32 last_pos = 1; // 上次请求的玩家的坐位
+  bool is_raise = 2; // 上次请求的玩家是否选择了加倍
+  int32 multiple = 3; // 最新的倍数
+  bool can_raise = 4; // 是否可以继续加倍
+  int32 lord_pos = 5; // 当前地主的索引
+}

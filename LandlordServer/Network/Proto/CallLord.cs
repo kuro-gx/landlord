@@ -30,7 +30,10 @@ public static partial class CallLordReflection {
           "KAUSDwoHaXNfZ3JhYhgCIAEoCBIQCghtdWx0aXBsZRgDIAEoBRISCgpncmFi",
           "X3RpbWVzGAQgASgFEhQKDGNhbl9ncmFiX3BvcxgFIAEoBSJBChJCZWNvbWVM",
           "b3JkUmVzcG9uc2USEAoIbG9yZF9wb3MYASABKAUSGQoKaG9sZV9jYXJkcxgC",
-          "IAMoCzIFLkNhcmRiBnByb3RvMw=="));
+          "IAMoCzIFLkNhcmQiKAoHUmFpc2VCbxILCgNwb3MYASABKAUSEAoIaXNfcmFp",
+          "c2UYAiABKAgiagoNUmFpc2VSZXNwb25zZRIQCghsYXN0X3BvcxgBIAEoBRIQ",
+          "Cghpc19yYWlzZRgCIAEoCBIQCghtdWx0aXBsZRgDIAEoBRIRCgljYW5fcmFp",
+          "c2UYBCABKAgSEAoIbG9yZF9wb3MYBSABKAViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -38,7 +41,9 @@ public static partial class CallLordReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::CallLordResponse), global::CallLordResponse.Parser, new[]{ "LastPos", "IsCall", "CallPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordBo), global::GrabLordBo.Parser, new[]{ "Pos", "IsGrab" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordResponse), global::GrabLordResponse.Parser, new[]{ "LastPos", "IsGrab", "Multiple", "GrabTimes", "CanGrabPos" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::BecomeLordResponse), global::BecomeLordResponse.Parser, new[]{ "LordPos", "HoleCards" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::BecomeLordResponse), global::BecomeLordResponse.Parser, new[]{ "LordPos", "HoleCards" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RaiseBo), global::RaiseBo.Parser, new[]{ "Pos", "IsRaise" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RaiseResponse), global::RaiseResponse.Parser, new[]{ "LastPos", "IsRaise", "Multiple", "CanRaise", "LordPos" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1405,6 +1410,614 @@ public sealed partial class BecomeLordResponse : pb::IMessage<BecomeLordResponse
         }
         case 18: {
           holeCards_.AddEntriesFrom(ref input, _repeated_holeCards_codec);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 加倍参数
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class RaiseBo : pb::IMessage<RaiseBo>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<RaiseBo> _parser = new pb::MessageParser<RaiseBo>(() => new RaiseBo());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<RaiseBo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CallLordReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseBo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseBo(RaiseBo other) : this() {
+    pos_ = other.pos_;
+    isRaise_ = other.isRaise_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseBo Clone() {
+    return new RaiseBo(this);
+  }
+
+  /// <summary>Field number for the "pos" field.</summary>
+  public const int PosFieldNumber = 1;
+  private int pos_;
+  /// <summary>
+  /// 发起请求玩家的坐位索引
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Pos {
+    get { return pos_; }
+    set {
+      pos_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_raise" field.</summary>
+  public const int IsRaiseFieldNumber = 2;
+  private bool isRaise_;
+  /// <summary>
+  /// 加倍 or 不加倍
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsRaise {
+    get { return isRaise_; }
+    set {
+      isRaise_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as RaiseBo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(RaiseBo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Pos != other.Pos) return false;
+    if (IsRaise != other.IsRaise) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Pos != 0) hash ^= Pos.GetHashCode();
+    if (IsRaise != false) hash ^= IsRaise.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Pos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Pos);
+    }
+    if (IsRaise != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsRaise);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Pos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Pos);
+    }
+    if (IsRaise != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsRaise);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Pos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
+    }
+    if (IsRaise != false) {
+      size += 1 + 1;
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(RaiseBo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Pos != 0) {
+      Pos = other.Pos;
+    }
+    if (other.IsRaise != false) {
+      IsRaise = other.IsRaise;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Pos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsRaise = input.ReadBool();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          Pos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsRaise = input.ReadBool();
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 加倍响应
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class RaiseResponse : pb::IMessage<RaiseResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<RaiseResponse> _parser = new pb::MessageParser<RaiseResponse>(() => new RaiseResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<RaiseResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CallLordReflection.Descriptor.MessageTypes[6]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseResponse(RaiseResponse other) : this() {
+    lastPos_ = other.lastPos_;
+    isRaise_ = other.isRaise_;
+    multiple_ = other.multiple_;
+    canRaise_ = other.canRaise_;
+    lordPos_ = other.lordPos_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public RaiseResponse Clone() {
+    return new RaiseResponse(this);
+  }
+
+  /// <summary>Field number for the "last_pos" field.</summary>
+  public const int LastPosFieldNumber = 1;
+  private int lastPos_;
+  /// <summary>
+  /// 上次请求的玩家的坐位
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int LastPos {
+    get { return lastPos_; }
+    set {
+      lastPos_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_raise" field.</summary>
+  public const int IsRaiseFieldNumber = 2;
+  private bool isRaise_;
+  /// <summary>
+  /// 上次请求的玩家是否选择了加倍
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsRaise {
+    get { return isRaise_; }
+    set {
+      isRaise_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "multiple" field.</summary>
+  public const int MultipleFieldNumber = 3;
+  private int multiple_;
+  /// <summary>
+  /// 最新的倍数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Multiple {
+    get { return multiple_; }
+    set {
+      multiple_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "can_raise" field.</summary>
+  public const int CanRaiseFieldNumber = 4;
+  private bool canRaise_;
+  /// <summary>
+  /// 是否可以继续加倍
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool CanRaise {
+    get { return canRaise_; }
+    set {
+      canRaise_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "lord_pos" field.</summary>
+  public const int LordPosFieldNumber = 5;
+  private int lordPos_;
+  /// <summary>
+  /// 当前地主的索引
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int LordPos {
+    get { return lordPos_; }
+    set {
+      lordPos_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as RaiseResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(RaiseResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (LastPos != other.LastPos) return false;
+    if (IsRaise != other.IsRaise) return false;
+    if (Multiple != other.Multiple) return false;
+    if (CanRaise != other.CanRaise) return false;
+    if (LordPos != other.LordPos) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (LastPos != 0) hash ^= LastPos.GetHashCode();
+    if (IsRaise != false) hash ^= IsRaise.GetHashCode();
+    if (Multiple != 0) hash ^= Multiple.GetHashCode();
+    if (CanRaise != false) hash ^= CanRaise.GetHashCode();
+    if (LordPos != 0) hash ^= LordPos.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (LastPos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(LastPos);
+    }
+    if (IsRaise != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsRaise);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(Multiple);
+    }
+    if (CanRaise != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(CanRaise);
+    }
+    if (LordPos != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(LordPos);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (LastPos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(LastPos);
+    }
+    if (IsRaise != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsRaise);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(24);
+      output.WriteInt32(Multiple);
+    }
+    if (CanRaise != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(CanRaise);
+    }
+    if (LordPos != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(LordPos);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (LastPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(LastPos);
+    }
+    if (IsRaise != false) {
+      size += 1 + 1;
+    }
+    if (Multiple != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Multiple);
+    }
+    if (CanRaise != false) {
+      size += 1 + 1;
+    }
+    if (LordPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(LordPos);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(RaiseResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.LastPos != 0) {
+      LastPos = other.LastPos;
+    }
+    if (other.IsRaise != false) {
+      IsRaise = other.IsRaise;
+    }
+    if (other.Multiple != 0) {
+      Multiple = other.Multiple;
+    }
+    if (other.CanRaise != false) {
+      CanRaise = other.CanRaise;
+    }
+    if (other.LordPos != 0) {
+      LordPos = other.LordPos;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          LastPos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsRaise = input.ReadBool();
+          break;
+        }
+        case 24: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 32: {
+          CanRaise = input.ReadBool();
+          break;
+        }
+        case 40: {
+          LordPos = input.ReadInt32();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          LastPos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsRaise = input.ReadBool();
+          break;
+        }
+        case 24: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 32: {
+          CanRaise = input.ReadBool();
+          break;
+        }
+        case 40: {
+          LordPos = input.ReadInt32();
           break;
         }
       }

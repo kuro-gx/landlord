@@ -22,22 +22,22 @@ public static partial class RoomReflection {
   static RoomReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpSb29tLnByb3RvGgpVc2VyLnByb3RvGgpDYXJkLnByb3RvIo4CCgRSb29t",
+          "CgpSb29tLnByb3RvGgpVc2VyLnByb3RvGgpDYXJkLnByb3RvIqMCCgRSb29t",
           "Eg8KB3Jvb21faWQYASABKAUSGAoHcGxheWVycxgCIAMoCzIHLlBsYXllchIe",
           "Cgpyb29tX3N0YXRlGAMgASgOMgouUm9vbVN0YXRlEhgKCWNhcmRfbGlzdBgE",
           "IAMoCzIFLkNhcmQSGQoKaG9sZV9jYXJkcxgFIAMoCzIFLkNhcmQSEAoIY2Fs",
           "bF9wb3MYBiABKAUSEgoKY2FsbF90aW1lcxgHIAEoBRISCgpiYXNlX3Njb3Jl",
           "GAggASgFEhAKCG11bHRpcGxlGAkgASgFEhIKCmdyYWJfdGltZXMYCiABKAUS",
-          "FAoMY3VyX2xvcmRfcG9zGAsgASgFEhAKCHBlbmRfcG9zGAwgASgFIksKDU1h",
-          "dGNoUmVzcG9uc2USDwoHcm9vbV9pZBgBIAEoBRIQCghzZWxmX3BvcxgCIAEo",
-          "BRIXCgZwbGF5ZXIYAyADKAsyBy5QbGF5ZXIqZQoJUm9vbVN0YXRlEggKBE5v",
-          "bmUQABIMCghNYXRjaGluZxABEgwKCENhbGxMb3JkEAMSDAoIR3JhYkxvcmQQ",
-          "BBIJCgVSYWlzZRAFEgwKCFBsYXlIYW5kEAYSCwoHR2FtZUVuZBAHYgZwcm90",
-          "bzM="));
+          "FAoMY3VyX2xvcmRfcG9zGAsgASgFEhAKCHBlbmRfcG9zGAwgASgFEhMKC3Jh",
+          "aXNlX3RpbWVzGA0gASgFIksKDU1hdGNoUmVzcG9uc2USDwoHcm9vbV9pZBgB",
+          "IAEoBRIQCghzZWxmX3BvcxgCIAEoBRIXCgZwbGF5ZXIYAyADKAsyBy5QbGF5",
+          "ZXIqZQoJUm9vbVN0YXRlEggKBE5vbmUQABIMCghNYXRjaGluZxABEgwKCENh",
+          "bGxMb3JkEAMSDAoIR3JhYkxvcmQQBBIJCgVSYWlzZRAFEgwKCFBsYXlIYW5k",
+          "EAYSCwoHR2FtZUVuZBAHYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::UserReflection.Descriptor, global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::RoomState), }, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::Room), global::Room.Parser, new[]{ "RoomId", "Players", "RoomState", "CardList", "HoleCards", "CallPos", "CallTimes", "BaseScore", "Multiple", "GrabTimes", "CurLordPos", "PendPos" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Room), global::Room.Parser, new[]{ "RoomId", "Players", "RoomState", "CardList", "HoleCards", "CallPos", "CallTimes", "BaseScore", "Multiple", "GrabTimes", "CurLordPos", "PendPos", "RaiseTimes" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MatchResponse), global::MatchResponse.Parser, new[]{ "RoomId", "SelfPos", "Player" }, null, null, null, null)
         }));
   }
@@ -129,6 +129,7 @@ public sealed partial class Room : pb::IMessage<Room>
     grabTimes_ = other.grabTimes_;
     curLordPos_ = other.curLordPos_;
     pendPos_ = other.pendPos_;
+    raiseTimes_ = other.raiseTimes_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -312,6 +313,21 @@ public sealed partial class Room : pb::IMessage<Room>
     }
   }
 
+  /// <summary>Field number for the "raise_times" field.</summary>
+  public const int RaiseTimesFieldNumber = 13;
+  private int raiseTimes_;
+  /// <summary>
+  /// 加倍的次数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int RaiseTimes {
+    get { return raiseTimes_; }
+    set {
+      raiseTimes_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -339,6 +355,7 @@ public sealed partial class Room : pb::IMessage<Room>
     if (GrabTimes != other.GrabTimes) return false;
     if (CurLordPos != other.CurLordPos) return false;
     if (PendPos != other.PendPos) return false;
+    if (RaiseTimes != other.RaiseTimes) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -358,6 +375,7 @@ public sealed partial class Room : pb::IMessage<Room>
     if (GrabTimes != 0) hash ^= GrabTimes.GetHashCode();
     if (CurLordPos != 0) hash ^= CurLordPos.GetHashCode();
     if (PendPos != 0) hash ^= PendPos.GetHashCode();
+    if (RaiseTimes != 0) hash ^= RaiseTimes.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -415,6 +433,10 @@ public sealed partial class Room : pb::IMessage<Room>
       output.WriteRawTag(96);
       output.WriteInt32(PendPos);
     }
+    if (RaiseTimes != 0) {
+      output.WriteRawTag(104);
+      output.WriteInt32(RaiseTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -464,6 +486,10 @@ public sealed partial class Room : pb::IMessage<Room>
       output.WriteRawTag(96);
       output.WriteInt32(PendPos);
     }
+    if (RaiseTimes != 0) {
+      output.WriteRawTag(104);
+      output.WriteInt32(RaiseTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -503,6 +529,9 @@ public sealed partial class Room : pb::IMessage<Room>
     }
     if (PendPos != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(PendPos);
+    }
+    if (RaiseTimes != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(RaiseTimes);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -545,6 +574,9 @@ public sealed partial class Room : pb::IMessage<Room>
     }
     if (other.PendPos != 0) {
       PendPos = other.PendPos;
+    }
+    if (other.RaiseTimes != 0) {
+      RaiseTimes = other.RaiseTimes;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -613,6 +645,10 @@ public sealed partial class Room : pb::IMessage<Room>
           PendPos = input.ReadInt32();
           break;
         }
+        case 104: {
+          RaiseTimes = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -678,6 +714,10 @@ public sealed partial class Room : pb::IMessage<Room>
         }
         case 96: {
           PendPos = input.ReadInt32();
+          break;
+        }
+        case 104: {
+          RaiseTimes = input.ReadInt32();
           break;
         }
       }
