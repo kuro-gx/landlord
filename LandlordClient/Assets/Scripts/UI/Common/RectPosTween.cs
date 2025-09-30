@@ -24,10 +24,20 @@ public class RectPosTween : MonoBehaviour {
     /// <param name="time">移动耗时</param>
     /// <param name="offset">移动距离</param>
     /// <param name="cb">回调函数</param>
-    public void MoveLocalPosTime(float time, Vector3 offset, Action cb = null) {
+    public void MoveLocalPosInTime(float time, Vector3 offset, Action cb = null) {
         _startPos = _rectTransform.localPosition;
         _moveTime = time;
         _targetPos = _startPos + offset;
+        _moveSpeed = (_targetPos - _startPos) / _moveTime;
+        _countTime = 0;
+        _callback = cb;
+        _isRun = true;
+    }
+    
+    public void MoveTargetPosInTime(float time, Vector3 target, Action cb = null) {
+        _startPos = _rectTransform.localPosition;
+        _moveTime = time;
+        _targetPos = target;
         _moveSpeed = (_targetPos - _startPos) / _moveTime;
         _countTime = 0;
         _callback = cb;

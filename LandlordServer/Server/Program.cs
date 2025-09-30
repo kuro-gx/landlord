@@ -20,6 +20,7 @@ namespace Server {
             server.RegisterCommand(NetDefine.CMD_CallLordCode, fightController);
             server.RegisterCommand(NetDefine.CMD_GrabLordCode, fightController);
             server.RegisterCommand(NetDefine.CMD_RaiseCode, fightController);
+            server.RegisterCommand(NetDefine.CMD_PlayHandCode, fightController);
 
             while (true) {
                 Thread.Sleep(10);

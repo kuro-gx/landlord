@@ -16,11 +16,12 @@
     // 加倍倒计时
     public const int RaiseCountDown = 15;
     // 出牌倒计时
-    public const int PlayHandCountDown = 30;
+    public const int PlayHandCountDown = 20;
     // UI音频
     public const string NormalClick = "SpecOk";
     // 特效音频
     public const string CardDispatch = "Special_DiscardDispatch";
+    public const string SelectedCard = "SpecSelectCard";
     // 操作音频
     public const string CallLord = "CallLord";
     public const string NotCall = "NotCall";

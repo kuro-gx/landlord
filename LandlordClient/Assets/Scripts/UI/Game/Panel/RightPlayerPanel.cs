@@ -71,7 +71,7 @@ public class RightPlayerPanel : UIBase {
 
             // 地主图片从屏幕中间移动到昵称上面
             var component = GetOrAddComponent<RectPosTween>(landlordIconEl.gameObject);
-            component.MoveLocalPosTime(1.6f, new Vector3(605, 0, 0));
+            component.MoveLocalPosInTime(1.6f, new Vector3(605, 0, 0));
         } else {
             landlordIconEl.gameObject.SetActive(false);
         }

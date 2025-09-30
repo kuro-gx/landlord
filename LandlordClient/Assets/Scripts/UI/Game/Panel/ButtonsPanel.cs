@@ -35,6 +35,7 @@ public class ButtonsPanel : UIBase {
     private bool _isAnimating;
     private bool _isStartGame;
     private TimerUtil _timer;
+    private PlayHandBtnEnum _playHandBtnPageState; // 出牌按钮页状态
 
     protected override void Init() {
         // 开始匹配
@@ -47,6 +48,12 @@ public class ButtonsPanel : UIBase {
         raiseBtn.onClick.AddListener(RaiseClicked);
         // 不加倍
         notRaiseBtn.onClick.AddListener(NotRaiseClicked);
+        // 出牌
+        playHandBtn.onClick.AddListener(PlayHandClicked);
+        // 不出
+        passBtn.onClick.AddListener(PassClicked);
+        // 提示
+        hintBtn.onClick.AddListener(() => { });
     }
     
     /// <summary>
@@ -158,6 +165,19 @@ public class ButtonsPanel : UIBase {
                 timerTask.EndCallback = NotRaiseClicked;
                 break;
             }
+            case GameState.PlayingHand: {
+                _timer = GetOrAddComponent<TimerUtil>(raiseCountDownEl.gameObject);
+                timerTask.EndCallback = () => {
+                    // todo 倒计时结束，放弃出牌 or 打出一张最小的牌
+                    if (_playHandBtnPageState is PlayHandBtnEnum.OnlyPass or PlayHandBtnEnum.ShowAll) {
+                    } else if (_playHandBtnPageState == PlayHandBtnEnum.OnlyPlayHand) {
+                    }
+
+                    ShowPlayHandBtnPage(PlayHandBtnEnum.None, false);
+                    Destroy(_timer);
+                };
+                break;
+            }
         }
 
         if (_timer) _timer.AddTimerTask(timerTask);
@@ -257,6 +277,7 @@ public class ButtonsPanel : UIBase {
         playHandBtn.gameObject.SetActive(false);
 
         if (!isShow) return;
+        _playHandBtnPageState = state;
         switch (state) {
             case PlayHandBtnEnum.OnlyPass:
                 passBtn.gameObject.SetActive(true);
@@ -271,7 +292,7 @@ public class ButtonsPanel : UIBase {
                 break;
         }
     }
-    
+
     /// <summary>
     /// 加倍请求
     /// </summary>
@@ -281,7 +302,7 @@ public class ButtonsPanel : UIBase {
         raiseBtnPage.SetActive(false);
         if (_timer) Destroy(_timer);
     }
-    
+
     /// <summary>
     /// 不加倍请求
     /// </summary>
@@ -290,5 +311,44 @@ public class ButtonsPanel : UIBase {
         NetSocketMgr.Client.SendData(NetDefine.CMD_RaiseCode, form.ToByteString());
         raiseBtnPage.SetActive(false);
         if (_timer) Destroy(_timer);
+    }
+    
+    /// <summary>
+    /// 出牌请求
+    /// </summary>
+    private void PlayHandClicked() {
+        var list = SelfPlayerPanel.Instance.PrepareCardList;
+        if (list.Count == 0) {
+            // 显示提示
+            SelfPlayerPanel.Instance.ChangeTipVisibility("5", "Sprites");
+            return;
+        }
+
+        // 获取牌型
+        var cardType = CardMgr.Instance.GetCardType(list);
+        if (cardType == CardType.HandUnknown) {
+            SelfPlayerPanel.Instance.ChangeTipVisibility("3", "Sprites");
+            return;
+        }
+
+        PlayHandRequest();
+    }
+    
+    /// <summary>
+    /// 不出请求
+    /// </summary>
+    private void PassClicked() {
+    }
+
+    /// <summary>
+    /// 发送出牌请求
+    /// </summary>
+    private void PlayHandRequest() {
+        var form = new PlayHandBo {
+            Pos = Global.CurPos,
+            IsPass = false
+        };
+        form.CardList.AddRange(SelfPlayerPanel.Instance.PrepareCardList);
+        NetSocketMgr.Client.SendData(NetDefine.CMD_PlayHandCode, form.ToByteString());
     }
 }

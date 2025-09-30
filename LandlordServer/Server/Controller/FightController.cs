@@ -19,6 +19,9 @@ public class FightController : IContainer {
             case NetDefine.CMD_RaiseCode:
                 OnRaiseHandle(package);
                 break;
+            case NetDefine.CMD_PlayHandCode:
+                OnPlayHandHandle(package);
+                break;
         }
     }
 
@@ -203,6 +206,19 @@ public class FightController : IContainer {
         };
 
         Broadcast(room.Players, package, response.ToByteString());
+    }
+
+    /// <summary>
+    /// 出牌请求
+    /// </summary>
+    private void OnPlayHandHandle(BasePackage package) {
+        Session session = SessionMgr.Instance.GetSession(package.SessionId);
+        Room room = Cache.Instance.UserRoomDict[session.UserId];
+        if (room.RoomState != RoomState.PlayHand) {
+            return;
+        }
+        
+        
     }
 
     /// <summary>

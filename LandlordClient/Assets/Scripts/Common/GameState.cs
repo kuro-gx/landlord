@@ -13,6 +13,7 @@ public enum GameState {
 /// 出牌按钮页应该显示的按钮
 /// </summary>
 public enum PlayHandBtnEnum {
+    None,
     OnlyPass, // 只显示不出
     OnlyPlayHand, // 只显示出牌
     ShowAll // 全部显示

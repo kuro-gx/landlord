@@ -97,49 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: landlord
-      rect:
-        serializedVersion: 2
-        x: 1919
-        y: 219
-        width: 78
-        height: 69
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 87e729de462e19243ab152f920b6ab3b
-      internalID: 2020611233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: pass
-      rect:
-        serializedVersion: 2
-        x: 1951
-        y: 293
-        width: 46
-        height: 91
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b33083390caa64042828a4507200824a
-      internalID: -24339366
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: comlayer_2
+      name: err6
       rect:
         serializedVersion: 2
         x: 1418
@@ -160,7 +118,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comlayer_3
+      name: err5
       rect:
         serializedVersion: 2
         x: 1418
@@ -181,7 +139,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comlayer_4
+      name: err4
       rect:
         serializedVersion: 2
         x: 701
@@ -202,7 +160,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comlayer_5
+      name: err2
       rect:
         serializedVersion: 2
         x: 544
@@ -223,7 +181,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comlayer_6
+      name: err3
       rect:
         serializedVersion: 2
         x: 544
@@ -244,7 +202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comlayer_7
+      name: err1
       rect:
         serializedVersion: 2
         x: 2
@@ -264,27 +222,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: msg_bg
-      rect:
-        serializedVersion: 2
-        x: 1199
-        y: 309
-        width: 153
-        height: 81
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: efb52f460c436e141b75600d909d03c5
-      internalID: -637204134
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -296,12 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      comlayer_2: 180872809
-      comlayer_3: -120405399
-      comlayer_4: -2027669238
-      comlayer_5: 132422764
-      comlayer_6: -1137152029
-      comlayer_7: 2124783906
+      err1: 2124783906
+      err2: 132422764
+      err3: -1137152029
+      err4: -2027669238
+      err5: -120405399
+      err6: 180872809
       landlord: 2020611233
       msg_bg: -637204134
       pass: -24339366

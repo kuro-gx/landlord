@@ -83,7 +83,7 @@ public class GameView : UIBase {
         // 隐藏玩家的提示文字
         leftPlayerPanel.ChangeTipVisibility(null, false);
         rightPlayerPanel.ChangeTipVisibility(null, false);
-        selfPlayerPanel.ChangeTipVisibility(null, false);
+        selfPlayerPanel.ChangeTipVisibility(null, "TipText", false);
         // 创建手牌预制体列表
         selfPlayerPanel.InitCardPanelList(response.CardList.ToList());
 
@@ -168,7 +168,7 @@ public class GameView : UIBase {
         // 隐藏叫/抢地主的提示文字
         leftPlayerPanel.ChangeTipVisibility(null, false);
         rightPlayerPanel.ChangeTipVisibility(null, false);
-        selfPlayerPanel.ChangeTipVisibility(null, false);
+        selfPlayerPanel.ChangeTipVisibility(null, "TipText", false);
         
         // 显示地主图标
         if (response.LordPos == _leftPosIndex) {
@@ -180,7 +180,7 @@ public class GameView : UIBase {
             // 自己成为地主
             selfPlayerPanel.BecomeLord(list);
         }
-        
+
         // 游戏进入加倍状态
         GameStateChangedHandle(GameState.Raise);
     }
@@ -208,7 +208,7 @@ public class GameView : UIBase {
         if (response.CanRaise) return;
         leftPlayerPanel.ChangeTipVisibility(null, false);
         rightPlayerPanel.ChangeTipVisibility(null, false);
-        selfPlayerPanel.ChangeTipVisibility(null, false);
+        selfPlayerPanel.ChangeTipVisibility(null, "TipText", false);
         // 游戏进入出牌阶段
         GameStateChangedHandle(GameState.PlayingHand);
         // 如果自己是地主，则显示出牌按钮页面
@@ -224,7 +224,7 @@ public class GameView : UIBase {
         AudioService.Instance.PlayEffectAudio(Constant.CardDispatch);
         foreach (var panel in selfPlayerPanel.SelfCardPanelList) {
             panel.Show();
-            panel.MovePosInTime(Constant.CardMoveDelay, new Vector3(Constant.CardHDistance, 0, 0));
+            panel.MoveLocalPosInTime(Constant.CardMoveDelay, new Vector3(Constant.CardHDistance, 0, 0));
 
             yield return new WaitForSeconds(Constant.CardMoveDelay);
         }
@@ -254,6 +254,9 @@ public class GameView : UIBase {
                 buttonsPanel.SetClockCallback(Constant.RaiseCountDown, GameState.Raise);
                 break;
             case GameState.PlayingHand:
+                // 设置selfPlayerPanel的游戏状态为PlayingHand，此状态可以选择卡牌
+                selfPlayerPanel.GameState = GameState.PlayingHand;
+                buttonsPanel.SetClockCallback(Constant.PlayHandCountDown, GameState.PlayingHand);
                 break;
         }
     }

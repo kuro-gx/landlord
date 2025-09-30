@@ -51,10 +51,12 @@ enum CardType {
     Hand_Bomb  = 12;                   // 炸弹
     Hand_Bomb_Pair  = 13;              // 炸弹带一对
     Hand_Bomb_Two_Single  = 14;        // 炸弹带两单
+    Hand_Bomb_Two_Pair  = 15;          // 炸弹带两对
 
-    Hand_Bomb_Jokers  = 15;            // 王炸
-    Hand_Bomb_Jokers_Pair  = 16;       // 王炸带一对
-    Hand_Bomb_Jokers_Two_Single  = 17; // 王炸带两单
+    Hand_Bomb_Jokers  = 16;            // 王炸
+    Hand_Bomb_Jokers_Pair  = 17;       // 王炸带一对
+    Hand_Bomb_Jokers_Two_Single  = 18; // 王炸带两单
+    Hand_Bomb_Jokers_Two_Pair  = 19;   // 王炸带两对
 }
 
 // 卡牌
@@ -68,4 +70,20 @@ message DispatchCardResponse {
     int32 base_score = 1; // 底分
     int32 multiple = 2; // 加倍倍数
     repeated Card card_list = 3; // 分发的卡牌
+}
+
+// 出牌参数
+message PlayHandBo {
+    int32 pos = 1; // 出牌玩家的坐位
+    bool is_pass = 2; // 是否不出
+    repeated Card card_list = 3; // 打出的牌
+}
+
+// 出牌响应
+message PlayHandResponse {
+    int32 last_pos = 1; // 上次请求的玩家的坐位
+    bool is_pass = 2; // 上次请求的玩家是否不出
+    repeated Card card_list = 3; // 打出的牌
+    int32 monster_pos = 4; // 本轮出牌中，打出的牌为最大的玩家的坐位
+    bool is_cover = 5; // 本次操作是否压死上家
 }

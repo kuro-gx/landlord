@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public abstract class UIBase : MonoBehaviour {
@@ -34,4 +35,23 @@ public abstract class UIBase : MonoBehaviour {
 
         return cpt;
     }
+    
+    #region 设置预制体的点击事件
+
+    protected void OnEnter(GameObject go, Action<GameObject> callback) {
+        var listener = GetOrAddComponent<ClickListener>(go);
+        listener.OnEnter = callback;
+    }
+
+    protected void OnClickDown(GameObject go, Action<GameObject> callback) {
+        var listener = GetOrAddComponent<ClickListener>(go);
+        listener.OnClickDown = callback;
+    }
+
+    protected void OnClickUp(GameObject go, Action<GameObject> callback) {
+        var listener = GetOrAddComponent<ClickListener>(go);
+        listener.OnClickUp = callback;
+    }
+
+    #endregion
 }

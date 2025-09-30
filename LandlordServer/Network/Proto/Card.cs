@@ -25,27 +25,34 @@ public static partial class CardReflection {
           "CgpDYXJkLnByb3RvIjoKBENhcmQSGQoFcG9pbnQYASABKA4yCi5DYXJkUG9p",
           "bnQSFwoEc3VpdBgCIAEoDjIJLkNhcmRTdWl0IlYKFERpc3BhdGNoQ2FyZFJl",
           "c3BvbnNlEhIKCmJhc2Vfc2NvcmUYASABKAUSEAoIbXVsdGlwbGUYAiABKAUS",
-          "GAoJY2FyZF9saXN0GAMgAygLMgUuQ2FyZCq6AQoJQ2FyZFBvaW50Eg0KCVBv",
-          "aW50Tm9uZRAAEgkKBVRocmVlEAMSCAoERm91chAEEggKBEZpdmUQBRIHCgNT",
-          "aXgQBhIJCgVTZXZlbhAHEgkKBUVpZ2h0EAgSCAoETmluZRAJEgcKA1RlbhAK",
-          "EggKBEphY2sQCxIJCgVRdWVlbhAMEggKBEtpbmcQDRIHCgNPbmUQDhIHCgNU",
-          "d28QDxIOCgpKb2tlclNtYWxsEBASDAoISm9rZXJCaWcQESpFCghDYXJkU3Vp",
-          "dBIMCghTdWl0Tm9uZRAAEgsKB0RpYW1vbmQQARIICgRDbHViEAISCQoFSGVh",
-          "cnQQAxIJCgVTcGFkZRAEKoUDCghDYXJkVHlwZRIQCgxIYW5kX1Vua25vd24Q",
-          "ABINCglIYW5kX1Bhc3MQARIPCgtIYW5kX1NpbmdsZRACEg0KCUhhbmRfUGFp",
-          "chADEg8KC0hhbmRfVHJpcGxlEAQSFgoSSGFuZF9UcmlwbGVfU2luZ2xlEAUS",
-          "FAoQSGFuZF9UcmlwbGVfUGFpchAGEg4KCkhhbmRfUGxhbmUQBxIZChVIYW5k",
-          "X1BsYW5lX1R3b19TaW5nbGUQCBIXChNIYW5kX1BsYW5lX1R3b19QYWlyEAkS",
-          "EQoNSGFuZF9TZXFfUGFpchAKEhMKD0hhbmRfU2VxX1NpbmdsZRALEg0KCUhh",
-          "bmRfQm9tYhAMEhIKDkhhbmRfQm9tYl9QYWlyEA0SGAoUSGFuZF9Cb21iX1R3",
-          "b19TaW5nbGUQDhIUChBIYW5kX0JvbWJfSm9rZXJzEA8SGQoVSGFuZF9Cb21i",
-          "X0pva2Vyc19QYWlyEBASHwobSGFuZF9Cb21iX0pva2Vyc19Ud29fU2luZ2xl",
-          "EBFiBnByb3RvMw=="));
+          "GAoJY2FyZF9saXN0GAMgAygLMgUuQ2FyZCJECgpQbGF5SGFuZEJvEgsKA3Bv",
+          "cxgBIAEoBRIPCgdpc19wYXNzGAIgASgIEhgKCWNhcmRfbGlzdBgDIAMoCzIF",
+          "LkNhcmQidgoQUGxheUhhbmRSZXNwb25zZRIQCghsYXN0X3BvcxgBIAEoBRIP",
+          "Cgdpc19wYXNzGAIgASgIEhgKCWNhcmRfbGlzdBgDIAMoCzIFLkNhcmQSEwoL",
+          "bW9uc3Rlcl9wb3MYBCABKAUSEAoIaXNfY292ZXIYBSABKAgqugEKCUNhcmRQ",
+          "b2ludBINCglQb2ludE5vbmUQABIJCgVUaHJlZRADEggKBEZvdXIQBBIICgRG",
+          "aXZlEAUSBwoDU2l4EAYSCQoFU2V2ZW4QBxIJCgVFaWdodBAIEggKBE5pbmUQ",
+          "CRIHCgNUZW4QChIICgRKYWNrEAsSCQoFUXVlZW4QDBIICgRLaW5nEA0SBwoD",
+          "T25lEA4SBwoDVHdvEA8SDgoKSm9rZXJTbWFsbBAQEgwKCEpva2VyQmlnEBEq",
+          "RQoIQ2FyZFN1aXQSDAoIU3VpdE5vbmUQABILCgdEaWFtb25kEAESCAoEQ2x1",
+          "YhACEgkKBUhlYXJ0EAMSCQoFU3BhZGUQBCq8AwoIQ2FyZFR5cGUSEAoMSGFu",
+          "ZF9Vbmtub3duEAASDQoJSGFuZF9QYXNzEAESDwoLSGFuZF9TaW5nbGUQAhIN",
+          "CglIYW5kX1BhaXIQAxIPCgtIYW5kX1RyaXBsZRAEEhYKEkhhbmRfVHJpcGxl",
+          "X1NpbmdsZRAFEhQKEEhhbmRfVHJpcGxlX1BhaXIQBhIOCgpIYW5kX1BsYW5l",
+          "EAcSGQoVSGFuZF9QbGFuZV9Ud29fU2luZ2xlEAgSFwoTSGFuZF9QbGFuZV9U",
+          "d29fUGFpchAJEhEKDUhhbmRfU2VxX1BhaXIQChITCg9IYW5kX1NlcV9TaW5n",
+          "bGUQCxINCglIYW5kX0JvbWIQDBISCg5IYW5kX0JvbWJfUGFpchANEhgKFEhh",
+          "bmRfQm9tYl9Ud29fU2luZ2xlEA4SFgoSSGFuZF9Cb21iX1R3b19QYWlyEA8S",
+          "FAoQSGFuZF9Cb21iX0pva2VycxAQEhkKFUhhbmRfQm9tYl9Kb2tlcnNfUGFp",
+          "chAREh8KG0hhbmRfQm9tYl9Kb2tlcnNfVHdvX1NpbmdsZRASEh0KGUhhbmRf",
+          "Qm9tYl9Kb2tlcnNfVHdvX1BhaXIQE2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CardPoint), typeof(global::CardSuit), typeof(global::CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::Card), global::Card.Parser, new[]{ "Point", "Suit" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::DispatchCardResponse), global::DispatchCardResponse.Parser, new[]{ "BaseScore", "Multiple", "CardList" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::DispatchCardResponse), global::DispatchCardResponse.Parser, new[]{ "BaseScore", "Multiple", "CardList" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandBo), global::PlayHandBo.Parser, new[]{ "Pos", "IsPass", "CardList" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandResponse), global::PlayHandResponse.Parser, new[]{ "LastPos", "IsPass", "CardList", "MonsterPos", "IsCover" }, null, null, null, null)
         }));
   }
   #endregion
@@ -207,17 +214,25 @@ public enum CardType {
   /// </summary>
   [pbr::OriginalName("Hand_Bomb_Two_Single")] HandBombTwoSingle = 14,
   /// <summary>
+  /// 炸弹带两对
+  /// </summary>
+  [pbr::OriginalName("Hand_Bomb_Two_Pair")] HandBombTwoPair = 15,
+  /// <summary>
   /// 王炸
   /// </summary>
-  [pbr::OriginalName("Hand_Bomb_Jokers")] HandBombJokers = 15,
+  [pbr::OriginalName("Hand_Bomb_Jokers")] HandBombJokers = 16,
   /// <summary>
   /// 王炸带一对
   /// </summary>
-  [pbr::OriginalName("Hand_Bomb_Jokers_Pair")] HandBombJokersPair = 16,
+  [pbr::OriginalName("Hand_Bomb_Jokers_Pair")] HandBombJokersPair = 17,
   /// <summary>
   /// 王炸带两单
   /// </summary>
-  [pbr::OriginalName("Hand_Bomb_Jokers_Two_Single")] HandBombJokersTwoSingle = 17,
+  [pbr::OriginalName("Hand_Bomb_Jokers_Two_Single")] HandBombJokersTwoSingle = 18,
+  /// <summary>
+  /// 王炸带两对
+  /// </summary>
+  [pbr::OriginalName("Hand_Bomb_Jokers_Two_Pair")] HandBombJokersTwoPair = 19,
 }
 
 #endregion
@@ -725,6 +740,632 @@ public sealed partial class DispatchCardResponse : pb::IMessage<DispatchCardResp
         }
         case 26: {
           cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 出牌参数
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class PlayHandBo : pb::IMessage<PlayHandBo>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<PlayHandBo> _parser = new pb::MessageParser<PlayHandBo>(() => new PlayHandBo());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<PlayHandBo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CardReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandBo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandBo(PlayHandBo other) : this() {
+    pos_ = other.pos_;
+    isPass_ = other.isPass_;
+    cardList_ = other.cardList_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandBo Clone() {
+    return new PlayHandBo(this);
+  }
+
+  /// <summary>Field number for the "pos" field.</summary>
+  public const int PosFieldNumber = 1;
+  private int pos_;
+  /// <summary>
+  /// 出牌玩家的坐位
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Pos {
+    get { return pos_; }
+    set {
+      pos_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_pass" field.</summary>
+  public const int IsPassFieldNumber = 2;
+  private bool isPass_;
+  /// <summary>
+  /// 是否不出
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsPass {
+    get { return isPass_; }
+    set {
+      isPass_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "card_list" field.</summary>
+  public const int CardListFieldNumber = 3;
+  private static readonly pb::FieldCodec<global::Card> _repeated_cardList_codec
+      = pb::FieldCodec.ForMessage(26, global::Card.Parser);
+  private readonly pbc::RepeatedField<global::Card> cardList_ = new pbc::RepeatedField<global::Card>();
+  /// <summary>
+  /// 打出的牌
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::Card> CardList {
+    get { return cardList_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as PlayHandBo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(PlayHandBo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Pos != other.Pos) return false;
+    if (IsPass != other.IsPass) return false;
+    if(!cardList_.Equals(other.cardList_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Pos != 0) hash ^= Pos.GetHashCode();
+    if (IsPass != false) hash ^= IsPass.GetHashCode();
+    hash ^= cardList_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (Pos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Pos);
+    }
+    if (IsPass != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsPass);
+    }
+    cardList_.WriteTo(output, _repeated_cardList_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (Pos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Pos);
+    }
+    if (IsPass != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsPass);
+    }
+    cardList_.WriteTo(ref output, _repeated_cardList_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (Pos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
+    }
+    if (IsPass != false) {
+      size += 1 + 1;
+    }
+    size += cardList_.CalculateSize(_repeated_cardList_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(PlayHandBo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Pos != 0) {
+      Pos = other.Pos;
+    }
+    if (other.IsPass != false) {
+      IsPass = other.IsPass;
+    }
+    cardList_.Add(other.cardList_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Pos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsPass = input.ReadBool();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(input, _repeated_cardList_codec);
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          Pos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsPass = input.ReadBool();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
+          break;
+        }
+      }
+    }
+  }
+  #endif
+
+}
+
+/// <summary>
+/// 出牌响应
+/// </summary>
+[global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
+#if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    , pb::IBufferMessage
+#endif
+{
+  private static readonly pb::MessageParser<PlayHandResponse> _parser = new pb::MessageParser<PlayHandResponse>(() => new PlayHandResponse());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pb::MessageParser<PlayHandResponse> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::CardReflection.Descriptor.MessageTypes[3]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandResponse() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandResponse(PlayHandResponse other) : this() {
+    lastPos_ = other.lastPos_;
+    isPass_ = other.isPass_;
+    cardList_ = other.cardList_.Clone();
+    monsterPos_ = other.monsterPos_;
+    isCover_ = other.isCover_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public PlayHandResponse Clone() {
+    return new PlayHandResponse(this);
+  }
+
+  /// <summary>Field number for the "last_pos" field.</summary>
+  public const int LastPosFieldNumber = 1;
+  private int lastPos_;
+  /// <summary>
+  /// 上次请求的玩家的坐位
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int LastPos {
+    get { return lastPos_; }
+    set {
+      lastPos_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_pass" field.</summary>
+  public const int IsPassFieldNumber = 2;
+  private bool isPass_;
+  /// <summary>
+  /// 上次请求的玩家是否不出
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsPass {
+    get { return isPass_; }
+    set {
+      isPass_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "card_list" field.</summary>
+  public const int CardListFieldNumber = 3;
+  private static readonly pb::FieldCodec<global::Card> _repeated_cardList_codec
+      = pb::FieldCodec.ForMessage(26, global::Card.Parser);
+  private readonly pbc::RepeatedField<global::Card> cardList_ = new pbc::RepeatedField<global::Card>();
+  /// <summary>
+  /// 打出的牌
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::Card> CardList {
+    get { return cardList_; }
+  }
+
+  /// <summary>Field number for the "monster_pos" field.</summary>
+  public const int MonsterPosFieldNumber = 4;
+  private int monsterPos_;
+  /// <summary>
+  /// 本轮出牌中，打出的牌为最大的玩家的坐位
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int MonsterPos {
+    get { return monsterPos_; }
+    set {
+      monsterPos_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_cover" field.</summary>
+  public const int IsCoverFieldNumber = 5;
+  private bool isCover_;
+  /// <summary>
+  /// 本次操作是否压死上家
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsCover {
+    get { return isCover_; }
+    set {
+      isCover_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override bool Equals(object other) {
+    return Equals(other as PlayHandResponse);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool Equals(PlayHandResponse other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (LastPos != other.LastPos) return false;
+    if (IsPass != other.IsPass) return false;
+    if(!cardList_.Equals(other.cardList_)) return false;
+    if (MonsterPos != other.MonsterPos) return false;
+    if (IsCover != other.IsCover) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (LastPos != 0) hash ^= LastPos.GetHashCode();
+    if (IsPass != false) hash ^= IsPass.GetHashCode();
+    hash ^= cardList_.GetHashCode();
+    if (MonsterPos != 0) hash ^= MonsterPos.GetHashCode();
+    if (IsCover != false) hash ^= IsCover.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void WriteTo(pb::CodedOutputStream output) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    output.WriteRawMessage(this);
+  #else
+    if (LastPos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(LastPos);
+    }
+    if (IsPass != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsPass);
+    }
+    cardList_.WriteTo(output, _repeated_cardList_codec);
+    if (MonsterPos != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(MonsterPos);
+    }
+    if (IsCover != false) {
+      output.WriteRawTag(40);
+      output.WriteBool(IsCover);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+    if (LastPos != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(LastPos);
+    }
+    if (IsPass != false) {
+      output.WriteRawTag(16);
+      output.WriteBool(IsPass);
+    }
+    cardList_.WriteTo(ref output, _repeated_cardList_codec);
+    if (MonsterPos != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(MonsterPos);
+    }
+    if (IsCover != false) {
+      output.WriteRawTag(40);
+      output.WriteBool(IsCover);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(ref output);
+    }
+  }
+  #endif
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CalculateSize() {
+    int size = 0;
+    if (LastPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(LastPos);
+    }
+    if (IsPass != false) {
+      size += 1 + 1;
+    }
+    size += cardList_.CalculateSize(_repeated_cardList_codec);
+    if (MonsterPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(MonsterPos);
+    }
+    if (IsCover != false) {
+      size += 1 + 1;
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(PlayHandResponse other) {
+    if (other == null) {
+      return;
+    }
+    if (other.LastPos != 0) {
+      LastPos = other.LastPos;
+    }
+    if (other.IsPass != false) {
+      IsPass = other.IsPass;
+    }
+    cardList_.Add(other.cardList_);
+    if (other.MonsterPos != 0) {
+      MonsterPos = other.MonsterPos;
+    }
+    if (other.IsCover != false) {
+      IsCover = other.IsCover;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public void MergeFrom(pb::CodedInputStream input) {
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    input.ReadRawMessage(this);
+  #else
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          LastPos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsPass = input.ReadBool();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(input, _repeated_cardList_codec);
+          break;
+        }
+        case 32: {
+          MonsterPos = input.ReadInt32();
+          break;
+        }
+        case 40: {
+          IsCover = input.ReadBool();
+          break;
+        }
+      }
+    }
+  #endif
+  }
+
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+    if ((tag & 7) == 4) {
+      // Abort on any end group tag.
+      return;
+    }
+    switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+          break;
+        case 8: {
+          LastPos = input.ReadInt32();
+          break;
+        }
+        case 16: {
+          IsPass = input.ReadBool();
+          break;
+        }
+        case 26: {
+          cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
+          break;
+        }
+        case 32: {
+          MonsterPos = input.ReadInt32();
+          break;
+        }
+        case 40: {
+          IsCover = input.ReadBool();
           break;
         }
       }

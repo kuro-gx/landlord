@@ -4443,6 +4443,7 @@ MonoBehaviour:
   chatContainerEl: {fileID: 1689836640}
   tipTextEl: {fileID: 766689033}
   selfCardArea: {fileID: 316681855}
+  GameState: 0
 --- !u!1 &849390517
 GameObject:
   m_ObjectHideFlags: 0
