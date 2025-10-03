@@ -1,6 +1,8 @@
 ﻿public class Constant {
     // 卡牌预制体的宽度
     public const float CardPanelWidth = 135;
+    // 打出的牌的预制体的宽度
+    public const float CardDisplayWidth = 66.6f;
     // 卡牌之间的横向距离
     public const float CardHDistance = 50;
     // 卡牌选中之后向上位移的距离
@@ -22,6 +24,7 @@
     // 特效音频
     public const string CardDispatch = "Special_DiscardDispatch";
     public const string SelectedCard = "SpecSelectCard";
+    public const string PlayHand = "Special_give";
     // 操作音频
     public const string CallLord = "CallLord";
     public const string NotCall = "NotCall";
@@ -29,6 +32,5 @@
     public const string Raise = "Raise";
     public const string NotRaise = "NotRaise";
     public static string[] PassArr = { "Pass1", "Pass2", "Pass3", "Pass4" };
-    public const string Alarm1 = "Alarm1"; // 剩1张牌
-    public const string Alarm2 = "Alarm1"; // 剩2张牌
+    public const string Alarm = "Alarm"; // 剩下1、2张牌警告
 }

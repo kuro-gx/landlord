@@ -26,9 +26,11 @@ message Room {
   int32 base_score = 8; // 底分
   int32 multiple = 9; // 倍数
   int32 grab_times = 10; // 抢地主的次数
-  int32 cur_lord_pos = 11; // 地主(临时)的位置索引
-  int32 pend_pos = 12; // 当前出牌人的坐位
-  int32 raise_times = 13; // 加倍的次数
+  int32 cur_lord_pos = 11; // 地主的位置索引
+  int32 raise_times = 12; // 加倍的次数
+  int32 pend_pos = 13; // 当前出牌人的坐位
+  int32 monster_pos = 14; // 本轮出牌中，打出的牌为最大的玩家的坐位
+  repeated Card play_cards = 15; // 当前打出的牌
 }
 
 // 匹配成功的响应

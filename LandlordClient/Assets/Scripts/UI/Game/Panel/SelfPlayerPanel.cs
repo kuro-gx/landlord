@@ -16,12 +16,15 @@ public class SelfPlayerPanel : UIBase {
     [SerializeField, Header("聊天气泡")] private Image chatContainerEl;
     [SerializeField, Header("提示文字")] private Image tipTextEl;
     [SerializeField, Header("手牌区域")] private RectTransform selfCardArea;
+    [SerializeField, Header("出牌区域")] private RectTransform playHandArea;
 
     public static SelfPlayerPanel Instance;
-    
+
     public List<Card> SelfCardList; // 自己的手牌
     public readonly List<CardPanel> SelfCardPanelList = new(20); // 手牌的预制体列表
     public readonly List<Card> PrepareCardList = new(20); // 将要打出的牌
+    public readonly List<Card> PendCardList = new(20); // 上家打出的牌，客户端出牌时比较大小使用
+    public readonly List<CardDisplay> SelfCardDisplayList = new(20); // 打出的牌的预制体列表
     public GameState GameState = GameState.CallLord; // 当前的游戏状态
     private GameObject _root; // 父节点，设置滑动动画时需绑定父节点
 
@@ -35,7 +38,7 @@ public class SelfPlayerPanel : UIBase {
             usernameEl.text = Global.LoginUser.Username;
             moneyEl.text = Global.LoginUser.Money.ToString();
         }
-        
+
         // 获取最外层的父节点
         _root = SceneManager.GetActiveScene().GetRootGameObjects()
             .FirstOrDefault(o => o.name == "Background");
@@ -66,6 +69,7 @@ public class SelfPlayerPanel : UIBase {
                 var sprites = Resources.LoadAll<Sprite>("Sprites/comlayer");
                 tipTextEl.sprite = sprites[Convert.ToInt32(tipImageName)];
             }
+
             tipTextEl.SetNativeSize();
         }
 
@@ -107,7 +111,7 @@ public class SelfPlayerPanel : UIBase {
         // 对手牌进行从大到小排序后保存手牌
         list.Sort(CardSort);
         SelfCardList = list;
-        
+
         PrepareCardList.Clear();
 
         // 创建卡牌预制体
@@ -144,24 +148,9 @@ public class SelfPlayerPanel : UIBase {
             pocketCardPanelList.Add(cardPanel);
         }
 
-        SelfCardPanelList.Sort((a, b) => b.CardValue.CompareTo(a.CardValue));
+        SelfCardPanelList.Sort((a, b) => b.cardValue.CompareTo(a.cardValue));
         // 插入底牌后，需重新调整所有手牌的位置
-        for (var i = 0; i < SelfCardPanelList.Count; i++) {
-            // 重新设置卡牌预制体在父组件中的次序，以及预制体名称
-            SelfCardPanelList[i].transform.SetSiblingIndex(i);
-            SelfCardPanelList[i].SetCardName(i);
-            // 卡牌的新位置
-            var newPositionX = GetFirstCardX() + i * Constant.CardHDistance + Constant.CardHDistance;
-            // 卡牌旧的位置
-            var oldPositionX = SelfCardPanelList[i].transform.localPosition.x;
-            // 卡牌的新旧位置相等，说明该牌是底牌，无须再次挪动
-            if (Mathf.Approximately(newPositionX, oldPositionX)) {
-                continue;
-            }
-
-            // 移动的距离为：新X坐标 - 旧X坐标
-            SelfCardPanelList[i].MoveLocalPosInTime(Constant.CardMoveTime, new Vector3(newPositionX - oldPositionX, 0, 0));
-        }
+        ResetCardPosition();
 
         // 底牌往下位移
         foreach (var item in pocketCardPanelList) {
@@ -206,13 +195,12 @@ public class SelfPlayerPanel : UIBase {
 
         var panel = Instantiate(cardPanel, selfCardArea);
         panel.SetCardInfo(card, index);
-        panel.Root = _root;
-        panel.OnSlideSelect(OnCardPanelSelected, _ => {
+        OnSlideSelect(panel.gameObject, _root, OnCardPanelSelected, _ => {
             // 不是出牌状态，无法滑动选中卡牌
             if (GameState != GameState.PlayingHand) {
                 return;
             }
-            
+
             // 播放音效
             AudioService.Instance.PlayEffectAudio(Constant.SelectedCard);
         });
@@ -239,22 +227,77 @@ public class SelfPlayerPanel : UIBase {
             return;
         }
 
-        int index = -1;
-        int.TryParse(go.name, out index);
-        if (index != -1) {
-            var cardPanel = SelfCardPanelList[index];
-            var card = SelfCardList[index];
-            if (cardPanel.IsSelected) {
-                cardPanel.SetCardSelected(false);
-                for (var i = 0; i < PrepareCardList.Count; i++) {
-                    if (PrepareCardList[i].Point == card.Point && PrepareCardList[i].Suit == card.Suit) {
-                        PrepareCardList.RemoveAt(i);
-                    }
-                }
-            } else {
-                cardPanel.SetCardSelected(true);
-                PrepareCardList.Add(card);
-            }
+        int index = int.Parse(go.name);
+        var cardPanel = SelfCardPanelList[index];
+        var card = SelfCardList[index];
+        if (cardPanel.isSelected) {
+            cardPanel.SetCardSelected(false);
+            PrepareCardList.Remove(card);
+        } else {
+            cardPanel.SetCardSelected(true);
+            PrepareCardList.Add(card);
         }
+    }
+
+    /// <summary>
+    /// 重新设置手牌的位置
+    /// </summary>
+    public void ResetCardPosition() {
+        for (var i = 0; i < SelfCardPanelList.Count; i++) {
+            // 重新设置卡牌预制体在父组件中的次序，以及预制体名称
+            SelfCardPanelList[i].transform.SetSiblingIndex(i);
+            SelfCardPanelList[i].SetCardName(i);
+            // 卡牌的新位置
+            var newPositionX = GetFirstCardX() + i * Constant.CardHDistance + Constant.CardHDistance;
+            // 卡牌旧的位置
+            var oldPositionX = SelfCardPanelList[i].transform.localPosition.x;
+            // 卡牌的新旧位置相等，说明该牌是底牌，无须再次挪动
+            if (Mathf.Approximately(newPositionX, oldPositionX)) {
+                continue;
+            }
+
+            // 移动的距离为：新X坐标 - 旧X坐标
+            SelfCardPanelList[i].MoveLocalPosInTime(Constant.CardMoveTime, new Vector3(newPositionX - oldPositionX, 0, 0));
+        }
+    }
+
+    /// <summary>
+    /// 显示打出的牌
+    /// </summary>
+    public void ShowCardDisplay() {
+        SelfCardDisplayList.Clear();
+
+        // 起始X坐标
+        float screenWidth = playHandArea.rect.width;
+        float distanceLeftWidth = (screenWidth - (30 * (PrepareCardList.Count - 1) + Constant.CardDisplayWidth)) / 2;
+        float startX = distanceLeftWidth - screenWidth / 2;
+
+        // 创建预制体
+        for (var i = 0; i < PrepareCardList.Count; i++) {
+            var cardDisplay = Resources.Load<CardDisplay>("Prefabs/CardDisplay");
+            if (cardDisplay == null) {
+                return;
+            }
+
+            var panel = Instantiate(cardDisplay, playHandArea);
+            panel.SetCardInfo(PrepareCardList[i]);
+            panel.transform.localPosition = new Vector2(startX + i * 30, -125);
+            SelfCardDisplayList.Add(panel);
+        }
+    }
+
+    /// <summary>
+    /// 删除打出的卡牌的预制体
+    /// </summary>
+    public void DestroyCardDisplay() {
+        if (SelfCardDisplayList.Count == 0) {
+            return;
+        }
+
+        foreach (var display in SelfCardDisplayList) {
+            Destroy(display);
+        }
+
+        SelfCardDisplayList.Clear();
     }
 }

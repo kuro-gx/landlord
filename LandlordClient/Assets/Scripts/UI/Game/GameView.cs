@@ -32,6 +32,8 @@ public class GameView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_BecomeLordCode, OnBecomeLordHandle);
         // 监听服务器响应的加倍消息
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RaiseCode, OnRaiseHandle);
+        // 监听服务器响应的出牌消息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_PlayHandCode, OnPlayHandHandle);
     }
 
     /// <summary>
@@ -88,8 +90,8 @@ public class GameView : UIBase {
         selfPlayerPanel.InitCardPanelList(response.CardList.ToList());
 
         // 显示左右玩家手牌数量
-        leftPlayerPanel.SetCardStack(17);
-        rightPlayerPanel.SetCardStack(17);
+        leftPlayerPanel.SetCardStack(0);
+        rightPlayerPanel.SetCardStack(0);
 
         // 动画显示手牌
         StartCoroutine(DelayMoveCard());
@@ -106,7 +108,9 @@ public class GameView : UIBase {
 
         // 显示上一个叫地主玩家的操作提示
         if (response.LastPos == _leftPosIndex) {
+            // 显示其选择并关闭倒计时
             leftPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+            leftPlayerPanel.HideClock();
             // 上个叫地主的玩家是左侧玩家，且左侧玩家选择“不叫”，则轮到自己叫地主
             if (!response.IsCall) {
                 buttonsPanel.ShowCallLordBtnPage(false);
@@ -116,8 +120,14 @@ public class GameView : UIBase {
             }
         } else if (response.LastPos == _selfPosIndex) {
             selfPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+            // 如果上一个叫地主的玩家是自己，则现在轮到右侧玩家操作，显示右侧玩家的倒计时
+            rightPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
         } else {
+            // 显示其选择并关闭倒计时
             rightPlayerPanel.ChangeTipVisibility(tipAndAudioName);
+            rightPlayerPanel.HideClock();
+            // 如果上一个叫地主的玩家是右侧玩家，则选择轮到左侧玩家操作，显示左侧玩家的倒计时
+            leftPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
         }
     }
 
@@ -131,13 +141,23 @@ public class GameView : UIBase {
         AudioService.Instance.PlayOperateAudio(response.LastPos,
             response.IsGrab ? $"Grab{response.GrabTimes}" : Constant.NotGrab);
 
-        // 显示上一个叫地主玩家的操作提示
+        // 显示上一个抢地主玩家的操作提示
         if (response.LastPos == _leftPosIndex) {
             leftPlayerPanel.ChangeTipVisibility(tipImageName);
+            leftPlayerPanel.HideClock();
         } else if (response.LastPos == _selfPosIndex) {
             selfPlayerPanel.ChangeTipVisibility(tipImageName);
+            // 下一个抢地主的玩家是右侧玩家
+            if (response.CanGrabPos == _rightPosIndex) {
+                rightPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
+            }
         } else {
             rightPlayerPanel.ChangeTipVisibility(tipImageName);
+            rightPlayerPanel.HideClock();
+            // 下一个抢地主的玩家是左侧玩家
+            if (response.CanGrabPos == _leftPosIndex) {
+                leftPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
+            }
         }
 
         // 设置倍数
@@ -148,7 +168,7 @@ public class GameView : UIBase {
             // 隐藏抢地主按钮组
             buttonsPanel.ShowCallLordBtnPage(true, false);
         }
-        
+
         // 如果还能抢地主的玩家是自己，则显示抢地主按钮页
         if (response.CanGrabPos == _selfPosIndex) {
             buttonsPanel.ShowCallLordBtnPage(true);
@@ -156,7 +176,7 @@ public class GameView : UIBase {
             buttonsPanel.SetClockCallback(Constant.CallLordCountDown, GameState.GrabLord);
         }
     }
-    
+
     /// <summary>
     /// 处理服务器响应的玩家成为地主消息
     /// </summary>
@@ -169,7 +189,7 @@ public class GameView : UIBase {
         leftPlayerPanel.ChangeTipVisibility(null, false);
         rightPlayerPanel.ChangeTipVisibility(null, false);
         selfPlayerPanel.ChangeTipVisibility(null, "TipText", false);
-        
+
         // 显示地主图标
         if (response.LordPos == _leftPosIndex) {
             leftPlayerPanel.ChangeLordIconVisibility();
@@ -184,7 +204,7 @@ public class GameView : UIBase {
         // 游戏进入加倍状态
         GameStateChangedHandle(GameState.Raise);
     }
-    
+
     /// <summary>
     /// 处理服务器响应的加倍消息
     /// </summary>
@@ -192,7 +212,7 @@ public class GameView : UIBase {
         var response = RaiseResponse.Parser.ParseFrom(data);
         var tipAndAudioName = response.IsRaise ? Constant.Raise : Constant.NotRaise;
         AudioService.Instance.PlayOperateAudio(response.LastPos, tipAndAudioName);
-        
+
         if (response.LastPos == _leftPosIndex) {
             leftPlayerPanel.ChangeTipVisibility(tipAndAudioName);
         } else if (response.LastPos == _selfPosIndex) {
@@ -218,6 +238,62 @@ public class GameView : UIBase {
     }
 
     /// <summary>
+    /// 处理服务器响应的出牌消息
+    /// </summary>
+    private void OnPlayHandHandle(ByteString data) {
+        var response = PlayHandResponse.Parser.ParseFrom(data);
+        if (response.LastPos == _leftPosIndex) {
+            OtherPlayHandHandle(true, response);
+            // 出牌人是左侧玩家，处理完其逻辑后，轮到自己出牌
+            buttonsPanel.ShowPlayHandBtnPage(PlayHandBtnEnum.ShowAll);
+            buttonsPanel.SetClockCallback(Constant.PlayHandCountDown, GameState.PlayingHand);
+        } else if (response.LastPos == _rightPosIndex) {
+            OtherPlayHandHandle(false, response);
+            // 显示左侧玩家的倒计时
+            rightPlayerPanel.HideClock();
+            if (!response.IsEnd) leftPlayerPanel.SetClockHandle(Constant.PlayHandCountDown);
+        } else {
+            // 出牌人是自己，销毁左侧玩家打出的牌，显示自己打出的牌
+            leftPlayerPanel.DestroyCardDisplay();
+            selfPlayerPanel.ShowCardDisplay();
+            // 清空选中的卡牌
+            selfPlayerPanel.PrepareCardList.Clear();
+            // todo 播放音频
+
+            // 删除打出的牌
+            selfPlayerPanel.SelfCardList.RemoveAll(c => response.PendCards.Contains(c));
+            // 删除打出的牌的预制体
+            for (var i = selfPlayerPanel.SelfCardPanelList.Count - 1; i >= 0; i--) {
+                foreach (var c in response.PendCards) {
+                    if ((int)c.Point * 10 + (int)c.Suit == selfPlayerPanel.SelfCardPanelList[i].cardValue) {
+                        Destroy(selfPlayerPanel.SelfCardPanelList[i].gameObject);
+                        selfPlayerPanel.SelfCardPanelList.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+
+            // 重新设置手牌的位置
+            selfPlayerPanel.ResetCardPosition();
+            // 显示右侧玩家的倒计时
+            leftPlayerPanel.HideClock();
+            if (!response.IsEnd) rightPlayerPanel.SetClockHandle(Constant.PlayHandCountDown);
+        }
+
+        // 更新倍数
+        gameBottomPanel.SetMultipleText(response.Multiple);
+
+        // todo 如果游戏结束
+        if (response.IsEnd) {
+            // todo 春天了，显示动画
+            if (response.IsSpring) {
+            } else {
+                // todo 正常结算
+            }
+        }
+    }
+
+    /// <summary>
     /// 移动卡牌的动画
     /// </summary>
     IEnumerator DelayMoveCard() {
@@ -232,6 +308,10 @@ public class GameView : UIBase {
         // 动画结束后切换游戏状态为'叫地主'，0号位置的玩家先叫地主
         if (_selfPosIndex == 0) {
             GameStateChangedHandle(GameState.CallLord);
+        } else if (_leftPosIndex == 0) {
+            leftPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
+        } else if (_rightPosIndex == 0) {
+            rightPlayerPanel.SetClockHandle(Constant.CallLordCountDown);
         }
     }
 
@@ -259,5 +339,43 @@ public class GameView : UIBase {
                 buttonsPanel.SetClockCallback(Constant.PlayHandCountDown, GameState.PlayingHand);
                 break;
         }
+    }
+
+    /// <summary>
+    /// 左右玩家出牌的处理
+    /// </summary>
+    /// <param name="isLeft">是否为左侧玩家</param>
+    /// <param name="response">出牌响应</param>
+    private void OtherPlayHandHandle(bool isLeft, PlayHandResponse response) {
+        // 播放不出牌的音效
+        if (response.IsPass) {
+            AudioService.Instance.PlayOperateAudio(
+                isLeft ? _leftPosIndex : _rightPosIndex, Constant.PassArr[Random.Range(0, 4)]);
+        }
+
+        // 设置剩余卡牌，显示左右玩家打出的牌
+        int remainingNum;
+        if (isLeft) {
+            // 销毁右侧玩家打出的牌
+            rightPlayerPanel.DestroyCardDisplay();
+            leftPlayerPanel.ShowCardDisplay(response.PendCards.ToList());
+            remainingNum = leftPlayerPanel.SetCardStack(response.PendCards.Count * -1);
+        } else {
+            rightPlayerPanel.ShowCardDisplay(response.PendCards.ToList());
+            remainingNum = rightPlayerPanel.SetCardStack(response.PendCards.Count * -1);;
+        }
+        // 剩余牌数量报警或者播放打出的牌
+        if (remainingNum is > 0 and < 3) {
+            AudioService.Instance.PlayOperateAudio(isLeft ? _leftPosIndex : _rightPosIndex,
+                Constant.Alarm + remainingNum);
+        } else {
+            // todo 播放音频
+        }
+
+        // 记录对手打出的牌，客户端出牌比较大小使用
+        selfPlayerPanel.PendCardList.Clear();
+        selfPlayerPanel.PendCardList.AddRange(response.PendCards);
+        // 销毁自己打出的牌
+        selfPlayerPanel.DestroyCardDisplay();
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using DG.Tweening;
 using Google.Protobuf;
 using UnityEngine;
@@ -148,6 +149,7 @@ public class ButtonsPanel : UIBase {
                     CallOrGrabLordApi(false, false);
                     callLordBtnPage.SetActive(false);
                     Destroy(_timer);
+                    _timer = null;
                 };
                 break;
             }
@@ -157,6 +159,7 @@ public class ButtonsPanel : UIBase {
                     CallOrGrabLordApi(true, false);
                     callLordBtnPage.SetActive(false);
                     Destroy(_timer);
+                    _timer = null;
                 };
                 break;
             }
@@ -166,15 +169,21 @@ public class ButtonsPanel : UIBase {
                 break;
             }
             case GameState.PlayingHand: {
-                _timer = GetOrAddComponent<TimerUtil>(raiseCountDownEl.gameObject);
+                _timer = GetOrAddComponent<TimerUtil>(playHandCountDownEl.gameObject);
                 timerTask.EndCallback = () => {
-                    // todo 倒计时结束，放弃出牌 or 打出一张最小的牌
+                    // 倒计时结束，自动选择不出 或者 打出一张最小的牌
                     if (_playHandBtnPageState is PlayHandBtnEnum.OnlyPass or PlayHandBtnEnum.ShowAll) {
+                        // 放弃出牌
+                        PassClicked();
                     } else if (_playHandBtnPageState == PlayHandBtnEnum.OnlyPlayHand) {
+                        // 还原卡牌选中状态
+                        RestoreCardSelect();
+                        SelfPlayerPanel.Instance.PrepareCardList.Add(SelfPlayerPanel.Instance.SelfCardList.Last());
+                        PlayHandClicked();
                     }
 
+                    _timer.RemoveTimerTask();
                     ShowPlayHandBtnPage(PlayHandBtnEnum.None, false);
-                    Destroy(_timer);
                 };
                 break;
             }
@@ -220,6 +229,7 @@ public class ButtonsPanel : UIBase {
         callLordBtnPage.SetActive(false);
         // 销毁倒计时的组件
         Destroy(_timer);
+        _timer = null;
     }
 
     /// <summary>
@@ -238,7 +248,10 @@ public class ButtonsPanel : UIBase {
         // 隐藏按钮组
         callLordBtnPage.SetActive(false);
         // 销毁倒计时的组件
-        if (_timer) Destroy(_timer);
+        if (_timer) {
+            Destroy(_timer);
+            _timer = null;
+        }
     }
 
     /// <summary>
@@ -271,12 +284,12 @@ public class ButtonsPanel : UIBase {
     /// <param name="isShow">是否显示</param>
     public void ShowPlayHandBtnPage(PlayHandBtnEnum state, bool isShow = true) {
         playHandBtnPage.SetActive(isShow);
+        if (!isShow) return;
         // 隐藏3个按钮
         passBtn.gameObject.SetActive(false);
         hintBtn.gameObject.SetActive(false);
         playHandBtn.gameObject.SetActive(false);
-
-        if (!isShow) return;
+        
         _playHandBtnPageState = state;
         switch (state) {
             case PlayHandBtnEnum.OnlyPass:
@@ -300,7 +313,10 @@ public class ButtonsPanel : UIBase {
         var form = new RaiseBo { Pos = Global.CurPos, IsRaise = true };
         NetSocketMgr.Client.SendData(NetDefine.CMD_RaiseCode, form.ToByteString());
         raiseBtnPage.SetActive(false);
-        if (_timer) Destroy(_timer);
+        if (_timer) {
+            Destroy(_timer);
+            _timer = null;
+        }
     }
 
     /// <summary>
@@ -310,7 +326,10 @@ public class ButtonsPanel : UIBase {
         var form = new RaiseBo { Pos = Global.CurPos, IsRaise = false };
         NetSocketMgr.Client.SendData(NetDefine.CMD_RaiseCode, form.ToByteString());
         raiseBtnPage.SetActive(false);
-        if (_timer) Destroy(_timer);
+        if (_timer) {
+            Destroy(_timer);
+            _timer = null;
+        }
     }
     
     /// <summary>
@@ -319,36 +338,85 @@ public class ButtonsPanel : UIBase {
     private void PlayHandClicked() {
         var list = SelfPlayerPanel.Instance.PrepareCardList;
         if (list.Count == 0) {
-            // 显示提示
+            // 显示提示，没有选择任何牌
             SelfPlayerPanel.Instance.ChangeTipVisibility("5", "Sprites");
             return;
         }
 
         // 获取牌型
-        var cardType = CardMgr.Instance.GetCardType(list);
-        if (cardType == CardType.HandUnknown) {
+        var playHand = CardMgr.Instance.GetCardType(list);
+        if (playHand.Type == CardType.HandUnknown) {
+            // 选择的牌不符合规则
             SelfPlayerPanel.Instance.ChangeTipVisibility("3", "Sprites");
             return;
         }
+        
+        // 打不过别人的牌
+        if (!CardMgr.Instance.CanBeat(SelfPlayerPanel.Instance.PendCardList, list)) {
+            SelfPlayerPanel.Instance.ChangeTipVisibility("0", "Sprites");
+            return;
+        }
 
-        PlayHandRequest();
+        // 隐藏出牌按钮页
+        playHandBtnPage.SetActive(false);
+        // 隐藏提示
+        SelfPlayerPanel.Instance.ChangeTipVisibility(null, "Sprites", false);
+        
+        // 发送出牌请求，收到响应后再做剔除手牌等相关操作
+        PlayHandRequest(false);
+        // 出牌音效
+        AudioService.Instance.PlayEffectAudio(Constant.PlayHand);
+        if (_timer) {
+            _timer.RemoveTimerTask();
+        }
     }
     
     /// <summary>
     /// 不出请求
     /// </summary>
     private void PassClicked() {
+        AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+        playHandBtnPage.SetActive(false);
+        // 还原卡牌选中状态
+        RestoreCardSelect();
+        
+        PlayHandRequest(true);
+        if (_timer) {
+            _timer.RemoveTimerTask();
+        }
     }
 
     /// <summary>
     /// 发送出牌请求
     /// </summary>
-    private void PlayHandRequest() {
+    /// <param name="isPass">是否不出</param>
+    private void PlayHandRequest(bool isPass) {
         var form = new PlayHandBo {
             Pos = Global.CurPos,
-            IsPass = false
+            IsPass = isPass
         };
-        form.CardList.AddRange(SelfPlayerPanel.Instance.PrepareCardList);
+        if (!isPass) {
+            form.CardList.AddRange(SelfPlayerPanel.Instance.PrepareCardList);
+        }
         NetSocketMgr.Client.SendData(NetDefine.CMD_PlayHandCode, form.ToByteString());
+    }
+
+    /// <summary>
+    /// 让选中的牌往下滑，还原其选中状态
+    /// </summary>
+    private void RestoreCardSelect() {
+        var list = SelfPlayerPanel.Instance.PrepareCardList;
+        var panelList = SelfPlayerPanel.Instance.SelfCardPanelList;
+        foreach (var c in list) {
+            foreach (var p in panelList) {
+                if ((int)c.Point * 10 + (int)c.Suit == p.cardValue) {
+                    p.MoveTargetPosInTime(Constant.CardMoveTime, new Vector3(0, Constant.CardVDistance, 0));
+                    break;
+                }
+            }
+        }
+        
+        // 清空选中的牌
+        SelfPlayerPanel.Instance.PrepareCardList.Clear();
     }
 }

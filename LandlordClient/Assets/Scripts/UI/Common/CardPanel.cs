@@ -12,13 +12,9 @@ public class CardPanel : UIBase {
     [SerializeField, Header("地主图标")] private Image landlordIcon;
 
     // 卡牌的数值，排序使用
-    public int CardValue;
+    public int cardValue;
     // 卡牌是否被选中
-    public bool IsSelected;
-    // 父节点，设置滑动动画时需绑定父节点
-    public GameObject Root;
-    // 是否是滑动选择状态
-    private bool _isSlideSelect;
+    public bool isSelected;
 
     protected override void Init() {
     }
@@ -32,9 +28,8 @@ public class CardPanel : UIBase {
     public void SetCardInfo(Card card, int index, bool isLord = false) {
         landlordIcon.gameObject.SetActive(isLord);
 
-        CardValue = (int)card.Point * 10 + (int)card.Suit;
-        // 设置预制体名称
-        // gameObject.name = $"{card.Point}_{card.Suit}";
+        cardValue = (int)card.Point * 10 + (int)card.Suit;
+        // 设置预制体名称为索引号，方便选牌时获取索引
         SetCardName(index);
         // 所有的卡牌图片
         Sprite[] cardImages = Resources.LoadAll<Sprite>("Sprites/card_big");
@@ -84,59 +79,25 @@ public class CardPanel : UIBase {
     /// <summary>
     /// 设置卡牌选中状态
     /// </summary>
-    /// <param name="isSelected">是否选中</param>
+    /// <param name="selected">是否选中</param>
     /// <param name="move">是否需要移动</param>
     /// <param name="hasAnima">是否启用动画</param>
-    public void SetCardSelected(bool isSelected, bool move = true, bool hasAnima = true) {
-        if (IsSelected == isSelected) {
+    public void SetCardSelected(bool selected, bool move = true, bool hasAnima = true) {
+        if (isSelected == selected) {
             return;
         }
 
-        IsSelected = isSelected;
+        isSelected = selected;
         if (!move) return;
         
         // 卡牌当前位置
         var nowPosition = gameObject.transform.localPosition;
         // 新的Y坐标
-        float positionY = IsSelected ? Constant.CardVDistance : 5;
+        float positionY = selected ? 5 : Constant.CardVDistance;
         if (hasAnima) {
             MoveTargetPosInTime(0.1f, new Vector3(nowPosition.x, positionY));
         } else {
             gameObject.transform.localPosition = new Vector3(nowPosition.x, positionY);
-        }
-    }
-
-    /// <summary>
-    /// 滑动选择卡牌
-    /// </summary>
-    public void OnSlideSelect(Action<GameObject> cb, Action<GameObject> endCb) {
-#if UNITY_EDITOR || UNITY_STANDALONE_WIN
-        OnClickDown(gameObject, _ => {
-            _isSlideSelect = true;
-            cb(gameObject);
-        });
-
-        OnEnter(gameObject, _ => {
-            if (!Input.GetMouseButton(0)) return;
-
-            _isSlideSelect = true;
-            cb(gameObject);
-        });
-#else
-        OnEnter(gameObject, _ => {
-            _isSlideSelect = true;
-            cb(gameObject);
-        });
-#endif
-
-        OnClickUp(gameObject, endCb);
-        if (Root) {
-            OnClickUp(Root, upGo => {
-                if (_isSlideSelect) {
-                    endCb(upGo);
-                    _isSlideSelect = false;
-                }
-            });
         }
     }
 }

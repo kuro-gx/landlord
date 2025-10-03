@@ -22,22 +22,23 @@ public static partial class RoomReflection {
   static RoomReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "CgpSb29tLnByb3RvGgpVc2VyLnByb3RvGgpDYXJkLnByb3RvIqMCCgRSb29t",
+          "CgpSb29tLnByb3RvGgpVc2VyLnByb3RvGgpDYXJkLnByb3RvItMCCgRSb29t",
           "Eg8KB3Jvb21faWQYASABKAUSGAoHcGxheWVycxgCIAMoCzIHLlBsYXllchIe",
           "Cgpyb29tX3N0YXRlGAMgASgOMgouUm9vbVN0YXRlEhgKCWNhcmRfbGlzdBgE",
           "IAMoCzIFLkNhcmQSGQoKaG9sZV9jYXJkcxgFIAMoCzIFLkNhcmQSEAoIY2Fs",
           "bF9wb3MYBiABKAUSEgoKY2FsbF90aW1lcxgHIAEoBRISCgpiYXNlX3Njb3Jl",
           "GAggASgFEhAKCG11bHRpcGxlGAkgASgFEhIKCmdyYWJfdGltZXMYCiABKAUS",
-          "FAoMY3VyX2xvcmRfcG9zGAsgASgFEhAKCHBlbmRfcG9zGAwgASgFEhMKC3Jh",
-          "aXNlX3RpbWVzGA0gASgFIksKDU1hdGNoUmVzcG9uc2USDwoHcm9vbV9pZBgB",
-          "IAEoBRIQCghzZWxmX3BvcxgCIAEoBRIXCgZwbGF5ZXIYAyADKAsyBy5QbGF5",
-          "ZXIqZQoJUm9vbVN0YXRlEggKBE5vbmUQABIMCghNYXRjaGluZxABEgwKCENh",
-          "bGxMb3JkEAMSDAoIR3JhYkxvcmQQBBIJCgVSYWlzZRAFEgwKCFBsYXlIYW5k",
-          "EAYSCwoHR2FtZUVuZBAHYgZwcm90bzM="));
+          "FAoMY3VyX2xvcmRfcG9zGAsgASgFEhMKC3JhaXNlX3RpbWVzGAwgASgFEhAK",
+          "CHBlbmRfcG9zGA0gASgFEhMKC21vbnN0ZXJfcG9zGA4gASgFEhkKCnBsYXlf",
+          "Y2FyZHMYDyADKAsyBS5DYXJkIksKDU1hdGNoUmVzcG9uc2USDwoHcm9vbV9p",
+          "ZBgBIAEoBRIQCghzZWxmX3BvcxgCIAEoBRIXCgZwbGF5ZXIYAyADKAsyBy5Q",
+          "bGF5ZXIqZQoJUm9vbVN0YXRlEggKBE5vbmUQABIMCghNYXRjaGluZxABEgwK",
+          "CENhbGxMb3JkEAMSDAoIR3JhYkxvcmQQBBIJCgVSYWlzZRAFEgwKCFBsYXlI",
+          "YW5kEAYSCwoHR2FtZUVuZBAHYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::UserReflection.Descriptor, global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::RoomState), }, null, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::Room), global::Room.Parser, new[]{ "RoomId", "Players", "RoomState", "CardList", "HoleCards", "CallPos", "CallTimes", "BaseScore", "Multiple", "GrabTimes", "CurLordPos", "PendPos", "RaiseTimes" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Room), global::Room.Parser, new[]{ "RoomId", "Players", "RoomState", "CardList", "HoleCards", "CallPos", "CallTimes", "BaseScore", "Multiple", "GrabTimes", "CurLordPos", "RaiseTimes", "PendPos", "MonsterPos", "PlayCards" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MatchResponse), global::MatchResponse.Parser, new[]{ "RoomId", "SelfPos", "Player" }, null, null, null, null)
         }));
   }
@@ -128,8 +129,10 @@ public sealed partial class Room : pb::IMessage<Room>
     multiple_ = other.multiple_;
     grabTimes_ = other.grabTimes_;
     curLordPos_ = other.curLordPos_;
-    pendPos_ = other.pendPos_;
     raiseTimes_ = other.raiseTimes_;
+    pendPos_ = other.pendPos_;
+    monsterPos_ = other.monsterPos_;
+    playCards_ = other.playCards_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -287,7 +290,7 @@ public sealed partial class Room : pb::IMessage<Room>
   public const int CurLordPosFieldNumber = 11;
   private int curLordPos_;
   /// <summary>
-  /// 地主(临时)的位置索引
+  /// 地主的位置索引
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -298,8 +301,23 @@ public sealed partial class Room : pb::IMessage<Room>
     }
   }
 
+  /// <summary>Field number for the "raise_times" field.</summary>
+  public const int RaiseTimesFieldNumber = 12;
+  private int raiseTimes_;
+  /// <summary>
+  /// 加倍的次数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int RaiseTimes {
+    get { return raiseTimes_; }
+    set {
+      raiseTimes_ = value;
+    }
+  }
+
   /// <summary>Field number for the "pend_pos" field.</summary>
-  public const int PendPosFieldNumber = 12;
+  public const int PendPosFieldNumber = 13;
   private int pendPos_;
   /// <summary>
   /// 当前出牌人的坐位
@@ -313,19 +331,33 @@ public sealed partial class Room : pb::IMessage<Room>
     }
   }
 
-  /// <summary>Field number for the "raise_times" field.</summary>
-  public const int RaiseTimesFieldNumber = 13;
-  private int raiseTimes_;
+  /// <summary>Field number for the "monster_pos" field.</summary>
+  public const int MonsterPosFieldNumber = 14;
+  private int monsterPos_;
   /// <summary>
-  /// 加倍的次数
+  /// 本轮出牌中，打出的牌为最大的玩家的坐位
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public int RaiseTimes {
-    get { return raiseTimes_; }
+  public int MonsterPos {
+    get { return monsterPos_; }
     set {
-      raiseTimes_ = value;
+      monsterPos_ = value;
     }
+  }
+
+  /// <summary>Field number for the "play_cards" field.</summary>
+  public const int PlayCardsFieldNumber = 15;
+  private static readonly pb::FieldCodec<global::Card> _repeated_playCards_codec
+      = pb::FieldCodec.ForMessage(122, global::Card.Parser);
+  private readonly pbc::RepeatedField<global::Card> playCards_ = new pbc::RepeatedField<global::Card>();
+  /// <summary>
+  /// 当前打出的牌
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public pbc::RepeatedField<global::Card> PlayCards {
+    get { return playCards_; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -354,8 +386,10 @@ public sealed partial class Room : pb::IMessage<Room>
     if (Multiple != other.Multiple) return false;
     if (GrabTimes != other.GrabTimes) return false;
     if (CurLordPos != other.CurLordPos) return false;
-    if (PendPos != other.PendPos) return false;
     if (RaiseTimes != other.RaiseTimes) return false;
+    if (PendPos != other.PendPos) return false;
+    if (MonsterPos != other.MonsterPos) return false;
+    if(!playCards_.Equals(other.playCards_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -374,8 +408,10 @@ public sealed partial class Room : pb::IMessage<Room>
     if (Multiple != 0) hash ^= Multiple.GetHashCode();
     if (GrabTimes != 0) hash ^= GrabTimes.GetHashCode();
     if (CurLordPos != 0) hash ^= CurLordPos.GetHashCode();
-    if (PendPos != 0) hash ^= PendPos.GetHashCode();
     if (RaiseTimes != 0) hash ^= RaiseTimes.GetHashCode();
+    if (PendPos != 0) hash ^= PendPos.GetHashCode();
+    if (MonsterPos != 0) hash ^= MonsterPos.GetHashCode();
+    hash ^= playCards_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -429,14 +465,19 @@ public sealed partial class Room : pb::IMessage<Room>
       output.WriteRawTag(88);
       output.WriteInt32(CurLordPos);
     }
-    if (PendPos != 0) {
-      output.WriteRawTag(96);
-      output.WriteInt32(PendPos);
-    }
     if (RaiseTimes != 0) {
-      output.WriteRawTag(104);
+      output.WriteRawTag(96);
       output.WriteInt32(RaiseTimes);
     }
+    if (PendPos != 0) {
+      output.WriteRawTag(104);
+      output.WriteInt32(PendPos);
+    }
+    if (MonsterPos != 0) {
+      output.WriteRawTag(112);
+      output.WriteInt32(MonsterPos);
+    }
+    playCards_.WriteTo(output, _repeated_playCards_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -482,14 +523,19 @@ public sealed partial class Room : pb::IMessage<Room>
       output.WriteRawTag(88);
       output.WriteInt32(CurLordPos);
     }
-    if (PendPos != 0) {
-      output.WriteRawTag(96);
-      output.WriteInt32(PendPos);
-    }
     if (RaiseTimes != 0) {
-      output.WriteRawTag(104);
+      output.WriteRawTag(96);
       output.WriteInt32(RaiseTimes);
     }
+    if (PendPos != 0) {
+      output.WriteRawTag(104);
+      output.WriteInt32(PendPos);
+    }
+    if (MonsterPos != 0) {
+      output.WriteRawTag(112);
+      output.WriteInt32(MonsterPos);
+    }
+    playCards_.WriteTo(ref output, _repeated_playCards_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -527,12 +573,16 @@ public sealed partial class Room : pb::IMessage<Room>
     if (CurLordPos != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurLordPos);
     }
-    if (PendPos != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PendPos);
-    }
     if (RaiseTimes != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(RaiseTimes);
     }
+    if (PendPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PendPos);
+    }
+    if (MonsterPos != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(MonsterPos);
+    }
+    size += playCards_.CalculateSize(_repeated_playCards_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -572,12 +622,16 @@ public sealed partial class Room : pb::IMessage<Room>
     if (other.CurLordPos != 0) {
       CurLordPos = other.CurLordPos;
     }
-    if (other.PendPos != 0) {
-      PendPos = other.PendPos;
-    }
     if (other.RaiseTimes != 0) {
       RaiseTimes = other.RaiseTimes;
     }
+    if (other.PendPos != 0) {
+      PendPos = other.PendPos;
+    }
+    if (other.MonsterPos != 0) {
+      MonsterPos = other.MonsterPos;
+    }
+    playCards_.Add(other.playCards_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -642,11 +696,19 @@ public sealed partial class Room : pb::IMessage<Room>
           break;
         }
         case 96: {
-          PendPos = input.ReadInt32();
+          RaiseTimes = input.ReadInt32();
           break;
         }
         case 104: {
-          RaiseTimes = input.ReadInt32();
+          PendPos = input.ReadInt32();
+          break;
+        }
+        case 112: {
+          MonsterPos = input.ReadInt32();
+          break;
+        }
+        case 122: {
+          playCards_.AddEntriesFrom(input, _repeated_playCards_codec);
           break;
         }
       }
@@ -713,11 +775,19 @@ public sealed partial class Room : pb::IMessage<Room>
           break;
         }
         case 96: {
-          PendPos = input.ReadInt32();
+          RaiseTimes = input.ReadInt32();
           break;
         }
         case 104: {
-          RaiseTimes = input.ReadInt32();
+          PendPos = input.ReadInt32();
+          break;
+        }
+        case 112: {
+          MonsterPos = input.ReadInt32();
+          break;
+        }
+        case 122: {
+          playCards_.AddEntriesFrom(ref input, _repeated_playCards_codec);
           break;
         }
       }

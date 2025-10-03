@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
+public class PlayHand {
+    // 牌型
+    public CardType Type { get; set; }
+
+    // 牌型比较的关键点数
+    public CardPoint Point { get; set; }
+}
+
 public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 初始化54张扑克牌，并进行洗牌
     /// </summary>
-    /// <returns></returns>
     public List<Card> InitAllCards() {
         List<Card> cards = new List<Card>(54);
 
@@ -30,49 +37,112 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 获取出牌的类型
     /// </summary>
-    public CardType GetCardType(List<Card> cards) {
-        CardType type = CardType.HandUnknown;
+    public PlayHand GetCardType(List<Card> cards) {
+        var playHand = new PlayHand { Type = CardType.HandUnknown, Point = CardPoint.PointNone };
         if (cards == null || cards.Count == 0) {
-            type = CardType.HandPass;
-        } else if (IsSingle(cards)) {
-            type = CardType.HandSingle;
-        } else if (IsPair(cards)) {
-            type = CardType.HandPair;
-        } else if (IsTriple(cards)) {
-            type = CardType.HandTriple;
-        } else if (IsTripleSingle(cards)) {
-            type = CardType.HandTripleSingle;
-        } else if (IsTriplePair(cards)) {
-            type = CardType.HandTriplePair;
-        } else if (IsPlane(cards)) {
-            type = CardType.HandPlane;
-        } else if (IsPlaneTwoSingle(cards)) {
-            type = CardType.HandPlaneTwoSingle;
-        } else if (IsPlaneTwoPair(cards)) {
-            type = CardType.HandPlaneTwoPair;
-        } else if (IsSeqPair(cards)) {
-            type = CardType.HandSeqPair;
-        } else if (IsSeqSingle(cards)) {
-            type = CardType.HandSeqSingle;
-        } else if (IsBomb(cards)) {
-            type = CardType.HandBomb;
-        } else if (IsBombPair(cards)) {
-            type = CardType.HandBombPair;
-        } else if (IsBombTwoSingle(cards)) {
-            type = CardType.HandBombTwoSingle;
-        } else if (IsBombTwoPair(cards)) {
-            type = CardType.HandBombTwoPair;
-        } else if (IsBombJokers(cards)) {
-            type = CardType.HandBombJokers;
-        } else if (IsBombJokersPair(cards)) {
-            type = CardType.HandBombJokersPair;
-        } else if (IsBombJokersTwoSingle(cards)) {
-            type = CardType.HandBombJokersTwoSingle;
-        } else if (IsBombJokersTwoPair(cards)) {
-            type = CardType.HandBombJokersTwoPair;
+            playHand.Type = CardType.HandPass;
+        } else if (IsSingle(cards)) { // 单牌
+            playHand.Type = CardType.HandSingle;
+            playHand.Point = cards[0].Point;
+        } else if (IsPair(cards)) { // 对
+            playHand.Type = CardType.HandPair;
+            playHand.Point = cards[0].Point;
+        } else if (IsTriple(cards)) { // 3张
+            playHand.Type = CardType.HandTriple;
+            playHand.Point = cards[0].Point;
+        } else if (IsTripleSingle(cards)) { // 三带一
+            playHand.Type = CardType.HandTripleSingle;
+            playHand.Point = FindPointFromCards(cards, CardType.HandTripleSingle);
+        } else if (IsTriplePair(cards)) { // 三带对
+            playHand.Type = CardType.HandTriplePair;
+            playHand.Point = FindPointFromCards(cards, CardType.HandTriplePair);
+        } else if (IsPlane(cards, playHand)) { // 飞机不带
+            playHand.Type = CardType.HandPlane;
+        } else if (IsPlaneSingle(cards, playHand)) { // 飞机带单
+            playHand.Type = CardType.HandPlaneSingle;
+        } else if (IsPlanePair(cards, playHand)) { // 飞机带对
+            playHand.Type = CardType.HandPlanePair;
+        } else if (IsSeqPair(cards, playHand)) { // 连对
+            playHand.Type = CardType.HandSeqPair;
+        } else if (IsSeqSingle(cards, playHand)) { // 顺子
+            playHand.Type = CardType.HandSeqSingle;
+        } else if (IsBomb(cards)) { // 炸弹
+            playHand.Type = CardType.HandBomb;
+            playHand.Point = cards[0].Point;
+        } else if (IsBombPair(cards)) { // 炸弹带一对
+            playHand.Type = CardType.HandBombPair;
+            playHand.Point = FindPointFromCards(cards, CardType.HandBombPair);
+        } else if (IsBombTwoSingle(cards)) { // 炸弹带两单
+            playHand.Type = CardType.HandBombTwoSingle;
+            playHand.Point = FindPointFromCards(cards, CardType.HandBombTwoSingle);
+        } else if (IsBombTwoPair(cards, playHand)) { // 炸弹带两对
+            playHand.Type = CardType.HandBombTwoPair;
+        } else if (IsBombJokers(cards)) { // 王炸
+            playHand.Type = CardType.HandBombJokers;
+        } else if (IsBombJokersPair(cards)) { // 王炸带一对
+            playHand.Type = CardType.HandBombJokersPair;
+        } else if (IsBombJokersTwoSingle(cards)) { // 王炸带两单
+            playHand.Type = CardType.HandBombJokersTwoSingle;
+        } else if (IsBombJokersTwoPair(cards)) { // 王炸带两对
+            playHand.Type = CardType.HandBombJokersTwoPair;
         }
 
-        return type;
+        return playHand;
+    }
+
+    /// <summary>
+    /// 出牌大小比较
+    /// </summary>
+    /// <param name="cards">上一轮对手出的牌</param>
+    /// <param name="myCards">我打出的牌</param>
+    /// <returns>我能否压住上一轮的牌</returns>
+    public bool CanBeat(List<Card> cards, List<Card> myCards) {
+        // 我的牌型
+        var playHand = GetCardType(myCards);
+        if (playHand.Type == CardType.HandUnknown) {
+            return false;
+        }
+
+        // 对手的牌型
+        var other = GetCardType(cards);
+        // 对手放弃出牌
+        if (other.Type == CardType.HandPass) {
+            return true;
+        }
+
+        // 我的牌是王炸
+        if (playHand.Type == CardType.HandBombJokers) {
+            return true;
+        }
+
+        // 我的牌是炸弹，并且对方的牌型枚举值在HandSingle(2)-HandBombJokersTwoPair(19)之间
+        if (playHand.Type == CardType.HandBomb && other.Type >= CardType.HandSingle &&
+            other.Type <= CardType.HandBombJokersTwoPair) {
+            return true;
+        }
+
+        // 双方牌型一致
+        if (playHand.Type == other.Type) {
+            // 双方的牌数量必须一致
+            if (cards.Count != myCards.Count) {
+                return false;
+            }
+
+            // 如果是连对、顺子，将所有牌的点数累加再进行判断
+            if (playHand.Type == CardType.HandSeqSingle || playHand.Type == CardType.HandSeqPair) {
+                int myTotalPoint = 0, otherTotalPoint = 0;
+                for (var i = 0; i < cards.Count; i++) {
+                    myTotalPoint += (int)myCards[i].Point;
+                    otherTotalPoint += (int)cards[i].Point;
+                }
+
+                return myTotalPoint > otherTotalPoint;
+            }
+
+            return playHand.Point > other.Point;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -131,7 +201,7 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 飞机不带
     /// </summary>
-    public bool IsPlane(List<Card> cards) {
+    public bool IsPlane(List<Card> cards, PlayHand playHand) {
         var classify = Classify(cards);
         var list = classify["3"];
         if (classify["1"].Count == 0 && classify["2"].Count == 0 && list.Count >= 2 && classify["4"].Count == 0) {
@@ -144,6 +214,7 @@ public class CardMgr : Singleton<CardMgr> {
 
             // 最大的点数小于 2
             if (list[list.Count - 1] < (int)CardPoint.Two) {
+                playHand.Point = (CardPoint)list[0];
                 return true;
             }
         }
@@ -152,14 +223,27 @@ public class CardMgr : Singleton<CardMgr> {
     }
 
     /// <summary>
-    /// 飞机带两张单
+    /// 飞机带单
     /// </summary>
-    public bool IsPlaneTwoSingle(List<Card> cards) {
+    public bool IsPlaneSingle(List<Card> cards, PlayHand playHand) {
         var classify = Classify(cards);
         var list = classify["3"];
-        if (classify["1"].Count == 2 && classify["2"].Count == 0 && list.Count == 2 && classify["4"].Count == 0) {
-            // 飞机牌之间点数相差为1，且最大的点数小于2；2张单牌不做限制，可以是大小王
-            if (list[1] - list[0] == 1 && list[1] < (int)CardPoint.Two) {
+        if (classify["1"].Count >= 2 && classify["2"].Count == 0 && list.Count >= 2 && classify["4"].Count == 0) {
+            // 单牌的数量和3张牌的数量不等
+            if (classify["1"].Count != list.Count) {
+                return false;
+            }
+            
+            // 两种牌之间点数相差不为1
+            for (int i = 1; i < list.Count; i++) {
+                if (list[i] - list[i - 1] != 1) {
+                    return false;
+                }
+            }
+            
+            // 最大的点数小于2，2张单牌不做限制，可以是大小王
+            if (list[list.Count - 1] < (int)CardPoint.Two) {
+                playHand.Point = (CardPoint)list[0];
                 return true;
             }
         }
@@ -168,14 +252,27 @@ public class CardMgr : Singleton<CardMgr> {
     }
 
     /// <summary>
-    /// 飞机带两对
+    /// 飞机带对
     /// </summary>
-    public bool IsPlaneTwoPair(List<Card> cards) {
+    public bool IsPlanePair(List<Card> cards, PlayHand playHand) {
         var classify = Classify(cards);
         var list = classify["3"];
-        if (classify["1"].Count == 0 && classify["2"].Count == 2 && list.Count == 2 && classify["4"].Count == 0) {
-            // 飞机牌之间点数相差为1，且最大的点数小于2
-            if (list[1] - list[0] == 1 && list[1] < (int)CardPoint.Two) {
+        if (classify["1"].Count == 0 && classify["2"].Count >= 2 && list.Count >= 2 && classify["4"].Count == 0) {
+            // 单牌的数量和3张牌的数量不等
+            if (classify["2"].Count != list.Count) {
+                return false;
+            }
+            
+            // 两种牌之间点数相差不为1
+            for (int i = 1; i < list.Count; i++) {
+                if (list[i] - list[i - 1] != 1) {
+                    return false;
+                }
+            }
+            
+            // 最大的点数小于2
+            if (list[list.Count - 1] < (int)CardPoint.Two) {
+                playHand.Point = (CardPoint)list[0];
                 return true;
             }
         }
@@ -186,28 +283,18 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 连对
     /// </summary>
-    public bool IsSeqPair(List<Card> cards) {
-        int count = cards.Count;
-        int seqPair0 = 0, seqPair1 = 0, min = 99;
-        if (count >= 6 && count % 2 == 0) {
-            foreach (var t in cards) {
-                int code = 3 + ((int)t.Point) / 4;
-                if (code >= 14) return false;
-                if (code < min) {
-                    min = code;
-                }
-
-                int temp = 1 << code;
-                if ((seqPair0 & temp) == 0) {
-                    seqPair0 |= temp;
-                } else if ((seqPair1 & temp) == 0) {
-                    seqPair1 |= temp;
-                } else {
-                    return false;
-                }
+    public bool IsSeqPair(List<Card> cards, PlayHand playHand) {
+        if (cards.Count < 6) return false;
+        
+        var classify = Classify(cards);
+        var list = classify["2"];
+        if (classify["1"].Count == 0 && list.Count >= 3 && classify["3"].Count == 0 && classify["4"].Count == 0) {
+            // 连对最后1张点数 - 第1张点数 = 连对数量 - 1 ：334455 -> 5-3 = 3-1
+            if (list[list.Count - 1] - list[0] == list.Count - 1 && 
+                list[0] >= (int)CardPoint.Three && list[list.Count - 1] < (int)CardPoint.Two) {
+                playHand.Point = (CardPoint)list[0];
+                return true;
             }
-
-            return seqPair0 == seqPair1 && IsSuccessiveOne(seqPair0, min, min + cards.Count / 2 - 1);
         }
 
         return false;
@@ -216,25 +303,18 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 顺子
     /// </summary>
-    public bool IsSeqSingle(List<Card> cards) {
-        if (cards.Count >= 5) {
-            int seqSingle = 0, temp, code, min = 99;
-            foreach (var card in cards) {
-                code = 3 + (int)card.Point / 4;
-                if (code < min) {
-                    min = code;
-                }
-
-                temp = 1 << code;
-                // 顺子不能包含王和2
-                if ((seqSingle & temp) != 0 || code > 14) {
-                    return false;
-                }
-
-                seqSingle |= temp;
+    public bool IsSeqSingle(List<Card> cards, PlayHand playHand) {
+        if (cards.Count < 5) return false;
+        
+        var classify = Classify(cards);
+        var list = classify["1"];
+        if (list.Count >= 5 && classify["2"].Count == 0 && classify["3"].Count == 0 && classify["4"].Count == 0) {
+            // 顺子最后1张点数 - 第1张点数 = 顺子数量 - 1 ：34567 -> 7-3 = 5-1
+            if (list[list.Count - 1] - list[0] == list.Count - 1 && 
+                list[0] >= (int)CardPoint.Three && list[list.Count - 1] < (int)CardPoint.Two) {
+                playHand.Point = (CardPoint)list[0];
+                return true;
             }
-
-            return IsSuccessiveOne(seqSingle, min, min + cards.Count - 1);
         }
 
         return false;
@@ -257,25 +337,16 @@ public class CardMgr : Singleton<CardMgr> {
     /// <summary>
     /// 炸弹带两对
     /// </summary>
-    public bool IsBombTwoPair(List<Card> cards) {
-        bool res = cards.Count == 8 && IsWith(cards, 6);
-        // 由于四带两对和飞机带两张的条件一致，需要再进一步杨筛选
-        if (res) {
-            int tmp = 0, code, count = 0;
-            for (int i = 0; i < cards.Count; i++) {
-                code = 3 + (int)cards[i].Point / 4;
-                tmp |= 1 << code;
-            }
-
-            while (tmp != 0) {
-                count += (tmp & 1);
-                tmp >>= 1;
-            }
-
-            res = count == 3;
+    public bool IsBombTwoPair(List<Card> cards, PlayHand playHand) {
+        if (cards.Count != 8) return false;
+        
+        var classify = Classify(cards);
+        if (classify["1"].Count == 0 && classify["2"].Count == 2 && classify["3"].Count == 0 && classify["4"].Count == 1) {
+            playHand.Point = (CardPoint)classify["4"][0];
+            return true;
         }
 
-        return res;
+        return false;
     }
 
     /// <summary>
@@ -344,14 +415,6 @@ public class CardMgr : Singleton<CardMgr> {
     #region 牌型判断辅助函数
 
     /// <summary>
-    /// 判断一个数的二进制形式是否全是相连的1组成，即0011111100这种形式
-    /// </summary>
-    private bool IsSuccessiveOne(long num, int min, int max) {
-        // 等比数列求和
-        return num == (1 << (max + 1)) - (1 << min);
-    }
-
-    /// <summary>
     /// <para>判断是否为三带、四带或什么都不带</para>
     /// 4个相同的牌可以统计出的次数为4; 
     /// 3个相同的牌可以统计出的次数为3; 
@@ -416,6 +479,25 @@ public class CardMgr : Singleton<CardMgr> {
         }
 
         return dict;
+    }
+
+    /// <summary>
+    /// 根据牌型取得该牌型比较大小的关键点数
+    /// </summary>
+    /// <param name="cards">卡牌列表</param>
+    /// <param name="type">卡牌所属的牌型</param>
+    /// <returns>关键点数</returns>
+    private CardPoint FindPointFromCards(List<Card> cards, CardType type) {
+        var dict = Classify(cards);
+        if (type == CardType.HandBombPair || type == CardType.HandBombTwoSingle) {
+            return (CardPoint)dict["4"][0];
+        }
+
+        if (type == CardType.HandTripleSingle || type == CardType.HandTriplePair) {
+            return (CardPoint)dict["3"][0];
+        }
+
+        return CardPoint.PointNone;
     }
 
     #endregion

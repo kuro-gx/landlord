@@ -31,9 +31,10 @@ public static partial class UserReflection {
           "c2VyX2lkGAIgASgFEhAKCHVzZXJuYW1lGAMgASgJEg4KBmdlbmRlchgEIAEo",
           "BRINCgVtb25leRgFIAEoBRIPCgdkaWFtb25kGAYgASgFEhEKCXdpbl9jb3Vu",
           "dBgHIAEoBRISCgpsb3NlX2NvdW50GAggASgFEhAKCHdpbl9sYXN0GAkgASgF",
-          "Im0KBlBsYXllchIKCgJpZBgBIAEoBRIQCgh1c2VybmFtZRgCIAEoCRINCgVt",
-          "b25leRgDIAEoBRILCgNwb3MYBCABKAUSGAoJY2FyZF9saXN0GAUgAygLMgUu",
-          "Q2FyZBIPCgdjYW5HcmFiGAYgASgIYgZwcm90bzM="));
+          "IoYBCgZQbGF5ZXISCgoCaWQYASABKAUSEAoIdXNlcm5hbWUYAiABKAkSDQoF",
+          "bW9uZXkYAyABKAUSCwoDcG9zGAQgASgFEhgKCWNhcmRfbGlzdBgFIAMoCzIF",
+          "LkNhcmQSDwoHY2FuR3JhYhgGIAEoCBIXCg9wbGF5X2hhbmRfdGltZXMYByAB",
+          "KAViBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::ResultCodeReflection.Descriptor, global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -41,7 +42,7 @@ public static partial class UserReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginBo), global::LoginBo.Parser, new[]{ "Mobile", "Password" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::UpdateUserBo), global::UpdateUserBo.Parser, new[]{ "UserId", "Username", "Gender" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::LoginResponse), global::LoginResponse.Parser, new[]{ "Code", "UserId", "Username", "Gender", "Money", "Diamond", "WinCount", "LoseCount", "WinLast" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Player), global::Player.Parser, new[]{ "Id", "Username", "Money", "Pos", "CardList", "CanGrab" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::Player), global::Player.Parser, new[]{ "Id", "Username", "Money", "Pos", "CardList", "CanGrab", "PlayHandTimes" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1398,6 +1399,7 @@ public sealed partial class Player : pb::IMessage<Player>
     pos_ = other.pos_;
     cardList_ = other.cardList_.Clone();
     canGrab_ = other.canGrab_;
+    playHandTimes_ = other.playHandTimes_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1490,6 +1492,21 @@ public sealed partial class Player : pb::IMessage<Player>
     }
   }
 
+  /// <summary>Field number for the "play_hand_times" field.</summary>
+  public const int PlayHandTimesFieldNumber = 7;
+  private int playHandTimes_;
+  /// <summary>
+  /// 出牌的次数，用于判断是否“春天”
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int PlayHandTimes {
+    get { return playHandTimes_; }
+    set {
+      playHandTimes_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -1511,6 +1528,7 @@ public sealed partial class Player : pb::IMessage<Player>
     if (Pos != other.Pos) return false;
     if(!cardList_.Equals(other.cardList_)) return false;
     if (CanGrab != other.CanGrab) return false;
+    if (PlayHandTimes != other.PlayHandTimes) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1524,6 +1542,7 @@ public sealed partial class Player : pb::IMessage<Player>
     if (Pos != 0) hash ^= Pos.GetHashCode();
     hash ^= cardList_.GetHashCode();
     if (CanGrab != false) hash ^= CanGrab.GetHashCode();
+    if (PlayHandTimes != 0) hash ^= PlayHandTimes.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1563,6 +1582,10 @@ public sealed partial class Player : pb::IMessage<Player>
       output.WriteRawTag(48);
       output.WriteBool(CanGrab);
     }
+    if (PlayHandTimes != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(PlayHandTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1594,6 +1617,10 @@ public sealed partial class Player : pb::IMessage<Player>
       output.WriteRawTag(48);
       output.WriteBool(CanGrab);
     }
+    if (PlayHandTimes != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(PlayHandTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1619,6 +1646,9 @@ public sealed partial class Player : pb::IMessage<Player>
     size += cardList_.CalculateSize(_repeated_cardList_codec);
     if (CanGrab != false) {
       size += 1 + 1;
+    }
+    if (PlayHandTimes != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayHandTimes);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1647,6 +1677,9 @@ public sealed partial class Player : pb::IMessage<Player>
     cardList_.Add(other.cardList_);
     if (other.CanGrab != false) {
       CanGrab = other.CanGrab;
+    }
+    if (other.PlayHandTimes != 0) {
+      PlayHandTimes = other.PlayHandTimes;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1691,6 +1724,10 @@ public sealed partial class Player : pb::IMessage<Player>
           CanGrab = input.ReadBool();
           break;
         }
+        case 56: {
+          PlayHandTimes = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -1732,6 +1769,10 @@ public sealed partial class Player : pb::IMessage<Player>
         }
         case 48: {
           CanGrab = input.ReadBool();
+          break;
+        }
+        case 56: {
+          PlayHandTimes = input.ReadInt32();
           break;
         }
       }

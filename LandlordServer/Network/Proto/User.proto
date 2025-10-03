@@ -44,4 +44,5 @@ message Player {
   int32 pos = 4; // 位置
   repeated Card card_list = 5; // 手牌
   bool canGrab = 6; // 是否可以抢地主
+  int32 play_hand_times = 7; // 出牌的次数，用于判断是否“春天”
 }

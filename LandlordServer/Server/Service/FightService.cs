@@ -54,4 +54,23 @@ public class FightService {
             Cache.Instance.SessionDict[p.Id].SendData(NetDefine.CMD_BecomeLordCode, response.ToByteString());
         }
     }
+
+    /// <summary>
+    /// 移除玩家手牌
+    /// </summary>
+    /// <param name="player">玩家</param>
+    /// <param name="pendCards">打出的牌</param>
+    /// <returns>true: 没牌了, false: 还有牌</returns>
+    public bool RemovePlayerCards(Player player, List<Card> pendCards) {
+        foreach (var card in pendCards) {
+            for (int j = 0; j < player.CardList.Count; j++) {
+                if (player.CardList[j].Point == card.Point && player.CardList[j].Suit == card.Suit) {
+                    player.CardList.RemoveAt(j);
+                    break;
+                }
+            }
+        }
+
+        return player.CardList.Count == 0;
+    }
 }

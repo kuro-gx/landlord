@@ -9,8 +9,8 @@ public class ClickListener : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
     public Action<GameObject> OnClickDown;
     public Action<GameObject> OnClickUp;
     public Action<GameObject> OnEnter;
-    
-    public void OnPointerUp(PointerEventData eventData) {
+
+    public void OnPointerDown(PointerEventData eventData) {
         OnClickDown?.Invoke(gameObject);
     }
 
@@ -18,7 +18,7 @@ public class ClickListener : MonoBehaviour, IPointerUpHandler, IPointerEnterHand
         OnEnter?.Invoke(gameObject);
     }
 
-    public void OnPointerDown(PointerEventData eventData) {
+    public void OnPointerUp(PointerEventData eventData) {
         OnClickUp?.Invoke(gameObject);
     }
 }

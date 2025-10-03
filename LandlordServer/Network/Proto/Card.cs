@@ -27,32 +27,33 @@ public static partial class CardReflection {
           "c3BvbnNlEhIKCmJhc2Vfc2NvcmUYASABKAUSEAoIbXVsdGlwbGUYAiABKAUS",
           "GAoJY2FyZF9saXN0GAMgAygLMgUuQ2FyZCJECgpQbGF5SGFuZEJvEgsKA3Bv",
           "cxgBIAEoBRIPCgdpc19wYXNzGAIgASgIEhgKCWNhcmRfbGlzdBgDIAMoCzIF",
-          "LkNhcmQidgoQUGxheUhhbmRSZXNwb25zZRIQCghsYXN0X3BvcxgBIAEoBRIP",
-          "Cgdpc19wYXNzGAIgASgIEhgKCWNhcmRfbGlzdBgDIAMoCzIFLkNhcmQSEwoL",
-          "bW9uc3Rlcl9wb3MYBCABKAUSEAoIaXNfY292ZXIYBSABKAgqugEKCUNhcmRQ",
-          "b2ludBINCglQb2ludE5vbmUQABIJCgVUaHJlZRADEggKBEZvdXIQBBIICgRG",
-          "aXZlEAUSBwoDU2l4EAYSCQoFU2V2ZW4QBxIJCgVFaWdodBAIEggKBE5pbmUQ",
-          "CRIHCgNUZW4QChIICgRKYWNrEAsSCQoFUXVlZW4QDBIICgRLaW5nEA0SBwoD",
-          "T25lEA4SBwoDVHdvEA8SDgoKSm9rZXJTbWFsbBAQEgwKCEpva2VyQmlnEBEq",
-          "RQoIQ2FyZFN1aXQSDAoIU3VpdE5vbmUQABILCgdEaWFtb25kEAESCAoEQ2x1",
-          "YhACEgkKBUhlYXJ0EAMSCQoFU3BhZGUQBCq8AwoIQ2FyZFR5cGUSEAoMSGFu",
-          "ZF9Vbmtub3duEAASDQoJSGFuZF9QYXNzEAESDwoLSGFuZF9TaW5nbGUQAhIN",
-          "CglIYW5kX1BhaXIQAxIPCgtIYW5kX1RyaXBsZRAEEhYKEkhhbmRfVHJpcGxl",
-          "X1NpbmdsZRAFEhQKEEhhbmRfVHJpcGxlX1BhaXIQBhIOCgpIYW5kX1BsYW5l",
-          "EAcSGQoVSGFuZF9QbGFuZV9Ud29fU2luZ2xlEAgSFwoTSGFuZF9QbGFuZV9U",
-          "d29fUGFpchAJEhEKDUhhbmRfU2VxX1BhaXIQChITCg9IYW5kX1NlcV9TaW5n",
-          "bGUQCxINCglIYW5kX0JvbWIQDBISCg5IYW5kX0JvbWJfUGFpchANEhgKFEhh",
-          "bmRfQm9tYl9Ud29fU2luZ2xlEA4SFgoSSGFuZF9Cb21iX1R3b19QYWlyEA8S",
-          "FAoQSGFuZF9Cb21iX0pva2VycxAQEhkKFUhhbmRfQm9tYl9Kb2tlcnNfUGFp",
-          "chAREh8KG0hhbmRfQm9tYl9Kb2tlcnNfVHdvX1NpbmdsZRASEh0KGUhhbmRf",
-          "Qm9tYl9Kb2tlcnNfVHdvX1BhaXIQE2IGcHJvdG8z"));
+          "LkNhcmQirAEKEFBsYXlIYW5kUmVzcG9uc2USEAoIbGFzdF9wb3MYASABKAUS",
+          "DwoHaXNfcGFzcxgCIAEoCBIZCgpwZW5kX2NhcmRzGAMgAygLMgUuQ2FyZBIT",
+          "Cgttb25zdGVyX3BvcxgEIAEoBRIQCghpc19jb3ZlchgFIAEoCBIOCgZpc19l",
+          "bmQYBiABKAgSEAoIbXVsdGlwbGUYByABKAUSEQoJaXNfc3ByaW5nGAggASgI",
+          "KroBCglDYXJkUG9pbnQSDQoJUG9pbnROb25lEAASCQoFVGhyZWUQAxIICgRG",
+          "b3VyEAQSCAoERml2ZRAFEgcKA1NpeBAGEgkKBVNldmVuEAcSCQoFRWlnaHQQ",
+          "CBIICgROaW5lEAkSBwoDVGVuEAoSCAoESmFjaxALEgkKBVF1ZWVuEAwSCAoE",
+          "S2luZxANEgcKA09uZRAOEgcKA1R3bxAPEg4KCkpva2VyU21hbGwQEBIMCghK",
+          "b2tlckJpZxARKkUKCENhcmRTdWl0EgwKCFN1aXROb25lEAASCwoHRGlhbW9u",
+          "ZBABEggKBENsdWIQAhIJCgVIZWFydBADEgkKBVNwYWRlEAQqtAMKCENhcmRU",
+          "eXBlEhAKDEhhbmRfVW5rbm93bhAAEg0KCUhhbmRfUGFzcxABEg8KC0hhbmRf",
+          "U2luZ2xlEAISDQoJSGFuZF9QYWlyEAMSDwoLSGFuZF9UcmlwbGUQBBIWChJI",
+          "YW5kX1RyaXBsZV9TaW5nbGUQBRIUChBIYW5kX1RyaXBsZV9QYWlyEAYSDgoK",
+          "SGFuZF9QbGFuZRAHEhUKEUhhbmRfUGxhbmVfU2luZ2xlEAgSEwoPSGFuZF9Q",
+          "bGFuZV9QYWlyEAkSEQoNSGFuZF9TZXFfUGFpchAKEhMKD0hhbmRfU2VxX1Np",
+          "bmdsZRALEg0KCUhhbmRfQm9tYhAVEhIKDkhhbmRfQm9tYl9QYWlyEA0SGAoU",
+          "SGFuZF9Cb21iX1R3b19TaW5nbGUQDhIWChJIYW5kX0JvbWJfVHdvX1BhaXIQ",
+          "DxIUChBIYW5kX0JvbWJfSm9rZXJzEBYSGQoVSGFuZF9Cb21iX0pva2Vyc19Q",
+          "YWlyEBESHwobSGFuZF9Cb21iX0pva2Vyc19Ud29fU2luZ2xlEBISHQoZSGFu",
+          "ZF9Cb21iX0pva2Vyc19Ud29fUGFpchATYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CardPoint), typeof(global::CardSuit), typeof(global::CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::Card), global::Card.Parser, new[]{ "Point", "Suit" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::DispatchCardResponse), global::DispatchCardResponse.Parser, new[]{ "BaseScore", "Multiple", "CardList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandBo), global::PlayHandBo.Parser, new[]{ "Pos", "IsPass", "CardList" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandResponse), global::PlayHandResponse.Parser, new[]{ "LastPos", "IsPass", "CardList", "MonsterPos", "IsCover" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandResponse), global::PlayHandResponse.Parser, new[]{ "LastPos", "IsPass", "PendCards", "MonsterPos", "IsCover", "IsEnd", "Multiple", "IsSpring" }, null, null, null, null)
         }));
   }
   #endregion
@@ -188,11 +189,11 @@ public enum CardType {
   /// <summary>
   /// 飞机带单，555_666_3_4
   /// </summary>
-  [pbr::OriginalName("Hand_Plane_Two_Single")] HandPlaneTwoSingle = 8,
+  [pbr::OriginalName("Hand_Plane_Single")] HandPlaneSingle = 8,
   /// <summary>
   /// 飞机带双，555_666_33_44
   /// </summary>
-  [pbr::OriginalName("Hand_Plane_Two_Pair")] HandPlaneTwoPair = 9,
+  [pbr::OriginalName("Hand_Plane_Pair")] HandPlanePair = 9,
   /// <summary>
   /// 连对，33_44_55(_66...)
   /// </summary>
@@ -204,7 +205,7 @@ public enum CardType {
   /// <summary>
   /// 炸弹
   /// </summary>
-  [pbr::OriginalName("Hand_Bomb")] HandBomb = 12,
+  [pbr::OriginalName("Hand_Bomb")] HandBomb = 21,
   /// <summary>
   /// 炸弹带一对
   /// </summary>
@@ -220,7 +221,7 @@ public enum CardType {
   /// <summary>
   /// 王炸
   /// </summary>
-  [pbr::OriginalName("Hand_Bomb_Jokers")] HandBombJokers = 16,
+  [pbr::OriginalName("Hand_Bomb_Jokers")] HandBombJokers = 22,
   /// <summary>
   /// 王炸带一对
   /// </summary>
@@ -1062,9 +1063,12 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
   public PlayHandResponse(PlayHandResponse other) : this() {
     lastPos_ = other.lastPos_;
     isPass_ = other.isPass_;
-    cardList_ = other.cardList_.Clone();
+    pendCards_ = other.pendCards_.Clone();
     monsterPos_ = other.monsterPos_;
     isCover_ = other.isCover_;
+    isEnd_ = other.isEnd_;
+    multiple_ = other.multiple_;
+    isSpring_ = other.isSpring_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1104,18 +1108,18 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     }
   }
 
-  /// <summary>Field number for the "card_list" field.</summary>
-  public const int CardListFieldNumber = 3;
-  private static readonly pb::FieldCodec<global::Card> _repeated_cardList_codec
+  /// <summary>Field number for the "pend_cards" field.</summary>
+  public const int PendCardsFieldNumber = 3;
+  private static readonly pb::FieldCodec<global::Card> _repeated_pendCards_codec
       = pb::FieldCodec.ForMessage(26, global::Card.Parser);
-  private readonly pbc::RepeatedField<global::Card> cardList_ = new pbc::RepeatedField<global::Card>();
+  private readonly pbc::RepeatedField<global::Card> pendCards_ = new pbc::RepeatedField<global::Card>();
   /// <summary>
   /// 打出的牌
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public pbc::RepeatedField<global::Card> CardList {
-    get { return cardList_; }
+  public pbc::RepeatedField<global::Card> PendCards {
+    get { return pendCards_; }
   }
 
   /// <summary>Field number for the "monster_pos" field.</summary>
@@ -1137,7 +1141,7 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
   public const int IsCoverFieldNumber = 5;
   private bool isCover_;
   /// <summary>
-  /// 本次操作是否压死上家
+  /// 本次出牌是否压死上家
   /// </summary>
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1145,6 +1149,51 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     get { return isCover_; }
     set {
       isCover_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_end" field.</summary>
+  public const int IsEndFieldNumber = 6;
+  private bool isEnd_;
+  /// <summary>
+  /// 游戏是否已经结束
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsEnd {
+    get { return isEnd_; }
+    set {
+      isEnd_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "multiple" field.</summary>
+  public const int MultipleFieldNumber = 7;
+  private int multiple_;
+  /// <summary>
+  /// 最新的倍数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int Multiple {
+    get { return multiple_; }
+    set {
+      multiple_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "is_spring" field.</summary>
+  public const int IsSpringFieldNumber = 8;
+  private bool isSpring_;
+  /// <summary>
+  /// 是否春天
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public bool IsSpring {
+    get { return isSpring_; }
+    set {
+      isSpring_ = value;
     }
   }
 
@@ -1165,9 +1214,12 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     }
     if (LastPos != other.LastPos) return false;
     if (IsPass != other.IsPass) return false;
-    if(!cardList_.Equals(other.cardList_)) return false;
+    if(!pendCards_.Equals(other.pendCards_)) return false;
     if (MonsterPos != other.MonsterPos) return false;
     if (IsCover != other.IsCover) return false;
+    if (IsEnd != other.IsEnd) return false;
+    if (Multiple != other.Multiple) return false;
+    if (IsSpring != other.IsSpring) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1177,9 +1229,12 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     int hash = 1;
     if (LastPos != 0) hash ^= LastPos.GetHashCode();
     if (IsPass != false) hash ^= IsPass.GetHashCode();
-    hash ^= cardList_.GetHashCode();
+    hash ^= pendCards_.GetHashCode();
     if (MonsterPos != 0) hash ^= MonsterPos.GetHashCode();
     if (IsCover != false) hash ^= IsCover.GetHashCode();
+    if (IsEnd != false) hash ^= IsEnd.GetHashCode();
+    if (Multiple != 0) hash ^= Multiple.GetHashCode();
+    if (IsSpring != false) hash ^= IsSpring.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1206,7 +1261,7 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
       output.WriteRawTag(16);
       output.WriteBool(IsPass);
     }
-    cardList_.WriteTo(output, _repeated_cardList_codec);
+    pendCards_.WriteTo(output, _repeated_pendCards_codec);
     if (MonsterPos != 0) {
       output.WriteRawTag(32);
       output.WriteInt32(MonsterPos);
@@ -1214,6 +1269,18 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (IsCover != false) {
       output.WriteRawTag(40);
       output.WriteBool(IsCover);
+    }
+    if (IsEnd != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(IsEnd);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(Multiple);
+    }
+    if (IsSpring != false) {
+      output.WriteRawTag(64);
+      output.WriteBool(IsSpring);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1233,7 +1300,7 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
       output.WriteRawTag(16);
       output.WriteBool(IsPass);
     }
-    cardList_.WriteTo(ref output, _repeated_cardList_codec);
+    pendCards_.WriteTo(ref output, _repeated_pendCards_codec);
     if (MonsterPos != 0) {
       output.WriteRawTag(32);
       output.WriteInt32(MonsterPos);
@@ -1241,6 +1308,18 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (IsCover != false) {
       output.WriteRawTag(40);
       output.WriteBool(IsCover);
+    }
+    if (IsEnd != false) {
+      output.WriteRawTag(48);
+      output.WriteBool(IsEnd);
+    }
+    if (Multiple != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(Multiple);
+    }
+    if (IsSpring != false) {
+      output.WriteRawTag(64);
+      output.WriteBool(IsSpring);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
@@ -1258,11 +1337,20 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (IsPass != false) {
       size += 1 + 1;
     }
-    size += cardList_.CalculateSize(_repeated_cardList_codec);
+    size += pendCards_.CalculateSize(_repeated_pendCards_codec);
     if (MonsterPos != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(MonsterPos);
     }
     if (IsCover != false) {
+      size += 1 + 1;
+    }
+    if (IsEnd != false) {
+      size += 1 + 1;
+    }
+    if (Multiple != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Multiple);
+    }
+    if (IsSpring != false) {
       size += 1 + 1;
     }
     if (_unknownFields != null) {
@@ -1283,12 +1371,21 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (other.IsPass != false) {
       IsPass = other.IsPass;
     }
-    cardList_.Add(other.cardList_);
+    pendCards_.Add(other.pendCards_);
     if (other.MonsterPos != 0) {
       MonsterPos = other.MonsterPos;
     }
     if (other.IsCover != false) {
       IsCover = other.IsCover;
+    }
+    if (other.IsEnd != false) {
+      IsEnd = other.IsEnd;
+    }
+    if (other.Multiple != 0) {
+      Multiple = other.Multiple;
+    }
+    if (other.IsSpring != false) {
+      IsSpring = other.IsSpring;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1318,7 +1415,7 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
           break;
         }
         case 26: {
-          cardList_.AddEntriesFrom(input, _repeated_cardList_codec);
+          pendCards_.AddEntriesFrom(input, _repeated_pendCards_codec);
           break;
         }
         case 32: {
@@ -1327,6 +1424,18 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
         }
         case 40: {
           IsCover = input.ReadBool();
+          break;
+        }
+        case 48: {
+          IsEnd = input.ReadBool();
+          break;
+        }
+        case 56: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 64: {
+          IsSpring = input.ReadBool();
           break;
         }
       }
@@ -1357,7 +1466,7 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
           break;
         }
         case 26: {
-          cardList_.AddEntriesFrom(ref input, _repeated_cardList_codec);
+          pendCards_.AddEntriesFrom(ref input, _repeated_pendCards_codec);
           break;
         }
         case 32: {
@@ -1366,6 +1475,18 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
         }
         case 40: {
           IsCover = input.ReadBool();
+          break;
+        }
+        case 48: {
+          IsEnd = input.ReadBool();
+          break;
+        }
+        case 56: {
+          Multiple = input.ReadInt32();
+          break;
+        }
+        case 64: {
+          IsSpring = input.ReadBool();
           break;
         }
       }

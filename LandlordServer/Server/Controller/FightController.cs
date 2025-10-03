@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Google.Protobuf;
 using Google.Protobuf.Collections;
 
@@ -83,7 +84,7 @@ public class FightController : IContainer {
             IsCall = form.IsCall,
             CallPos = room.CallPos
         };
-        
+
         // 将进行抢地主操作的玩家广播给房间内的玩家
         Broadcast(room.Players, package, response.ToByteString());
     }
@@ -115,7 +116,7 @@ public class FightController : IContainer {
             room.GrabTimes++;
             room.CurLordPos = form.Pos;
         }
-        
+
         var response = new GrabLordResponse {
             LastPos = form.Pos,
             IsGrab = form.IsGrab,
@@ -170,11 +171,11 @@ public class FightController : IContainer {
                 _fightService.BecomeLord(room);
             }
         }
-        
+
         // 用户选择“抢”或“不抢”，都无法再进行抢地主，只能抢1次
         grabLordPlayer.CanGrab = false;
     }
-    
+
     /// <summary>
     /// 加倍请求
     /// </summary>
@@ -184,13 +185,7 @@ public class FightController : IContainer {
         if (room.RoomState != RoomState.Raise) {
             return;
         }
-        
-        // 最多进行3次加倍
-        if (room.RaiseTimes >= 3) {
-            room.RoomState = RoomState.PlayHand;
-            return;
-        }
-        
+
         var form = RaiseBo.Parser.ParseFrom(package.Data);
         room.RaiseTimes++;
         if (form.IsRaise) {
@@ -206,6 +201,11 @@ public class FightController : IContainer {
         };
 
         Broadcast(room.Players, package, response.ToByteString());
+
+        // 最多进行3次加倍
+        if (room.RaiseTimes >= 3) {
+            room.RoomState = RoomState.PlayHand;
+        }
     }
 
     /// <summary>
@@ -217,8 +217,98 @@ public class FightController : IContainer {
         if (room.RoomState != RoomState.PlayHand) {
             return;
         }
-        
-        
+
+        var form = PlayHandBo.Parser.ParseFrom(package.Data);
+        // 当前出牌人与请求参数不符合
+        if (room.PendPos != form.Pos) {
+            return;
+        }
+
+        // 请求出牌的玩家
+        var playHandPlayer = room.Players[form.Pos];
+        var response = new PlayHandResponse {
+            LastPos = form.Pos,
+            IsCover = false,
+            IsEnd = false,
+            IsPass = false,
+            MonsterPos = room.MonsterPos,
+            Multiple = room.Multiple,
+            IsSpring = false
+        };
+
+        if (form.IsPass) {
+            // 不出
+            response.IsPass = true;
+        } else {
+            // 获取出牌的牌型
+            var list = form.CardList.ToList();
+            var playHand = CardMgr.Instance.GetCardType(list);
+            // 打出的牌是炸弹，积分加倍
+            if (playHand.Type == CardType.HandBomb || playHand.Type == CardType.HandBombJokers) {
+                room.Multiple *= 2;
+                response.Multiple = room.Multiple;
+            }
+
+            // 本次请求的玩家在上一轮中，打出的牌没人要
+            if (form.Pos == room.MonsterPos) {
+                // 现在请求的玩家是第一个出牌，将其打出的牌保存下来
+                room.PlayCards.Clear();
+                room.PlayCards.AddRange(list);
+                // 移除手牌中已打出的牌，并检测是否出完牌了
+                response.IsEnd = _fightService.RemovePlayerCards(playHandPlayer, list);
+                response.PendCards.AddRange(list);
+                response.IsCover = true;
+                // 出牌次数+1
+                playHandPlayer.PlayHandTimes++;
+            } else {
+                // 比较自己出的牌能否大过上家
+                if (CardMgr.Instance.CanBeat(room.PlayCards.ToList(), list)) {
+                    room.PlayCards.Clear();
+                    room.PlayCards.AddRange(list);
+                    response.IsEnd = _fightService.RemovePlayerCards(playHandPlayer, list);
+                    // 自己压过了上家的牌，更新当前出牌最大的玩家
+                    room.MonsterPos = form.Pos;
+                    response.MonsterPos = form.Pos;
+                    response.PendCards.AddRange(list);
+                    response.IsCover = true;
+                    // 出牌次数+1
+                    playHandPlayer.PlayHandTimes++;
+                }
+            }
+        }
+
+        // 如果玩家的牌已经打完，游戏结束，开始结算
+        if (response.IsEnd) {
+            room.RoomState = RoomState.GameEnd;
+
+            // 如果当前出牌玩家是地主，并且农民的出牌次数相加为0，则表示地主打出了“春天”
+            if (playHandPlayer.Pos == room.CurLordPos) {
+                int playHandCount = room.Players.Where(p => p.Pos != playHandPlayer.Pos).Sum(p => p.PlayHandTimes);
+
+                // “春天”，积分加倍
+                if (playHandCount == 0) {
+                    response.IsSpring = true;
+                    room.Multiple *= 2;
+                    response.Multiple = room.Multiple;
+                }
+            } else {
+                // 当前出牌玩家是农民，并且地主只出了1次牌，则表示当前玩家打出了“春天”
+                var landPlayer = room.Players.FirstOrDefault(p => p.Pos == room.CurLordPos);
+                if (landPlayer != null && landPlayer.PlayHandTimes == 1) {
+                    response.IsSpring = true;
+                    room.Multiple *= 2;
+                    response.Multiple = room.Multiple;
+                }
+            }
+        } else {
+            // 轮到下一个玩家出牌
+            room.PendPos++;
+            if (room.PendPos == 3) {
+                room.PendPos = 0;
+            }
+        }
+
+        Broadcast(room.Players, package, response.ToByteString());
     }
 
     /// <summary>

@@ -1,5 +1,4 @@
 ﻿using Google.Protobuf;
-using System;
 
 /// <summary>
 /// 匹配控制器
@@ -39,7 +38,8 @@ public class MatchController : IContainer {
             Username = loginUser.Username,
             Money = loginUser.Money,
             Pos = _posIndex,
-            CanGrab = true
+            CanGrab = true,
+            PlayHandTimes = 0
         };
 
         if (_posIndex == 0) {
@@ -53,6 +53,7 @@ public class MatchController : IContainer {
                 Multiple = 1,
                 GrabTimes = 0,
                 CurLordPos = -1,
+                MonsterPos = -1,
                 PendPos = -1,
                 RaiseTimes = 0
             };

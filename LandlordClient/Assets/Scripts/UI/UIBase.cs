@@ -36,7 +36,7 @@ public abstract class UIBase : MonoBehaviour {
         return cpt;
     }
     
-    #region 设置预制体的点击事件
+    #region 滑动、点击事件
 
     protected void OnEnter(GameObject go, Action<GameObject> callback) {
         var listener = GetOrAddComponent<ClickListener>(go);
@@ -51,6 +51,45 @@ public abstract class UIBase : MonoBehaviour {
     protected void OnClickUp(GameObject go, Action<GameObject> callback) {
         var listener = GetOrAddComponent<ClickListener>(go);
         listener.OnClickUp = callback;
+    }
+
+    // 是否是滑动选择状态
+    private bool _isSlideSelect;
+    /// <summary>
+    /// 滑动选择
+    /// </summary>
+    public void OnSlideSelect(GameObject targetEl, GameObject rootEl, Action<GameObject> cb, Action<GameObject> endCb) {
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
+        // 点击目标触发
+        OnClickDown(targetEl, clickEl => {
+            _isSlideSelect = false;
+            cb(clickEl);
+        });
+
+        // 鼠标进入目标触发
+        OnEnter(targetEl, enterEl => {
+            if (!Input.GetMouseButton(0)) {
+                return;
+            }
+            _isSlideSelect = true;
+            cb(enterEl);
+        });
+#else
+        OnEnter(gameObject, enterEl => {
+            _isSlideSelect = true;
+            cb(enterEl);
+        });
+#endif
+
+        // 鼠标在目标物体抬起触发
+        OnClickUp(targetEl, endCb);
+        // 鼠标在rootEl组件内抬起触发
+        OnClickUp(rootEl, upEl => {
+            if (_isSlideSelect) {
+                endCb(upEl);
+                _isSlideSelect = false;
+            }
+        });
     }
 
     #endregion

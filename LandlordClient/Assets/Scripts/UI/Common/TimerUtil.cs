@@ -46,6 +46,15 @@ public class TimerUtil : MonoBehaviour {
         _isRun = true;
     }
 
+    public void RemoveTimerTask() {
+        _isRun = false;
+        _timerTask = null;
+        _timerState = TimerState.None;
+        _delayCount = 0;
+        _rateCount = 0;
+        _endCount = 0;
+    }
+
     private void Update() {
         if (_isRun) {
             float delta = Time.deltaTime;
@@ -90,17 +99,12 @@ public class TimerUtil : MonoBehaviour {
             float endOffset = _endCount - _timerTask.EndTime;
             if (endOffset >= 0) {
                 _timerTask.EndCallback?.Invoke();
-                OnDisable();
+                RemoveTimerTask();
             }
         }
     }
 
     private void OnDisable() {
-        _isRun = false;
-        _timerTask = null;
-        _timerState = TimerState.None;
-        _delayCount = 0;
-        _rateCount = 0;
-        _endCount = 0;
+        RemoveTimerTask();
     }
 }
