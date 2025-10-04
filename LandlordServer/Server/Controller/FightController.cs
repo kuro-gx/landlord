@@ -49,31 +49,28 @@ public class FightController : IContainer {
         // 获取请求参数
         CallLordBo form = CallLordBo.Parser.ParseFrom(package.Data);
         room.CallTimes++;
-        // 请求次数为3，表示现在是最后一个人叫地主
-        if (room.CallTimes == 3) {
-            if (form.IsCall) {
-                // 只有最后一人“叫地主”，则直接成为地主进入加倍环节
-                room.CallPos = form.Pos;
-                room.CurLordPos = form.Pos;
-                _fightService.BecomeLord(room);
-            } else {
-                // 没人"叫地主"，重新发牌
-                room.CallTimes = 0;
-                room.Players[0].CanGrab = true;
-                room.Players[1].CanGrab = true;
-                room.Players[2].CanGrab = true;
-                // 重新发牌
-                _fightService.StartDispatchCardHandle(room);
-                return;
-            }
+        // 没人"叫地主"，重新发牌
+        if (room.CallTimes == 3 && !form.IsCall) {
+            room.CallTimes = 0;
+            room.Players[0].CanGrab = true;
+            room.Players[1].CanGrab = true;
+            room.Players[2].CanGrab = true;
+            // 重新发牌
+            _fightService.StartDispatchCardHandle(room);
+            return;
         }
 
         // 如果玩家选择“叫地主”，将其坐位索引记录下来
         if (form.IsCall) {
             room.CallPos = form.Pos;
             room.CurLordPos = form.Pos;
-            // 进入抢地主环节
-            room.RoomState = RoomState.GrabLord;
+            if (room.CallTimes == 3) {
+                // 只有最后一人“叫地主”，则直接成为地主进入加倍环节
+                _fightService.BecomeLord(room);
+            } else {
+                // 进入抢地主环节
+                room.RoomState = RoomState.GrabLord;
+            }
         } else {
             // 玩家不叫地主，则无法参与抢地主
             callLordPlayer.CanGrab = false;
@@ -82,7 +79,8 @@ public class FightController : IContainer {
         var response = new CallLordResponse {
             LastPos = form.Pos,
             IsCall = form.IsCall,
-            CallPos = room.CallPos
+            CallPos = room.CallPos,
+            CallTimes = room.CallTimes
         };
 
         // 将进行抢地主操作的玩家广播给房间内的玩家

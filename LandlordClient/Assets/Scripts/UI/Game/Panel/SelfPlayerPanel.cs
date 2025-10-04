@@ -22,10 +22,9 @@ public class SelfPlayerPanel : UIBase {
 
     public List<Card> SelfCardList; // 自己的手牌
     public readonly List<CardPanel> SelfCardPanelList = new(20); // 手牌的预制体列表
-    public readonly List<Card> PrepareCardList = new(20); // 将要打出的牌
-    public readonly List<Card> PendCardList = new(20); // 上家打出的牌，客户端出牌时比较大小使用
-    public readonly List<CardDisplay> SelfCardDisplayList = new(20); // 打出的牌的预制体列表
+    public readonly List<Card> OtherPendCards = new(20); // 上家打出的牌，客户端出牌时比较大小使用
     public GameState GameState = GameState.CallLord; // 当前的游戏状态
+    private readonly List<CardDisplay> _selfCardDisplayList = new(20); // 打出的牌的预制体列表
     private GameObject _root; // 父节点，设置滑动动画时需绑定父节点
 
     private void Awake() {
@@ -61,7 +60,7 @@ public class SelfPlayerPanel : UIBase {
     /// <summary>
     /// 显示or隐藏提示消息
     /// </summary>
-    public void ChangeTipVisibility(string tipImageName, string path = "TipText", bool visibility = true) {
+    public void ShowTipMessage(string tipImageName, string path = "TipText", bool visibility = true) {
         if (tipImageName != null) {
             if (path.Equals("TipText")) {
                 tipTextEl.sprite = Resources.Load<Sprite>("TipText/" + tipImageName);
@@ -111,8 +110,6 @@ public class SelfPlayerPanel : UIBase {
         // 对手牌进行从大到小排序后保存手牌
         list.Sort(CardSort);
         SelfCardList = list;
-
-        PrepareCardList.Clear();
 
         // 创建卡牌预制体
         for (var i = 0; i < SelfCardList.Count; i++) {
@@ -220,6 +217,21 @@ public class SelfPlayerPanel : UIBase {
     }
 
     /// <summary>
+    /// 获取选中的卡牌列表
+    /// </summary>
+    /// <returns>选中的卡牌</returns>
+    public List<Card> GetSelectedCards() {
+        var list = new List<Card>(20);
+        for (var i = 0; i < SelfCardPanelList.Count; i++) {
+            if (SelfCardPanelList[i].isSelected) {
+                list.Add(SelfCardList[i]);
+            }
+        }
+
+        return list;
+    }
+
+    /// <summary>
     /// 卡牌选中回调
     /// </summary>
     private void OnCardPanelSelected(GameObject go) {
@@ -229,14 +241,7 @@ public class SelfPlayerPanel : UIBase {
 
         int index = int.Parse(go.name);
         var cardPanel = SelfCardPanelList[index];
-        var card = SelfCardList[index];
-        if (cardPanel.isSelected) {
-            cardPanel.SetCardSelected(false);
-            PrepareCardList.Remove(card);
-        } else {
-            cardPanel.SetCardSelected(true);
-            PrepareCardList.Add(card);
-        }
+        cardPanel.SetCardSelected(!cardPanel.isSelected);
     }
 
     /// <summary>
@@ -265,24 +270,25 @@ public class SelfPlayerPanel : UIBase {
     /// 显示打出的牌
     /// </summary>
     public void ShowCardDisplay() {
-        SelfCardDisplayList.Clear();
+        DestroyCardDisplay();
+        var prepareCards = GetSelectedCards();
 
         // 起始X坐标
         float screenWidth = playHandArea.rect.width;
-        float distanceLeftWidth = (screenWidth - (30 * (PrepareCardList.Count - 1) + Constant.CardDisplayWidth)) / 2;
+        float distanceLeftWidth = (screenWidth - (30 * (prepareCards.Count - 1) + Constant.CardDisplayWidth)) / 2;
         float startX = distanceLeftWidth - screenWidth / 2;
 
         // 创建预制体
-        for (var i = 0; i < PrepareCardList.Count; i++) {
+        for (var i = 0; i < prepareCards.Count; i++) {
             var cardDisplay = Resources.Load<CardDisplay>("Prefabs/CardDisplay");
             if (cardDisplay == null) {
                 return;
             }
 
             var panel = Instantiate(cardDisplay, playHandArea);
-            panel.SetCardInfo(PrepareCardList[i]);
+            panel.SetCardInfo(prepareCards[i]);
             panel.transform.localPosition = new Vector2(startX + i * 30, -125);
-            SelfCardDisplayList.Add(panel);
+            _selfCardDisplayList.Add(panel);
         }
     }
 
@@ -290,14 +296,14 @@ public class SelfPlayerPanel : UIBase {
     /// 删除打出的卡牌的预制体
     /// </summary>
     public void DestroyCardDisplay() {
-        if (SelfCardDisplayList.Count == 0) {
+        if (_selfCardDisplayList.Count == 0) {
             return;
         }
 
-        foreach (var display in SelfCardDisplayList) {
-            Destroy(display);
+        foreach (var display in _selfCardDisplayList) {
+            Destroy(display.gameObject);
         }
 
-        SelfCardDisplayList.Clear();
+        _selfCardDisplayList.Clear();
     }
 }

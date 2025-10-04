@@ -13,6 +13,7 @@ message CallLordResponse {
   int32 last_pos = 1; // 上次请求的玩家的坐位
   bool is_call = 2; // 上次请求的玩家是否叫了地主
   int32 call_pos = 3; // 叫地主玩家的坐位
+  int32 call_times = 4; // 叫地主的次数
 }
 
 // 抢地主参数

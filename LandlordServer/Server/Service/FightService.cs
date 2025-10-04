@@ -62,10 +62,10 @@ public class FightService {
     /// <param name="pendCards">打出的牌</param>
     /// <returns>true: 没牌了, false: 还有牌</returns>
     public bool RemovePlayerCards(Player player, List<Card> pendCards) {
-        foreach (var card in pendCards) {
-            for (int j = 0; j < player.CardList.Count; j++) {
-                if (player.CardList[j].Point == card.Point && player.CardList[j].Suit == card.Suit) {
-                    player.CardList.RemoveAt(j);
+        for (int i = player.CardList.Count - 1; i >= 0; i--) {
+            foreach (var card in pendCards) {
+                if (player.CardList[i].Point == card.Point && player.CardList[i].Suit == card.Suit) {
+                    player.CardList.RemoveAt(i);
                     break;
                 }
             }

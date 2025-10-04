@@ -67,7 +67,7 @@ public class LeftPlayerPanel : UIBase {
     /// <summary>
     /// 显示or隐藏提示消息
     /// </summary>
-    public void ChangeTipVisibility(string tipImageName, bool visibility = true) {
+    public void ShowTipMessage(string tipImageName, bool visibility = true) {
         if (tipImageName != null) {
             tipTextEl.sprite = Resources.Load<Sprite>("TipText/" + tipImageName);
             tipTextEl.SetNativeSize();
@@ -98,7 +98,11 @@ public class LeftPlayerPanel : UIBase {
     /// </summary>
     /// <param name="cards">打出的牌</param>
     public void ShowCardDisplay(List<Card> cards) {
-        _displayCards.Clear();
+        if (cards.Count == 0) {
+            return;
+        }
+
+        DestroyCardDisplay();
 
         for (var i = 0; i < cards.Count; i++) {
             var cardDisplay = Resources.Load<CardDisplay>("Prefabs/CardDisplay");

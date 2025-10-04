@@ -24,7 +24,11 @@
     // 特效音频
     public const string CardDispatch = "Special_DiscardDispatch";
     public const string SelectedCard = "SpecSelectCard";
-    public const string PlayHand = "Special_give";
+    public const string PlayHand = "Special_Give";
+    public const string HandSeq = "Special_Seq";
+    public const string HandPlane = "Special_Plane";
+    public const string HandBomb = "Special_Bomb";
+    public const string HandBombJoker = "Special_Long_Bomb";
     // 操作音频
     public const string CallLord = "CallLord";
     public const string NotCall = "NotCall";

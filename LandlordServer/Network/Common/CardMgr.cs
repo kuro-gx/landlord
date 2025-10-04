@@ -106,7 +106,7 @@ public class CardMgr : Singleton<CardMgr> {
         // 对手的牌型
         var other = GetCardType(cards);
         // 对手放弃出牌
-        if (other.Type == CardType.HandPass) {
+        if (other.Type == CardType.HandPass || other.Type == CardType.HandUnknown) {
             return true;
         }
 

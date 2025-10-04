@@ -178,7 +178,7 @@ public class ButtonsPanel : UIBase {
                     } else if (_playHandBtnPageState == PlayHandBtnEnum.OnlyPlayHand) {
                         // 还原卡牌选中状态
                         RestoreCardSelect();
-                        SelfPlayerPanel.Instance.PrepareCardList.Add(SelfPlayerPanel.Instance.SelfCardList.Last());
+                        SelfPlayerPanel.Instance.SelfCardPanelList.Last().isSelected = true;
                         PlayHandClicked();
                     }
 
@@ -336,10 +336,10 @@ public class ButtonsPanel : UIBase {
     /// 出牌请求
     /// </summary>
     private void PlayHandClicked() {
-        var list = SelfPlayerPanel.Instance.PrepareCardList;
+        var list = SelfPlayerPanel.Instance.GetSelectedCards();
         if (list.Count == 0) {
             // 显示提示，没有选择任何牌
-            SelfPlayerPanel.Instance.ChangeTipVisibility("5", "Sprites");
+            SelfPlayerPanel.Instance.ShowTipMessage("5", "Sprites");
             return;
         }
 
@@ -347,20 +347,20 @@ public class ButtonsPanel : UIBase {
         var playHand = CardMgr.Instance.GetCardType(list);
         if (playHand.Type == CardType.HandUnknown) {
             // 选择的牌不符合规则
-            SelfPlayerPanel.Instance.ChangeTipVisibility("3", "Sprites");
+            SelfPlayerPanel.Instance.ShowTipMessage("3", "Sprites");
             return;
         }
         
         // 打不过别人的牌
-        if (!CardMgr.Instance.CanBeat(SelfPlayerPanel.Instance.PendCardList, list)) {
-            SelfPlayerPanel.Instance.ChangeTipVisibility("0", "Sprites");
+        if (!CardMgr.Instance.CanBeat(SelfPlayerPanel.Instance.OtherPendCards, list)) {
+            SelfPlayerPanel.Instance.ShowTipMessage("0", "Sprites");
             return;
         }
 
         // 隐藏出牌按钮页
         playHandBtnPage.SetActive(false);
         // 隐藏提示
-        SelfPlayerPanel.Instance.ChangeTipVisibility(null, "Sprites", false);
+        SelfPlayerPanel.Instance.ShowTipMessage(null, "Sprites", false);
         
         // 发送出牌请求，收到响应后再做剔除手牌等相关操作
         PlayHandRequest(false);
@@ -379,7 +379,7 @@ public class ButtonsPanel : UIBase {
         playHandBtnPage.SetActive(false);
         // 还原卡牌选中状态
         RestoreCardSelect();
-        
+
         PlayHandRequest(true);
         if (_timer) {
             _timer.RemoveTimerTask();
@@ -396,7 +396,7 @@ public class ButtonsPanel : UIBase {
             IsPass = isPass
         };
         if (!isPass) {
-            form.CardList.AddRange(SelfPlayerPanel.Instance.PrepareCardList);
+            form.CardList.AddRange(SelfPlayerPanel.Instance.GetSelectedCards());
         }
         NetSocketMgr.Client.SendData(NetDefine.CMD_PlayHandCode, form.ToByteString());
     }
@@ -405,18 +405,16 @@ public class ButtonsPanel : UIBase {
     /// 让选中的牌往下滑，还原其选中状态
     /// </summary>
     private void RestoreCardSelect() {
-        var list = SelfPlayerPanel.Instance.PrepareCardList;
+        var list = SelfPlayerPanel.Instance.GetSelectedCards();
         var panelList = SelfPlayerPanel.Instance.SelfCardPanelList;
         foreach (var c in list) {
             foreach (var p in panelList) {
                 if ((int)c.Point * 10 + (int)c.Suit == p.cardValue) {
                     p.MoveTargetPosInTime(Constant.CardMoveTime, new Vector3(0, Constant.CardVDistance, 0));
+                    p.isSelected = false;
                     break;
                 }
             }
         }
-        
-        // 清空选中的牌
-        SelfPlayerPanel.Instance.PrepareCardList.Clear();
     }
 }

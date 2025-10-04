@@ -23,22 +23,23 @@ public static partial class CallLordReflection {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
           "Cg5DYWxsTG9yZC5wcm90bxoKQ2FyZC5wcm90byIqCgpDYWxsTG9yZEJvEgsK",
-          "A3BvcxgBIAEoBRIPCgdpc19jYWxsGAIgASgIIkcKEENhbGxMb3JkUmVzcG9u",
+          "A3BvcxgBIAEoBRIPCgdpc19jYWxsGAIgASgIIlsKEENhbGxMb3JkUmVzcG9u",
           "c2USEAoIbGFzdF9wb3MYASABKAUSDwoHaXNfY2FsbBgCIAEoCBIQCghjYWxs",
-          "X3BvcxgDIAEoBSIqCgpHcmFiTG9yZEJvEgsKA3BvcxgBIAEoBRIPCgdpc19n",
-          "cmFiGAIgASgIInEKEEdyYWJMb3JkUmVzcG9uc2USEAoIbGFzdF9wb3MYASAB",
-          "KAUSDwoHaXNfZ3JhYhgCIAEoCBIQCghtdWx0aXBsZRgDIAEoBRISCgpncmFi",
-          "X3RpbWVzGAQgASgFEhQKDGNhbl9ncmFiX3BvcxgFIAEoBSJBChJCZWNvbWVM",
-          "b3JkUmVzcG9uc2USEAoIbG9yZF9wb3MYASABKAUSGQoKaG9sZV9jYXJkcxgC",
-          "IAMoCzIFLkNhcmQiKAoHUmFpc2VCbxILCgNwb3MYASABKAUSEAoIaXNfcmFp",
-          "c2UYAiABKAgiagoNUmFpc2VSZXNwb25zZRIQCghsYXN0X3BvcxgBIAEoBRIQ",
-          "Cghpc19yYWlzZRgCIAEoCBIQCghtdWx0aXBsZRgDIAEoBRIRCgljYW5fcmFp",
-          "c2UYBCABKAgSEAoIbG9yZF9wb3MYBSABKAViBnByb3RvMw=="));
+          "X3BvcxgDIAEoBRISCgpjYWxsX3RpbWVzGAQgASgFIioKCkdyYWJMb3JkQm8S",
+          "CwoDcG9zGAEgASgFEg8KB2lzX2dyYWIYAiABKAgicQoQR3JhYkxvcmRSZXNw",
+          "b25zZRIQCghsYXN0X3BvcxgBIAEoBRIPCgdpc19ncmFiGAIgASgIEhAKCG11",
+          "bHRpcGxlGAMgASgFEhIKCmdyYWJfdGltZXMYBCABKAUSFAoMY2FuX2dyYWJf",
+          "cG9zGAUgASgFIkEKEkJlY29tZUxvcmRSZXNwb25zZRIQCghsb3JkX3BvcxgB",
+          "IAEoBRIZCgpob2xlX2NhcmRzGAIgAygLMgUuQ2FyZCIoCgdSYWlzZUJvEgsK",
+          "A3BvcxgBIAEoBRIQCghpc19yYWlzZRgCIAEoCCJqCg1SYWlzZVJlc3BvbnNl",
+          "EhAKCGxhc3RfcG9zGAEgASgFEhAKCGlzX3JhaXNlGAIgASgIEhAKCG11bHRp",
+          "cGxlGAMgASgFEhEKCWNhbl9yYWlzZRgEIAEoCBIQCghsb3JkX3BvcxgFIAEo",
+          "BWIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { global::CardReflection.Descriptor, },
         new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::CallLordBo), global::CallLordBo.Parser, new[]{ "Pos", "IsCall" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::CallLordResponse), global::CallLordResponse.Parser, new[]{ "LastPos", "IsCall", "CallPos" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::CallLordResponse), global::CallLordResponse.Parser, new[]{ "LastPos", "IsCall", "CallPos", "CallTimes" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordBo), global::GrabLordBo.Parser, new[]{ "Pos", "IsGrab" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GrabLordResponse), global::GrabLordResponse.Parser, new[]{ "LastPos", "IsGrab", "Multiple", "GrabTimes", "CanGrabPos" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::BecomeLordResponse), global::BecomeLordResponse.Parser, new[]{ "LordPos", "HoleCards" }, null, null, null, null),
@@ -335,6 +336,7 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     lastPos_ = other.lastPos_;
     isCall_ = other.isCall_;
     callPos_ = other.callPos_;
+    callTimes_ = other.callTimes_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -389,6 +391,21 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     }
   }
 
+  /// <summary>Field number for the "call_times" field.</summary>
+  public const int CallTimesFieldNumber = 4;
+  private int callTimes_;
+  /// <summary>
+  /// 叫地主的次数
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+  public int CallTimes {
+    get { return callTimes_; }
+    set {
+      callTimes_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -407,6 +424,7 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     if (LastPos != other.LastPos) return false;
     if (IsCall != other.IsCall) return false;
     if (CallPos != other.CallPos) return false;
+    if (CallTimes != other.CallTimes) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -417,6 +435,7 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     if (LastPos != 0) hash ^= LastPos.GetHashCode();
     if (IsCall != false) hash ^= IsCall.GetHashCode();
     if (CallPos != 0) hash ^= CallPos.GetHashCode();
+    if (CallTimes != 0) hash ^= CallTimes.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -447,6 +466,10 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
       output.WriteRawTag(24);
       output.WriteInt32(CallPos);
     }
+    if (CallTimes != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(CallTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -469,6 +492,10 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
       output.WriteRawTag(24);
       output.WriteInt32(CallPos);
     }
+    if (CallTimes != 0) {
+      output.WriteRawTag(32);
+      output.WriteInt32(CallTimes);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -487,6 +514,9 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     }
     if (CallPos != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(CallPos);
+    }
+    if (CallTimes != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CallTimes);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -508,6 +538,9 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
     }
     if (other.CallPos != 0) {
       CallPos = other.CallPos;
+    }
+    if (other.CallTimes != 0) {
+      CallTimes = other.CallTimes;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -540,6 +573,10 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
           CallPos = input.ReadInt32();
           break;
         }
+        case 32: {
+          CallTimes = input.ReadInt32();
+          break;
+        }
       }
     }
   #endif
@@ -569,6 +606,10 @@ public sealed partial class CallLordResponse : pb::IMessage<CallLordResponse>
         }
         case 24: {
           CallPos = input.ReadInt32();
+          break;
+        }
+        case 32: {
+          CallTimes = input.ReadInt32();
           break;
         }
       }
