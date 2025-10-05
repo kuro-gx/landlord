@@ -58,9 +58,9 @@ public class ResultPanel : UIBase {
         row1Score.text = response.BaseScore.ToString();
         row2Score.text = response.BaseScore.ToString();
         row3Score.text = response.BaseScore.ToString();
-        row1Multiple.text = response.BaseScore.ToString();
-        row2Multiple.text = response.BaseScore.ToString();
-        row3Multiple.text = response.BaseScore.ToString();
+        row1Multiple.text = response.Multiple.ToString();
+        row2Multiple.text = response.Multiple.ToString();
+        row3Multiple.text = response.Multiple.ToString();
 
         // 除自己外的两个玩家
         var list = new List<PlayerResult>(2);
