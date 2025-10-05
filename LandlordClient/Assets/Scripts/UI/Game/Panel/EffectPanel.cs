@@ -1,3 +1,4 @@
+using System;
 using Spine.Unity;
 using UnityEngine;
 
@@ -23,12 +24,13 @@ public class EffectPanel : UIBase {
     /// <summary>
     /// 播放春天特效
     /// </summary>
-    public void PlaySpringEffect() {
+    public void PlaySpringEffect(Action callback) {
         springEffect.gameObject.SetActive(true);
         springEffect.AnimationState.SetAnimation(0, "Spring", false);
         // 动画播放完成隐藏特效
         springEffect.AnimationState.Complete += _ => {
             springEffect.gameObject.SetActive(false);
+            callback?.Invoke();
         };
     }
     
@@ -74,7 +76,7 @@ public class EffectPanel : UIBase {
     public void PlayBombEffect(string effectName) {
         bombEffect.gameObject.SetActive(true);
         bombEffect.AnimationState.SetAnimation(0, effectName, false);
-        bombEffect.AnimationState.AddAnimation(0, "zha", false, 0);
+        bombEffect.AnimationState.AddAnimation(0, "zha", false, 0.3f);
         // 动画播放完成隐藏特效
         bombEffect.AnimationState.Complete += _ => {
             bombEffect.gameObject.SetActive(false);

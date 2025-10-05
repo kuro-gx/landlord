@@ -40,10 +40,19 @@ message MatchResponse {
   repeated Player player = 3;
 }
 
-// 游戏结束的响应
-message GameEndResponse {
+// 游戏结束后玩家的数据
+message PlayerResult {
   bool is_win = 1; // 是否赢了
   int32 money = 2; // 加或减了多少豆子
   bool is_spring = 3; // 是否春天
-  repeated Player players = 4; // 玩家列表
+  int32 pos = 4; // 玩家的坐位
+  bool is_lord = 5; // 是否是地主
+  string nickname = 6; // 昵称
+}
+
+// 游戏结束的响应
+message GameEndResponse {
+  repeated PlayerResult players = 1; // 玩家列表
+  int32 base_score = 2; // 底分
+  int32 multiple = 3; // 倍数
 }

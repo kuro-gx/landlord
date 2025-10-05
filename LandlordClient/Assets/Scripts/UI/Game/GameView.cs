@@ -11,6 +11,7 @@ public class GameView : UIBase {
     [SerializeField, Header("自己的信息面板")] private SelfPlayerPanel selfPlayerPanel;
     [SerializeField, Header("左侧玩家信息面板")] private LeftPlayerPanel leftPlayerPanel;
     [SerializeField, Header("右侧玩家信息面板")] private RightPlayerPanel rightPlayerPanel;
+    [SerializeField, Header("结算面板")] private ResultPanel resultPanel;
 
     private int _leftPosIndex = -1; // 左边玩家坐位索引
     private int _rightPosIndex = -1; // 右边玩家的坐位索引
@@ -34,6 +35,11 @@ public class GameView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_RaiseCode, OnRaiseHandle);
         // 监听服务器响应的出牌消息
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_PlayHandCode, OnPlayHandHandle);
+        // 监听服务器响应的对局结束消息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_GameEndCode, OnGameEndHandle);
+        
+        // 背景音乐
+        AudioService.Instance.PlayBGMAudio(Constant.GameBGM);
     }
 
     /// <summary>
@@ -302,6 +308,33 @@ public class GameView : UIBase {
         // 如果游戏结束
         if (response.IsEnd) {
             selfPlayerPanel.GameState = GameState.GameEnd;
+        }
+    }
+
+    /// <summary>
+    /// 处理服务器响应的游戏结束消息
+    /// </summary>
+    private void OnGameEndHandle(ByteString data) {
+        var response = GameEndResponse.Parser.ParseFrom(data);
+        // 设置倍数
+        gameBottomPanel.SetMultipleText(response.Multiple);
+
+        // 获取自己的数据
+        var player = response.Players.FirstOrDefault(p => p.Pos == _selfPosIndex);
+        if (player == null) {
+            return;
+        }
+
+        // 播放胜利or失败的BGM
+        AudioService.Instance.PlayBGMAudio(player.IsWin ? Constant.WinBGM : Constant.LostBGM, false);
+        // 播放春天动画
+        if (player.IsSpring) {
+            EffectPanel.Instance.PlaySpringEffect(() => {
+                resultPanel.ShowPanel(response, _selfPosIndex);
+            });
+        } else {
+            // 显示结算界面
+            resultPanel.ShowPanel(response, _selfPosIndex);
         }
     }
 

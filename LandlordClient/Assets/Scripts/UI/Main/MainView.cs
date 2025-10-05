@@ -18,6 +18,9 @@ public class MainView : UIBase {
         setInfoPanel.UpdateUserInfoAction = UpdateUserInfoHandle;
 
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_UpdateUserInfoCode, OnUpdateInfoHandle);
+        
+        // BGM
+        AudioService.Instance.PlayBGMAudio(Constant.LobbyBGM);
     }
 
     /// <summary>

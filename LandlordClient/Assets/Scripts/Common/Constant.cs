@@ -19,6 +19,11 @@
     public const int RaiseCountDown = 15;
     // 出牌倒计时
     public const int PlayHandCountDown = 20;
+    // BGM
+    public const string WinBGM = "MusicEx_Win";
+    public const string LostBGM = "MusicEx_Lose";
+    public const string LobbyBGM = "MusicEx_Welcome";
+    public const string GameBGM = "MusicEx_Normal";
     // UI音频
     public const string NormalClick = "SpecOk";
     // 特效音频

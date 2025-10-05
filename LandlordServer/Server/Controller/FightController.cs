@@ -278,25 +278,8 @@ public class FightController : IContainer {
         if (response.IsEnd) {
             room.RoomState = RoomState.GameEnd;
 
+            _fightService.CalcGameResult(playHandPlayer, room);
             // 如果当前出牌玩家是地主，并且农民的出牌次数相加为0，则表示地主打出了“春天”
-            if (playHandPlayer.Pos == room.CurLordPos) {
-                int playHandCount = room.Players.Where(p => p.Pos != playHandPlayer.Pos).Sum(p => p.PlayHandTimes);
-
-                // “春天”，积分加倍
-                if (playHandCount == 0) {
-                    response.IsSpring = true;
-                    room.Multiple *= 2;
-                    response.Multiple = room.Multiple;
-                }
-            } else {
-                // 当前出牌玩家是农民，并且地主只出了1次牌，则表示当前玩家打出了“春天”
-                var landPlayer = room.Players.FirstOrDefault(p => p.Pos == room.CurLordPos);
-                if (landPlayer != null && landPlayer.PlayHandTimes == 1) {
-                    response.IsSpring = true;
-                    room.Multiple *= 2;
-                    response.Multiple = room.Multiple;
-                }
-            }
         } else {
             // 轮到下一个玩家出牌
             room.PendPos++;

@@ -6,6 +6,8 @@ public class TopPanel : UIBase {
     [SerializeField, Header("设置按钮")] private Button settingBtn;
     [SerializeField, Header("欢乐豆数量")] private Text beanText;
     [SerializeField, Header("钻石")] private Text diamondText;
+    [SerializeField, Header("设置面板")] private SettingPanel settingPanel;
+    
     private RectTransform _transform;
 
     protected override void Init() {
@@ -13,7 +15,10 @@ public class TopPanel : UIBase {
         _transform = GetComponent<RectTransform>();
         _transform.DOAnchorPos(new Vector2(0.0f, 0.0f), 0.4f).From(new Vector2(550.0f, 0.0f));
 
-        settingBtn.onClick.AddListener(() => { });
+        settingBtn.onClick.AddListener(() => {
+            AudioService.Instance.PlayUIAudio(Constant.NormalClick);
+            settingPanel.Show();
+        });
     }
 
     private void OnDestroy() {

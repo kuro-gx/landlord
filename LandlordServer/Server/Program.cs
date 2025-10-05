@@ -10,8 +10,8 @@ namespace Server {
             SqlSugarClient db = DBMgr.Instance.InitDB();
 
             UserController userController = new UserController(new UserService(db));
-            MatchController matchController = new MatchController(new FightService());
-            FightController fightController = new FightController(new FightService());
+            MatchController matchController = new MatchController(new FightService(db));
+            FightController fightController = new FightController(new FightService(db));
             // 注册指令集
             server.RegisterCommand(NetDefine.CMD_RegisterCode, userController);
             server.RegisterCommand(NetDefine.CMD_LoginCode, userController);
