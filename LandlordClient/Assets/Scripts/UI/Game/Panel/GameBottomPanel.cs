@@ -17,6 +17,10 @@ public class GameBottomPanel : UIBase {
     /// 聊天按钮点击事件
     /// </summary>
     private void ChatBtnClicked() {
+        if (SelfPlayerPanel.Instance.GameState == GameState.None) {
+            return;
+        }
+
         AudioService.Instance.PlayUIAudio(Constant.NormalClick);
         // 显示 or 隐藏聊天快捷面板
         chatPanel.Show(!chatPanel.gameObject.activeSelf);
@@ -27,5 +31,12 @@ public class GameBottomPanel : UIBase {
     /// </summary>
     public void SetMultipleText(int multiple) {
         multipleTextEl.text = multiple.ToString();
+    }
+
+    /// <summary>
+    /// 初始化快捷聊天项
+    /// </summary>
+    public void InitChatItems(int pos) {
+        chatPanel.InitChatItems(pos);
     }
 }

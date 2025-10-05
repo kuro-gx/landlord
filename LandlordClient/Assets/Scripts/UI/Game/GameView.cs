@@ -37,6 +37,8 @@ public class GameView : UIBase {
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_PlayHandCode, OnPlayHandHandle);
         // 监听服务器响应的对局结束消息
         SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_GameEndCode, OnGameEndHandle);
+        // 处理服务器响应的快捷聊天消息
+        SocketDispatcher.Instance.AddEventHandler(NetDefine.CMD_ChatCode, OnChatHandle);
         
         // 背景音乐
         AudioService.Instance.PlayBGMAudio(Constant.GameBGM);
@@ -73,6 +75,9 @@ public class GameView : UIBase {
         selfPlayerPanel.RefreshPanel(_selfPlayerInfo);
         leftPlayerPanel.RefreshPanel(_leftPlayerInfo);
         rightPlayerPanel.RefreshPanel(_rightPlayerInfo);
+
+        // 初始化快捷聊天项
+        gameBottomPanel.InitChatItems(_selfPosIndex);
     }
 
     /// <summary>
@@ -339,6 +344,14 @@ public class GameView : UIBase {
     }
 
     /// <summary>
+    /// 处理服务器响应的快捷聊天消息
+    /// </summary>
+    private void OnChatHandle(ByteString data) {
+        var response = ChatForm.Parser.ParseFrom(data);
+        AudioService.Instance.PlayOperateAudio(response.Pos, $"Chat_{response.ChatId}");
+    }
+
+    /// <summary>
     /// 移动卡牌的动画
     /// </summary>
     IEnumerator DelayMoveCard() {
@@ -351,6 +364,7 @@ public class GameView : UIBase {
         }
 
         // 动画结束后切换游戏状态为'叫地主'，0号位置的玩家先叫地主
+        selfPlayerPanel.GameState = GameState.CallLord;
         if (_selfPosIndex == 0) {
             GameStateChangedHandle(GameState.CallLord);
         } else if (_leftPosIndex == 0) {
@@ -365,6 +379,7 @@ public class GameView : UIBase {
     /// </summary>
     /// <param name="state">状态</param>
     private void GameStateChangedHandle(GameState state) {
+        selfPlayerPanel.GameState = state;
         switch (state) {
             case GameState.CallLord:
                 buttonsPanel.ShowCallLordBtnPage(false);
@@ -379,8 +394,6 @@ public class GameView : UIBase {
                 buttonsPanel.SetClockCallback(Constant.RaiseCountDown, GameState.Raise);
                 break;
             case GameState.PlayingHand:
-                // 设置selfPlayerPanel的游戏状态为PlayingHand，此状态可以选择卡牌
-                selfPlayerPanel.GameState = GameState.PlayingHand;
                 buttonsPanel.SetClockCallback(Constant.PlayHandCountDown, GameState.PlayingHand);
                 break;
         }

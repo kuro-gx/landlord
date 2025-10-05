@@ -15,6 +15,7 @@
     public const ushort CMD_RaiseCode = 825; // 加倍
     public const ushort CMD_PlayHandCode = 831; // 出牌
     public const ushort CMD_GameEndCode = 832; // 对局结束
+    public const ushort CMD_ChatCode = 841; // 快捷聊天
 }
 
 /// <summary>

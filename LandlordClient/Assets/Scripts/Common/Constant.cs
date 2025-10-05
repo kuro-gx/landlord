@@ -40,6 +40,6 @@
     public const string NotGrab = "NotGrab";
     public const string Raise = "Raise";
     public const string NotRaise = "NotRaise";
-    public static string[] PassArr = { "Pass1", "Pass2", "Pass3", "Pass4" };
+    public static readonly string[] PassArr = { "Pass1", "Pass2", "Pass3", "Pass4" };
     public const string Alarm = "Alarm"; // 剩下1、2张牌警告
 }

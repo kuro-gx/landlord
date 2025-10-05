@@ -9,9 +9,10 @@ namespace Server {
 
             SqlSugarClient db = DBMgr.Instance.InitDB();
 
-            UserController userController = new UserController(new UserService(db));
-            MatchController matchController = new MatchController(new FightService(db));
-            FightController fightController = new FightController(new FightService(db));
+            var userController = new UserController(new UserService(db));
+            var matchController = new MatchController(new FightService(db));
+            var fightController = new FightController(new FightService(db));
+            var chatController = new ChatController();
             // 注册指令集
             server.RegisterCommand(NetDefine.CMD_RegisterCode, userController);
             server.RegisterCommand(NetDefine.CMD_LoginCode, userController);
@@ -21,6 +22,7 @@ namespace Server {
             server.RegisterCommand(NetDefine.CMD_GrabLordCode, fightController);
             server.RegisterCommand(NetDefine.CMD_RaiseCode, fightController);
             server.RegisterCommand(NetDefine.CMD_PlayHandCode, fightController);
+            server.RegisterCommand(NetDefine.CMD_ChatCode, chatController);
 
             while (true) {
                 Thread.Sleep(10);

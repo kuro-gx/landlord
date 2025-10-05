@@ -2,6 +2,7 @@
 /// 游戏状态
 /// </summary>
 public enum GameState {
+    None,
     CallLord, // 叫地主
     GrabLord, // 抢地主
     Raise, // 加倍

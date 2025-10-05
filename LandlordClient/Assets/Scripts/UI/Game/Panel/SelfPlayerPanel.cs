@@ -23,7 +23,7 @@ public class SelfPlayerPanel : UIBase {
     public List<Card> SelfCardList; // 自己的手牌
     public readonly List<CardPanel> SelfCardPanelList = new(20); // 手牌的预制体列表
     public readonly List<Card> OtherPendCards = new(20); // 上家打出的牌，客户端出牌时比较大小使用
-    public GameState GameState = GameState.CallLord; // 当前的游戏状态
+    public GameState GameState = GameState.None; // 当前的游戏状态
     private readonly List<CardDisplay> _selfCardDisplayList = new(20); // 打出的牌的预制体列表
     private GameObject _root; // 父节点，设置滑动动画时需绑定父节点
 

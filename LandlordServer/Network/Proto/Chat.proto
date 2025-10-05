@@ -1,0 +1,6 @@
+﻿syntax = "proto3";
+
+message ChatForm {
+  int32 pos = 1; // 请求的坐位
+  int32 chat_id = 2; // 快捷聊天项标识
+}
