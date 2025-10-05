@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -6,10 +7,9 @@ using UnityEngine.UI;
 /// 顶部面板
 /// </summary>
 public class GameTopPanel : UIBase {
+    [SerializeField, Header("左边")] private GameObject leftArea;
+    [SerializeField, Header("右边")] private GameObject rightArea;
     [SerializeField, Header("退出按钮")] private Button exitBtnEl;
-    [SerializeField, Header("时间文本")] private Text timeTextEl;
-    [SerializeField, Header("换桌按钮")] private Button changeTableBtnEl;
-    [SerializeField, Header("托管按钮")] private Button hostedBtnEl;
 
     protected override void Init() {
         // 退出按钮点击事件
@@ -17,6 +17,10 @@ public class GameTopPanel : UIBase {
             AudioService.Instance.PlayUIAudio(Constant.NormalClick);
             SceneManager.LoadScene("MainScene");
         });
+
+        // 左右两边的缩放动画
+        leftArea.transform.DOScale(Vector3.one, 0.4f);
+        rightArea.transform.DOScale(new Vector3(-1f, 1f, 1f), 0.4f);
     }
 
     private void OnDestroy() {

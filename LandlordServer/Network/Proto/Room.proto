@@ -39,3 +39,11 @@ message MatchResponse {
   int32 self_pos = 2; // 自己坐位的索引
   repeated Player player = 3;
 }
+
+// 游戏结束的响应
+message GameEndResponse {
+  bool is_win = 1; // 是否赢了
+  int32 money = 2; // 加或减了多少豆子
+  bool is_spring = 3; // 是否春天
+  repeated Player players = 4; // 玩家列表
+}

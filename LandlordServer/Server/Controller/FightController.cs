@@ -230,8 +230,7 @@ public class FightController : IContainer {
             IsEnd = false,
             IsPass = false,
             MonsterPos = room.MonsterPos,
-            Multiple = room.Multiple,
-            IsSpring = false
+            Multiple = room.Multiple
         };
 
         if (form.IsPass) {

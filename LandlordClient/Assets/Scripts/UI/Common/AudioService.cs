@@ -43,7 +43,7 @@ public class AudioService : MonoBehaviour {
     /// <summary>
     /// 播放打出卡牌的具体音效，如“对3”、“王炸”
     /// </summary>
-    public void PlayCardAudio(int pos, List<Card> cards, bool isCover) {
+    public void PlayCardAudio(int pos, List<Card> cards, bool isCover, PlayerDirection direction) {
         var playHand = CardMgr.Instance.GetCardType(cards);
         AudioClip source = null;
         string basePath = $"Audio/Operate/Character{pos}/";
@@ -66,22 +66,40 @@ public class AudioService : MonoBehaviour {
                 break;
             case CardType.HandPlane:
             case CardType.HandPlaneSingle:
-            case CardType.HandPlanePair:
+            case CardType.HandPlanePair: {
+                if (direction == PlayerDirection.Left) {
+                    EffectPanel.Instance.PlayPlaneEffect("Feiji_L");
+                } else if (direction == PlayerDirection.Center) {
+                    EffectPanel.Instance.PlayPlaneEffect("Feiji_M");
+                } else if (direction == PlayerDirection.Right) {
+                    EffectPanel.Instance.PlayPlaneEffect("Feiji_R");
+                }
                 PlayEffectAudio(Constant.HandPlane);
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "Plane"));
                 break;
+            }
             case CardType.HandSeqPair:
+                EffectPanel.Instance.PlaySeqPairEffect();
                 PlayEffectAudio(Constant.HandSeq);
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "SeqPair"));
                 break;
             case CardType.HandSeqSingle:
+                EffectPanel.Instance.PlaySeqSingleEffect();
                 PlayEffectAudio(Constant.HandSeq);
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "SeqSingle"));
                 break;
-            case CardType.HandBomb:
+            case CardType.HandBomb: {
+                if (direction == PlayerDirection.Left) {
+                    EffectPanel.Instance.PlayBombEffect("lujingzuo");
+                } else if (direction == PlayerDirection.Center) {
+                    EffectPanel.Instance.PlayBombEffect("lujingzhu");
+                } else if (direction == PlayerDirection.Right) {
+                    EffectPanel.Instance.PlayBombEffect("lujingyou");
+                }
                 PlayEffectAudio(Constant.HandBomb);
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "Bomb"));
                 break;
+            }
             case CardType.HandBombPair:
             case CardType.HandBombTwoSingle:
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "BombTwoSingle"));
@@ -89,10 +107,18 @@ public class AudioService : MonoBehaviour {
             case CardType.HandBombTwoPair:
                 source = Resources.Load<AudioClip>(basePath + (isCover ? cover : "BombTwoPair"));
                 break;
-            case CardType.HandBombJokers:
+            case CardType.HandBombJokers: {
+                if (direction == PlayerDirection.Left) {
+                    EffectPanel.Instance.PlayBombEffect("lujingzuo");
+                } else if (direction == PlayerDirection.Center) {
+                    EffectPanel.Instance.PlayBombEffect("lujingzhu");
+                } else if (direction == PlayerDirection.Right) {
+                    EffectPanel.Instance.PlayBombEffect("lujingyou");
+                }
                 PlayEffectAudio(Constant.HandBombJoker);
                 source = Resources.Load<AudioClip>($"Audio/Operate/Character{pos}/BombJokers");
                 break;
+            }
         }
 
         if (source == null) {

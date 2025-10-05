@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,13 +35,8 @@ public class PocketCardPanel : UIBase {
         }
 
         // 设置缩放动画
-        var scaleTween = GetOrAddComponent<RectScaleTween>(gameObject);
-        scaleTween.ScaleTo(0.15f, Vector3.zero * 1.2f, () => {
-            scaleTween.ScaleTo(0.5f, Vector3.zero * 1.25f, () => {
-                scaleTween.ScaleTo(0.2f, Vector3.one, () => {
-                    Destroy(scaleTween);
-                });
-            });
+        gameObject.transform.DOScale(new Vector3(1.4f, 1.4f, 1.4f), 0.5f).OnComplete(() => {
+            gameObject.transform.DOScale(Vector3.one, 0.2f);
         });
     }
 

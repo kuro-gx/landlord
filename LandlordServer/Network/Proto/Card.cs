@@ -27,33 +27,33 @@ public static partial class CardReflection {
           "c3BvbnNlEhIKCmJhc2Vfc2NvcmUYASABKAUSEAoIbXVsdGlwbGUYAiABKAUS",
           "GAoJY2FyZF9saXN0GAMgAygLMgUuQ2FyZCJECgpQbGF5SGFuZEJvEgsKA3Bv",
           "cxgBIAEoBRIPCgdpc19wYXNzGAIgASgIEhgKCWNhcmRfbGlzdBgDIAMoCzIF",
-          "LkNhcmQirAEKEFBsYXlIYW5kUmVzcG9uc2USEAoIbGFzdF9wb3MYASABKAUS",
+          "LkNhcmQimQEKEFBsYXlIYW5kUmVzcG9uc2USEAoIbGFzdF9wb3MYASABKAUS",
           "DwoHaXNfcGFzcxgCIAEoCBIZCgpwZW5kX2NhcmRzGAMgAygLMgUuQ2FyZBIT",
           "Cgttb25zdGVyX3BvcxgEIAEoBRIQCghpc19jb3ZlchgFIAEoCBIOCgZpc19l",
-          "bmQYBiABKAgSEAoIbXVsdGlwbGUYByABKAUSEQoJaXNfc3ByaW5nGAggASgI",
-          "KroBCglDYXJkUG9pbnQSDQoJUG9pbnROb25lEAASCQoFVGhyZWUQAxIICgRG",
-          "b3VyEAQSCAoERml2ZRAFEgcKA1NpeBAGEgkKBVNldmVuEAcSCQoFRWlnaHQQ",
-          "CBIICgROaW5lEAkSBwoDVGVuEAoSCAoESmFjaxALEgkKBVF1ZWVuEAwSCAoE",
-          "S2luZxANEgcKA09uZRAOEgcKA1R3bxAPEg4KCkpva2VyU21hbGwQEBIMCghK",
-          "b2tlckJpZxARKkUKCENhcmRTdWl0EgwKCFN1aXROb25lEAASCwoHRGlhbW9u",
-          "ZBABEggKBENsdWIQAhIJCgVIZWFydBADEgkKBVNwYWRlEAQqtAMKCENhcmRU",
-          "eXBlEhAKDEhhbmRfVW5rbm93bhAAEg0KCUhhbmRfUGFzcxABEg8KC0hhbmRf",
-          "U2luZ2xlEAISDQoJSGFuZF9QYWlyEAMSDwoLSGFuZF9UcmlwbGUQBBIWChJI",
-          "YW5kX1RyaXBsZV9TaW5nbGUQBRIUChBIYW5kX1RyaXBsZV9QYWlyEAYSDgoK",
-          "SGFuZF9QbGFuZRAHEhUKEUhhbmRfUGxhbmVfU2luZ2xlEAgSEwoPSGFuZF9Q",
-          "bGFuZV9QYWlyEAkSEQoNSGFuZF9TZXFfUGFpchAKEhMKD0hhbmRfU2VxX1Np",
-          "bmdsZRALEg0KCUhhbmRfQm9tYhAVEhIKDkhhbmRfQm9tYl9QYWlyEA0SGAoU",
-          "SGFuZF9Cb21iX1R3b19TaW5nbGUQDhIWChJIYW5kX0JvbWJfVHdvX1BhaXIQ",
-          "DxIUChBIYW5kX0JvbWJfSm9rZXJzEBYSGQoVSGFuZF9Cb21iX0pva2Vyc19Q",
-          "YWlyEBESHwobSGFuZF9Cb21iX0pva2Vyc19Ud29fU2luZ2xlEBISHQoZSGFu",
-          "ZF9Cb21iX0pva2Vyc19Ud29fUGFpchATYgZwcm90bzM="));
+          "bmQYBiABKAgSEAoIbXVsdGlwbGUYByABKAUqugEKCUNhcmRQb2ludBINCglQ",
+          "b2ludE5vbmUQABIJCgVUaHJlZRADEggKBEZvdXIQBBIICgRGaXZlEAUSBwoD",
+          "U2l4EAYSCQoFU2V2ZW4QBxIJCgVFaWdodBAIEggKBE5pbmUQCRIHCgNUZW4Q",
+          "ChIICgRKYWNrEAsSCQoFUXVlZW4QDBIICgRLaW5nEA0SBwoDT25lEA4SBwoD",
+          "VHdvEA8SDgoKSm9rZXJTbWFsbBAQEgwKCEpva2VyQmlnEBEqRQoIQ2FyZFN1",
+          "aXQSDAoIU3VpdE5vbmUQABILCgdEaWFtb25kEAESCAoEQ2x1YhACEgkKBUhl",
+          "YXJ0EAMSCQoFU3BhZGUQBCq0AwoIQ2FyZFR5cGUSEAoMSGFuZF9Vbmtub3du",
+          "EAASDQoJSGFuZF9QYXNzEAESDwoLSGFuZF9TaW5nbGUQAhINCglIYW5kX1Bh",
+          "aXIQAxIPCgtIYW5kX1RyaXBsZRAEEhYKEkhhbmRfVHJpcGxlX1NpbmdsZRAF",
+          "EhQKEEhhbmRfVHJpcGxlX1BhaXIQBhIOCgpIYW5kX1BsYW5lEAcSFQoRSGFu",
+          "ZF9QbGFuZV9TaW5nbGUQCBITCg9IYW5kX1BsYW5lX1BhaXIQCRIRCg1IYW5k",
+          "X1NlcV9QYWlyEAoSEwoPSGFuZF9TZXFfU2luZ2xlEAsSDQoJSGFuZF9Cb21i",
+          "EBUSEgoOSGFuZF9Cb21iX1BhaXIQDRIYChRIYW5kX0JvbWJfVHdvX1Npbmds",
+          "ZRAOEhYKEkhhbmRfQm9tYl9Ud29fUGFpchAPEhQKEEhhbmRfQm9tYl9Kb2tl",
+          "cnMQFhIZChVIYW5kX0JvbWJfSm9rZXJzX1BhaXIQERIfChtIYW5kX0JvbWJf",
+          "Sm9rZXJzX1R3b19TaW5nbGUQEhIdChlIYW5kX0JvbWJfSm9rZXJzX1R3b19Q",
+          "YWlyEBNiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::CardPoint), typeof(global::CardSuit), typeof(global::CardType), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::Card), global::Card.Parser, new[]{ "Point", "Suit" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::DispatchCardResponse), global::DispatchCardResponse.Parser, new[]{ "BaseScore", "Multiple", "CardList" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandBo), global::PlayHandBo.Parser, new[]{ "Pos", "IsPass", "CardList" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandResponse), global::PlayHandResponse.Parser, new[]{ "LastPos", "IsPass", "PendCards", "MonsterPos", "IsCover", "IsEnd", "Multiple", "IsSpring" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayHandResponse), global::PlayHandResponse.Parser, new[]{ "LastPos", "IsPass", "PendCards", "MonsterPos", "IsCover", "IsEnd", "Multiple" }, null, null, null, null)
         }));
   }
   #endregion
@@ -1068,7 +1068,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     isCover_ = other.isCover_;
     isEnd_ = other.isEnd_;
     multiple_ = other.multiple_;
-    isSpring_ = other.isSpring_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1182,21 +1181,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     }
   }
 
-  /// <summary>Field number for the "is_spring" field.</summary>
-  public const int IsSpringFieldNumber = 8;
-  private bool isSpring_;
-  /// <summary>
-  /// 是否春天
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-  public bool IsSpring {
-    get { return isSpring_; }
-    set {
-      isSpring_ = value;
-    }
-  }
-
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
   public override bool Equals(object other) {
@@ -1219,7 +1203,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (IsCover != other.IsCover) return false;
     if (IsEnd != other.IsEnd) return false;
     if (Multiple != other.Multiple) return false;
-    if (IsSpring != other.IsSpring) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1234,7 +1217,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     if (IsCover != false) hash ^= IsCover.GetHashCode();
     if (IsEnd != false) hash ^= IsEnd.GetHashCode();
     if (Multiple != 0) hash ^= Multiple.GetHashCode();
-    if (IsSpring != false) hash ^= IsSpring.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1278,10 +1260,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
       output.WriteRawTag(56);
       output.WriteInt32(Multiple);
     }
-    if (IsSpring != false) {
-      output.WriteRawTag(64);
-      output.WriteBool(IsSpring);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -1317,10 +1295,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
       output.WriteRawTag(56);
       output.WriteInt32(Multiple);
     }
-    if (IsSpring != false) {
-      output.WriteRawTag(64);
-      output.WriteBool(IsSpring);
-    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(ref output);
     }
@@ -1349,9 +1323,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     }
     if (Multiple != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Multiple);
-    }
-    if (IsSpring != false) {
-      size += 1 + 1;
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1383,9 +1354,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
     }
     if (other.Multiple != 0) {
       Multiple = other.Multiple;
-    }
-    if (other.IsSpring != false) {
-      IsSpring = other.IsSpring;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1434,10 +1402,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
           Multiple = input.ReadInt32();
           break;
         }
-        case 64: {
-          IsSpring = input.ReadBool();
-          break;
-        }
       }
     }
   #endif
@@ -1483,10 +1447,6 @@ public sealed partial class PlayHandResponse : pb::IMessage<PlayHandResponse>
         }
         case 56: {
           Multiple = input.ReadInt32();
-          break;
-        }
-        case 64: {
-          IsSpring = input.ReadBool();
           break;
         }
       }

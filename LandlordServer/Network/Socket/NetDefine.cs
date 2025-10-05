@@ -14,6 +14,7 @@
     public const ushort CMD_BecomeLordCode = 824; // 成为地主
     public const ushort CMD_RaiseCode = 825; // 加倍
     public const ushort CMD_PlayHandCode = 831; // 出牌
+    public const ushort CMD_GameEndCode = 832; // 对局结束
 }
 
 /// <summary>

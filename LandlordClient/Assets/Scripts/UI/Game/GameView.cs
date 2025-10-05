@@ -276,9 +276,9 @@ public class GameView : UIBase {
             // 出牌人是自己，销毁左侧玩家打出的牌，显示自己打出的牌
             leftPlayerPanel.DestroyCardDisplay();
             selfPlayerPanel.ShowCardDisplay();
-            // 播放音频
+            // 播放音频和特效
             bool isCover = response.IsCover && response.MonsterPos != _selfPosIndex;
-            AudioService.Instance.PlayCardAudio(response.LastPos, response.PendCards.ToList(), isCover);
+            AudioService.Instance.PlayCardAudio(response.LastPos, response.PendCards.ToList(), isCover, PlayerDirection.Center);
 
             // 删除打出的牌
             selfPlayerPanel.SelfCardList.RemoveAll(c => response.PendCards.Contains(c));
@@ -299,15 +299,9 @@ public class GameView : UIBase {
 
         // 更新倍数
         gameBottomPanel.SetMultipleText(response.Multiple);
-
-        // todo 如果游戏结束
+        // 如果游戏结束
         if (response.IsEnd) {
-            ShowSystemTips("游戏结束了", Color.green);
-            // todo 春天了，显示动画
-            if (response.IsSpring) {
-            } else {
-                // todo 正常结算
-            }
+            selfPlayerPanel.GameState = GameState.GameEnd;
         }
     }
 
@@ -391,7 +385,8 @@ public class GameView : UIBase {
         } else {
             // 播放音频
             bool isCover = response.IsCover && response.MonsterPos != (isLeft ? _leftPosIndex : _rightPosIndex);
-            AudioService.Instance.PlayCardAudio(response.LastPos, response.PendCards.ToList(), isCover);
+            var direction = isLeft ? PlayerDirection.Left : PlayerDirection.Right;
+            AudioService.Instance.PlayCardAudio(response.LastPos, response.PendCards.ToList(), isCover, direction);
         }
 
         // 记录对手打出的牌，客户端出牌比较大小使用

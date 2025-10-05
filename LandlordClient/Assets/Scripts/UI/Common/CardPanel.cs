@@ -62,7 +62,7 @@ public class CardPanel : UIBase {
         RectPosTween component = GetOrAddComponent<RectPosTween>(gameObject);
         component.MoveLocalPosInTime(time, offset, cb);
     }
-    
+
     public void MoveTargetPosInTime(float time, Vector3 target, Action cb = null) {
         RectPosTween component = GetOrAddComponent<RectPosTween>(gameObject);
         component.MoveTargetPosInTime(time, target, cb);

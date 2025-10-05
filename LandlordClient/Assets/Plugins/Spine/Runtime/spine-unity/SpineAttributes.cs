@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated April 5, 2025. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2025, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,31 +15,30 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
+using UnityEngine;
 using System;
 using System.Collections;
-using UnityEngine;
 
 namespace Spine.Unity {
 
-	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
 	public abstract class SpineAttributeBase : PropertyAttribute {
 		public string dataField = "";
 		public string startsWith = "";
 		public bool includeNone = true;
 		public bool fallbackToTextField = false;
-		public bool avoidGenericMenu = false;
 	}
 
 	public class SpineBone : SpineAttributeBase {
@@ -65,7 +64,7 @@ namespace Spine.Unity {
 		}
 
 		public static Spine.BoneData GetBoneData (string boneName, SkeletonDataAsset skeletonDataAsset) {
-			SkeletonData data = skeletonDataAsset.GetSkeletonData(true);
+			var data = skeletonDataAsset.GetSkeletonData(true);
 			return data.FindBone(boneName);
 		}
 	}
@@ -104,14 +103,11 @@ namespace Spine.Unity {
 		/// Valid types are SkeletonDataAsset and SkeletonRenderer (and derivatives)
 		/// If left empty and the script the attribute is applied to is derived from Component, GetComponent<SkeletonRenderer>() will be called as a fallback.
 		/// </param>
-		public SpineAnimation (string startsWith = "", string dataField = "",
-			bool includeNone = true, bool fallbackToTextField = false, bool avoidGenericMenu = false) {
-
+		public SpineAnimation (string startsWith = "", string dataField = "", bool includeNone = true, bool fallbackToTextField = false) {
 			this.startsWith = startsWith;
 			this.dataField = dataField;
 			this.includeNone = includeNone;
 			this.fallbackToTextField = fallbackToTextField;
-			this.avoidGenericMenu = avoidGenericMenu;
 		}
 	}
 
@@ -209,15 +205,12 @@ namespace Spine.Unity {
 
 		public bool defaultAsEmptyString = false;
 
-		public SpineSkin (string startsWith = "", string dataField = "", bool includeNone = false,
-			bool fallbackToTextField = false, bool defaultAsEmptyString = false, bool avoidGenericMenu = false) {
-
+		public SpineSkin (string startsWith = "", string dataField = "", bool includeNone = true, bool fallbackToTextField = false, bool defaultAsEmptyString = false) {
 			this.startsWith = startsWith;
 			this.dataField = dataField;
 			this.includeNone = includeNone;
 			this.fallbackToTextField = fallbackToTextField;
 			this.defaultAsEmptyString = defaultAsEmptyString;
-			this.avoidGenericMenu = avoidGenericMenu;
 		}
 	}
 
@@ -231,7 +224,7 @@ namespace Spine.Unity {
 		/// <summary>
 		/// Smart popup menu for Spine Attachments
 		/// </summary>
-		/// <param name="currentSkinOnly">Filters popup results to only include the current Skin. Only valid when a SkeletonRenderer is the data source.</param>
+		/// <param name="currentSkinOnly">Filters popup results to only include the current Skin.  Only valid when a SkeletonRenderer is the data source.</param>
 		/// <param name="returnAttachmentPath">Returns a fully qualified path for an Attachment in the format "Skin/Slot/AttachmentName". This path format is only used by the SpineAttachment helper methods like SpineAttachment.GetAttachment and .GetHierarchy. Do not use full path anywhere else in Spine's system.</param>
 		/// <param name="placeholdersOnly">Filters popup results to exclude attachments that are not children of Skin Placeholders</param>
 		/// <param name="slotField">If specified, a locally scoped field with the name supplied by in slotField will be used to limit the popup results to children of a named slot</param>
@@ -258,12 +251,8 @@ namespace Spine.Unity {
 		}
 
 		public static Spine.Attachment GetAttachment (string attachmentPath, Spine.SkeletonData skeletonData) {
-			SpineAttachment.Hierarchy hierarchy = SpineAttachment.GetHierarchy(attachmentPath);
-			if (string.IsNullOrEmpty(hierarchy.name)) return null;
-
-			SlotData slot = skeletonData.FindSlot(hierarchy.slot);
-			if (slot == null) return null;
-			return skeletonData.FindSkin(hierarchy.skin).GetAttachment(slot.Index, hierarchy.name);
+			var hierarchy = SpineAttachment.GetHierarchy(attachmentPath);
+			return string.IsNullOrEmpty(hierarchy.name) ? null : skeletonData.FindSkin(hierarchy.skin).GetAttachment(skeletonData.FindSlotIndex(hierarchy.slot), hierarchy.name);
 		}
 
 		public static Spine.Attachment GetAttachment (string attachmentPath, SkeletonDataAsset skeletonDataAsset) {
@@ -278,13 +267,14 @@ namespace Spine.Unity {
 			public string name;
 
 			public Hierarchy (string fullPath) {
-				string[] chunks = fullPath.Split(new char[] { '/' }, System.StringSplitOptions.RemoveEmptyEntries);
+				string[] chunks = fullPath.Split(new char[]{'/'}, System.StringSplitOptions.RemoveEmptyEntries);
 				if (chunks.Length == 0) {
 					skin = "";
 					slot = "";
 					name = "";
 					return;
-				} else if (chunks.Length < 2) {
+				}
+				else if (chunks.Length < 2) {
 					throw new System.Exception("Cannot generate Attachment Hierarchy from string! Not enough components! [" + fullPath + "]");
 				}
 				skin = chunks[0];

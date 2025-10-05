@@ -18,3 +18,12 @@ public enum PlayHandBtnEnum {
     OnlyPlayHand, // 只显示出牌
     ShowAll // 全部显示
 }
+
+/// <summary>
+/// 玩家方位：左、中、右
+/// </summary>
+public enum PlayerDirection {
+    Left,
+    Center,
+    Right
+}

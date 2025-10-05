@@ -88,5 +88,4 @@ message PlayHandResponse {
     bool is_cover = 5; // 本次出牌是否压死上家
     bool is_end = 6; // 游戏是否已经结束
     int32 multiple = 7; // 最新的倍数
-    bool is_spring = 8; // 是否春天
 }

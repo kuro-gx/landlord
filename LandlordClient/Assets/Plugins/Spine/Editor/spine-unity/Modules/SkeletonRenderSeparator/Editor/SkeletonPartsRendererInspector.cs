@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated April 5, 2025. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2025, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,28 +15,28 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using Spine.Unity.Editor;
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
+using Spine.Unity.Editor;
 
-namespace Spine.Unity.Examples {
+namespace Spine.Unity.Modules {
 	[CustomEditor(typeof(SkeletonPartsRenderer))]
 	public class SkeletonRenderPartInspector : UnityEditor.Editor {
 		SpineInspectorUtility.SerializedSortingProperties sortingProperties;
 
-		void OnEnable () {
+		void OnEnable () {			
 			sortingProperties = new SpineInspectorUtility.SerializedSortingProperties(SpineInspectorUtility.GetRenderersSerializedObject(serializedObject));
 		}
 
@@ -46,10 +46,10 @@ namespace Spine.Unity.Examples {
 			if (!serializedObject.isEditingMultipleObjects) {
 				EditorGUILayout.Space();
 				if (SpineInspectorUtility.LargeCenteredButton(new GUIContent("Select SkeletonRenderer", SpineEditorUtilities.Icons.spine))) {
-					SkeletonPartsRenderer thisSkeletonPartsRenderer = target as SkeletonPartsRenderer;
-					SkeletonRenderSeparator separator = thisSkeletonPartsRenderer.GetComponentInParent<SkeletonRenderSeparator>();
-					if (separator != null && separator.partsRenderers.Contains(thisSkeletonPartsRenderer) && separator.SkeletonRenderer != null)
-						Selection.activeGameObject = separator.SkeletonRenderer.gameObject;
+					var thisSkeletonPartsRenderer = target as SkeletonPartsRenderer;
+					var srs = thisSkeletonPartsRenderer.GetComponentInParent<SkeletonRenderSeparator>();
+					if (srs != null && srs.partsRenderers.Contains(thisSkeletonPartsRenderer) && srs.SkeletonRenderer != null)
+						Selection.activeGameObject = srs.SkeletonRenderer.gameObject;
 				}
 			}
 		}

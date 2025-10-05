@@ -1,8 +1,8 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated April 5, 2025. Replaces all prior versions.
+ * Last updated May 1, 2019. Replaces all prior versions.
  *
- * Copyright (c) 2013-2025, Esoteric Software LLC
+ * Copyright (c) 2013-2019, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
@@ -15,16 +15,16 @@
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
  *
- * THE SPINE RUNTIMES ARE PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
- * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * THIS SOFTWARE IS PROVIDED BY ESOTERIC SOFTWARE LLC "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN
+ * NO EVENT SHALL ESOTERIC SOFTWARE LLC BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES, BUSINESS
+ * INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+ * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using System;
@@ -36,13 +36,12 @@ namespace Spine {
 		internal BoneData parent;
 		internal float length;
 		internal float x, y, rotation, scaleX = 1, scaleY = 1, shearX, shearY;
-		internal Inherit inherit = Inherit.Normal;
-		internal bool skinRequired;
+		internal TransformMode transformMode = TransformMode.Normal;
 
 		/// <summary>The index of the bone in Skeleton.Bones</summary>
 		public int Index { get { return index; } }
 
-		/// <summary>The name of the bone, which is unique across all bones in the skeleton.</summary>
+		/// <summary>The name of the bone, which is unique within the skeleton.</summary>
 		public string Name { get { return name; } }
 
 		/// <summary>May be null.</summary>
@@ -56,7 +55,7 @@ namespace Spine {
 		/// <summary>Local Y translation.</summary>
 		public float Y { get { return y; } set { y = value; } }
 
-		/// <summary>Local rotation in degrees, counter clockwise.</summary>
+		/// <summary>Local rotation.</summary>
 		public float Rotation { get { return rotation; } set { rotation = value; } }
 
 		/// <summary>Local scaleX.</summary>
@@ -71,13 +70,8 @@ namespace Spine {
 		/// <summary>Local shearY.</summary>
 		public float ShearY { get { return shearY; } set { shearY = value; } }
 
-		/// <summary>Determines how parent world transforms affect this bone.</summary>
-		public Inherit Inherit { get { return inherit; } set { inherit = value; } }
-
-		/// <summary>When true, <see cref="Skeleton.UpdateWorldTransform(Skeleton.Physics)"/> only updates this bone if the <see cref="Skeleton.Skin"/> contains
-		/// this bone.</summary>
-		/// <seealso cref="Skin.Bones"/>
-		public bool SkinRequired { get { return skinRequired; } set { skinRequired = value; } }
+		/// <summary>The transform mode for how parent world transforms affect this bone.</summary>
+		public TransformMode TransformMode { get { return transformMode; } set { transformMode = value; } }
 
 		/// <param name="parent">May be null.</param>
 		public BoneData (int index, string name, BoneData parent) {
@@ -93,21 +87,13 @@ namespace Spine {
 		}
 	}
 
-	public enum Inherit {
-		Normal,
-		OnlyTranslation,
-		NoRotationOrReflection,
-		NoScale,
-		NoScaleOrReflection
-	}
-
-	public class InheritEnum {
-		public static readonly Inherit[] Values = {
-			Inherit.Normal,
-			Inherit.OnlyTranslation,
-			Inherit.NoRotationOrReflection,
-			Inherit.NoScale,
-			Inherit.NoScaleOrReflection
-		};
+	[Flags]
+	public enum TransformMode {
+		//0000 0 Flip Scale Rotation
+		Normal = 0, // 0000
+		OnlyTranslation = 7, // 0111
+		NoRotationOrReflection = 1, // 0001
+		NoScale = 2, // 0010
+		NoScaleOrReflection = 6, // 0110
 	}
 }
