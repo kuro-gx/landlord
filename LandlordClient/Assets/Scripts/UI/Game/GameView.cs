@@ -429,7 +429,7 @@ public class GameView : UIBase {
             AudioService.Instance.PlayOperateAudio(isLeft ? _leftPosIndex : _rightPosIndex,
                 Constant.Alarm + remainingNum);
         } else {
-            // 播放音频
+            // todo 播放音频，isCover的判定有问题导致无法播放“不要”语音
             bool isCover = response.IsCover && response.MonsterPos != (isLeft ? _leftPosIndex : _rightPosIndex);
             var direction = isLeft ? PlayerDirection.Left : PlayerDirection.Right;
             AudioService.Instance.PlayCardAudio(response.LastPos, response.PendCards.ToList(), isCover, direction);

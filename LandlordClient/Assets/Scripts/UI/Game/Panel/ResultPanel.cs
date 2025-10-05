@@ -85,6 +85,12 @@ public class ResultPanel : UIBase {
             row1Money.text = "+" + self.Money;
         }
         
+        if (self.IsWin) {
+            winIcon.gameObject.SetActive(true);
+        } else {
+            lostIcon.gameObject.SetActive(true);
+        }
+
         // 另外玩家的数据
         if (list[0].IsLord) {
             row2LandIcon.gameObject.SetActive(true);
